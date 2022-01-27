@@ -8,7 +8,7 @@ const ButtonForm = (props: Props) => {
   const { message } = props
   return (
     <>
-      <Button size={"lg"}>
+      <Button size={"lg"} type="submit">
         {message}
       </Button>
     </>
