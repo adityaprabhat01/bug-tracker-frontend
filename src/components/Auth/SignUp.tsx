@@ -1,5 +1,14 @@
 import { Grid, GridItem, Heading, VStack } from "@chakra-ui/react";
+import axios from "axios";
 import { Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
+import { object, string } from "yup";
+import {
+  signup_failure,
+  signup_request,
+  signup_success,
+} from "../../store/auth/authActions";
+import { url } from "../../url";
 
 import ButtonForm from "./Form/ButtonForm";
 import InputForm from "./Form/InputForm";
@@ -11,7 +20,14 @@ interface InitialValuesInterface {
   password: string;
 }
 
+const api = axios.create({
+  baseURL: url,
+  withCredentials: true,
+});
+
 const SignUp: React.FC = () => {
+  const dispatch = useDispatch();
+
   const initialValues = {
     name: "",
     username: "",
@@ -19,8 +35,34 @@ const SignUp: React.FC = () => {
     password: "",
   };
 
+  const signupSchema = object({
+    name: string().required(),
+    username: string().required(),
+    email: string().required().email("Must be a valid email"),
+    password: string().required().min(4, "Must have atleast 4 characters"),
+  });
+
   function handleSubmit(values: InitialValuesInterface, fn: Function) {
-    console.log(values);
+    const { name, username, email, password } = values;
+    dispatch(signup_request());
+    api
+      .post("/signup", {
+        name,
+        username,
+        email,
+        password,
+      })
+      .then((res) => {
+        const { data } = res;
+        dispatch(signup_success(data));
+      })
+      .catch((err) => {
+        dispatch(
+          signup_failure({
+            error: "An error occured",
+          })
+        );
+      });
   }
 
   return (
@@ -32,6 +74,7 @@ const SignUp: React.FC = () => {
           </Heading>
           <Formik
             initialValues={initialValues}
+            validationSchema={signupSchema}
             onSubmit={(values, { setSubmitting }) => {
               handleSubmit(values, setSubmitting);
             }}

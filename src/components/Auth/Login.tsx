@@ -1,21 +1,70 @@
 import { Grid, VStack, GridItem, Heading } from "@chakra-ui/react";
+import axios from "axios";
 import { Form, Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { object, string } from "yup";
+import {
+  login_failure,
+  login_request,
+  login_success,
+} from "../../store/auth/authActions";
+import { url } from "../../url";
 import ButtonForm from "./Form/ButtonForm";
+import Error from "./Form/Error";
 import InputForm from "./Form/InputForm";
 
 interface InitialValuesInterface {
-  email: string,
-  password: string
+  username: string;
+  password: string;
 }
 
+const api = axios.create({
+  baseURL: url,
+  withCredentials: true,
+});
+
 const Login: React.FC = () => {
-  const initialValues = {
-    email: '',
-    password: ''
+  function handleSelectors(state: { auth: { error: string } }) {
+    const error = state.auth.error;
+    return { error };
   }
 
+  const store = useSelector(handleSelectors);
+
+  const initialValues = {
+    username: "",
+    password: "",
+  };
+
+  const loginSchema = object({
+    username: string().required(),
+    password: string().required(),
+  });
+
+  const dispatch = useDispatch();
+
   function handleSubmit(values: InitialValuesInterface, fn: Function) {
-    console.log(values);
+    dispatch(login_request());
+    const { username, password } = values;
+    api
+      .post("/login", {
+        username,
+        password,
+      })
+      .then((res) => {
+        const { data } = res;
+        if ("error" in data || "message" in data) {
+          return dispatch(login_failure(data));
+        }
+        dispatch(login_success(data));
+      })
+      .catch((err) => {
+        dispatch(
+          login_failure({
+            error: "An error occured",
+          })
+        );
+      });
   }
 
   return (
@@ -27,15 +76,17 @@ const Login: React.FC = () => {
           </Heading>
           <Formik
             initialValues={initialValues}
+            validationSchema={loginSchema}
             onSubmit={(values, { setSubmitting }) => {
               handleSubmit(values, setSubmitting);
             }}
           >
             <Form>
               <VStack>
-                <InputForm message="Email" name="email" />
+                <InputForm message="username" name="username" />
                 <InputForm message="Password" name="password" />
                 <ButtonForm message="LogIn" />
+                {store.error !== "" ? <Error message={store.error} /> : null}
               </VStack>
             </Form>
           </Formik>

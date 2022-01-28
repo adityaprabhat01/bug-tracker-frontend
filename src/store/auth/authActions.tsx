@@ -1,17 +1,48 @@
-import { SIGNUP_REQUEST } from "./authTypes"
+import {
+  LOGIN_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  SIGNUP_FAILURE,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+} from "./authTypes";
 
-interface Data {
-  name: string,
-  username: string,
-  email: string,
-  password: string,
-  loading: boolean,
-  error: string
-}
-
-export const signup_request = (data: Data) => {
+export const signup_request = () => {
   return {
     type: SIGNUP_REQUEST,
-    payload: data
-  }
-}
+  };
+};
+
+export const signup_success = (data: any) => {
+  return {
+    type: SIGNUP_SUCCESS,
+    payload: data,
+  };
+};
+
+export const signup_failure = (data: any) => {
+  return {
+    type: SIGNUP_FAILURE,
+    payload: data,
+  };
+};
+
+export const login_request = () => {
+  return {
+    type: LOGIN_REQUEST,
+  };
+};
+
+export const login_success = (data: any) => {
+  return {
+    type: LOGIN_SUCCESS,
+    payload: data,
+  };
+};
+
+export const login_failure = (data: any) => {
+  return {
+    type: LOGIN_FAILURE,
+    payload: data,
+  };
+};
