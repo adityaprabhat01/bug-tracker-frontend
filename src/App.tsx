@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import Login from "./components/Auth/Login";
-import SignUp from "./components/Auth/SignUp";
+import Login from "./pages/Login/Login";
+import SignUp from "./pages/Signup/SignUp";
 
 function App() {
   return (

@@ -9,9 +9,9 @@ import {
   login_success,
 } from "../../store/auth/authActions";
 import { url } from "../../url";
-import ButtonForm from "./Form/ButtonForm";
-import Error from "./Form/Error";
-import InputForm from "./Form/InputForm";
+import ButtonForm from "../../components/Auth/Form/ButtonForm";
+import Error from "../../components/Auth/Form/Error";
+import InputForm from "../../components/Auth/Form/InputForm";
 
 interface InitialValuesInterface {
   username: string;

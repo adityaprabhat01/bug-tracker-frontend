@@ -10,8 +10,8 @@ import {
 } from "../../store/auth/authActions";
 import { url } from "../../url";
 
-import ButtonForm from "./Form/ButtonForm";
-import InputForm from "./Form/InputForm";
+import ButtonForm from "../../components/Auth/Form/ButtonForm";
+import InputForm from "../../components/Auth/Form/InputForm";
 
 interface InitialValuesInterface {
   name: string;
