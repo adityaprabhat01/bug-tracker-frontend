@@ -3,6 +3,7 @@ import axios from "axios";
 import { Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { object, string } from "yup";
+import { useNavigate } from "react-router-dom";
 import {
   login_failure,
   login_request,
@@ -24,7 +25,9 @@ const api = axios.create({
 });
 
 const Login: React.FC = () => {
-  function handleSelectors(state: { auth: { error: string } }) {
+  function handleSelectors(state: {
+    auth: { error: string; isAuthenticated: boolean };
+  }) {
     const error = state.auth.error;
     return { error };
   }
@@ -42,6 +45,7 @@ const Login: React.FC = () => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handleSubmit(values: InitialValuesInterface, fn: Function) {
     dispatch(login_request());
@@ -57,6 +61,7 @@ const Login: React.FC = () => {
           return dispatch(login_failure(data));
         }
         dispatch(login_success(data));
+        navigate("/projects")
       })
       .catch((err) => {
         dispatch(

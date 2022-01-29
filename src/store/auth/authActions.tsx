@@ -5,6 +5,7 @@ import {
   SIGNUP_FAILURE,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
+  UPDATE_AUTH_FROM_COOKIES,
 } from "./authTypes";
 
 export const signup_request = () => {
@@ -46,3 +47,10 @@ export const login_failure = (data: any) => {
     payload: data,
   };
 };
+
+export const update_auth_from_cookies = (data: any) => {
+  return {
+    type: UPDATE_AUTH_FROM_COOKIES,
+    payload: data
+  }
+}

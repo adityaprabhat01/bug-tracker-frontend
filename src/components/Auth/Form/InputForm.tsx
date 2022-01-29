@@ -10,7 +10,7 @@ interface Props {
 const InputForm = (props: Props) => {
   const { message, name } = props;
   const [field, meta] = useField(name);
-
+  console.log(field)
   return (
     <>
       <Input

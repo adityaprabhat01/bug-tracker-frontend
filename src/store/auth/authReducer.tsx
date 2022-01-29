@@ -5,6 +5,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  UPDATE_AUTH_FROM_COOKIES,
 } from "./authTypes";
 
 const initState = {
@@ -14,6 +15,7 @@ const initState = {
   user_id: "",
   loading: false,
   error: "",
+  isAuthenticated: false,
 };
 
 const authReducer = (state = initState, action: any) => {
@@ -27,6 +29,7 @@ const authReducer = (state = initState, action: any) => {
         username: "",
         email: "",
         user_id: "",
+        isAuthenticated: false,
       };
     case SIGNUP_SUCCESS: {
       const { name, user_id, username, email } = action.payload;
@@ -38,6 +41,7 @@ const authReducer = (state = initState, action: any) => {
         username,
         email,
         error: "",
+        isAuthenticated: true,
       };
     }
     case SIGNUP_FAILURE: {
@@ -46,6 +50,7 @@ const authReducer = (state = initState, action: any) => {
         ...state,
         loading: false,
         error,
+        isAuthenticated: false,
       };
     }
     case LOGIN_REQUEST:
@@ -57,6 +62,7 @@ const authReducer = (state = initState, action: any) => {
         username: "",
         email: "",
         user_id: "",
+        isAuthenticated: false,
       };
     case LOGIN_SUCCESS: {
       const { name, user_id, username, email } = action.payload;
@@ -68,6 +74,7 @@ const authReducer = (state = initState, action: any) => {
         email,
         loading: false,
         error: "",
+        isAuthenticated: true,
       };
     }
     case LOGIN_FAILURE: {
@@ -76,7 +83,16 @@ const authReducer = (state = initState, action: any) => {
         ...state,
         loading: false,
         error: error === undefined ? message : error,
+        isAuthenticated: false,
       };
+    }
+    case UPDATE_AUTH_FROM_COOKIES: {
+      const { user_id, username } = action.payload;
+      return {
+        ...state,
+        user_id,
+        username
+      }
     }
     default:
       return state;
