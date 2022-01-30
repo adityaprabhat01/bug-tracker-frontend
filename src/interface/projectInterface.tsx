@@ -23,8 +23,8 @@ export interface initStateInterface {
   error: string;
 }
 
-export const initState: initStateInterface = {
-  projects: [],
-  loading: false,
-  error: "",
-};
+export interface selectProjectInitStateInterface {
+  project: ProjectInterface | object,
+  error: string,
+  loading: boolean
+}
