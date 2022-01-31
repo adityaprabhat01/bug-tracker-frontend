@@ -3,5 +3,4 @@ export interface User {
   username: string;
   user_id: string;
   _id: string;
-  profileImageUrl: string;
 }

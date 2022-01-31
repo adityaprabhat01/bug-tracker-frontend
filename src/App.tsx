@@ -3,7 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/Signup/SignUp";
 import ProjectPage from "./pages/Project/ProjectPage";
-import Project from "./components/Project/Project";
+import Project from "./pages/SelectedProject/SelectedProjectPage";
 
 function App() {
   return (

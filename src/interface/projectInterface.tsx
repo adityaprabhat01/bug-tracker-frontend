@@ -24,7 +24,7 @@ export interface initStateInterface {
 }
 
 export interface selectProjectInitStateInterface {
-  project: ProjectInterface | object,
-  error: string,
-  loading: boolean
+  project:  ProjectInterface;
+  error: string;
+  loading: boolean;
 }
