@@ -19,9 +19,9 @@ import {
   add_member_request,
   add_member_success,
 } from "../../store/selectProject.tsx/selectProjectAction";
-import ButtonForm from "../Auth/Form/ButtonForm";
-import Error from "../Auth/Form/Error";
-import InputForm from "../Auth/Form/InputForm";
+import ButtonForm from "../Form/ButtonForm";
+import Error from "../Form/Error";
+import InputForm from "../Form/InputForm";
 
 interface InitialValuesInterface {
   user_id: string;

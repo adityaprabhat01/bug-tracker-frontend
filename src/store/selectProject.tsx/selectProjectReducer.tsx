@@ -1,5 +1,8 @@
 import { selectProjectInitStateInterface } from "../../interface/projectInterface";
 import {
+  ADD_BUG_FAILURE,
+  ADD_BUG_REQUEST,
+  ADD_BUG_SUCCESS,
   ADD_MEMBER_FAILURE,
   ADD_MEMBER_REQUEST,
   ADD_MEMBER_SUCCESS,
@@ -101,6 +104,32 @@ const selectProjectReducer = (state = initState, action: any) => {
       }
     }
     case REMOVE_MEMBER_FAILURE: {
+      const { error, message } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        error: error === undefined ? message : error
+      }
+    }
+    case ADD_BUG_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: ""
+      }
+    }
+    case ADD_BUG_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        error: "",
+        project: {
+          ...state.project,
+          bugs: [...state.project.bugs, action.payload]
+        }
+      }
+    }
+    case ADD_BUG_FAILURE: {
       const { error, message } = action.payload;
       return {
         ...state,

@@ -1,11 +1,14 @@
 import { Box, Heading } from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import AddBug from "../../components/Bug/AddBug";
+import BugListItem from "../../components/Bug/BugListItem";
 import Loading from "../../components/Loading";
 import AddMember from "../../components/Project/AddMember";
+import Body from "../../components/Project/Body";
 import ProjectMember from "../../components/Project/ProjectMembers";
 import useFetch from "../../hooks/useFetch";
-import { selectProjectInitStateInterface } from "../../interface/projectInterface";
+import { BugInterface, selectProjectInitStateInterface } from "../../interface/projectInterface";
 import { User } from "../../interface/userInterface";
 import {
   fetch_select_project_request,
@@ -32,7 +35,7 @@ const Project = () => {
       members,
       techStack,
       loading,
-      error
+      error,
     };
   }
 
@@ -61,11 +64,15 @@ const Project = () => {
     <>
       {project.loading === true ? <Loading /> : null}
       <Heading>{project.title}</Heading>
-      <Box>{project.body}</Box>
+      <Body body={project.body} user={project.user} />
       <Box>{project.dateCreated}</Box>
       <AddMember />
+      <AddBug />
       {
         project.members.map((member: User) => <ProjectMember key={member._id} member={member} />)
+      }
+      {
+        project.bugs.map((bug: BugInterface) => <BugListItem key={bug._id} bug={bug} />)
       }
     </>
   );

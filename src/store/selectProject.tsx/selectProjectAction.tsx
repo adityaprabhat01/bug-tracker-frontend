@@ -1,4 +1,7 @@
 import {
+  ADD_BUG_FAILURE,
+  ADD_BUG_REQUEST,
+  ADD_BUG_SUCCESS,
   ADD_MEMBER_FAILURE,
   ADD_MEMBER_REQUEST,
   ADD_MEMBER_SUCCESS,
@@ -66,6 +69,26 @@ export const remove_member_success = (data: any) => {
 export const remove_member_failure = (data: any) => {
   return {
     type: REMOVE_MEMBER_FAILURE,
+    payload: data
+  }
+}
+
+export const add_bug_request = () => {
+  return {
+    type: ADD_BUG_REQUEST
+  }
+}
+
+export const add_bug_success = (data: any) => {
+  return {
+    type: ADD_BUG_SUCCESS,
+    payload: data
+  }
+}
+
+export const add_bug_failure = (data: any) => {
+  return {
+    type: ADD_BUG_FAILURE,
     payload: data
   }
 }

@@ -1,77 +1,59 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
-import {
-  add_project_request,
-  add_project_success,
-} from "../../store/project/projectAction";
+import { add_bug_failure, add_bug_request, add_bug_success } from "../../store/selectProject.tsx/selectProjectAction";
 import ButtonForm from "../Form/ButtonForm";
+import Error from "../Form/Error";
 import InputForm from "../Form/InputForm";
 
 interface InitialValuesInterface {
-  title: string;
-  body: string;
+  title: string,
+  body: string
 }
 
-const AddProject = () => {
-
-  function handleSelector (state: { auth: any; }) {
-    const user = state.auth;
-    return { user }
-  }
-
-  const dispatch = useDispatch();
-  const store = useSelector(handleSelector)
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
+const AddBug = () => {
   const initialValues = {
     title: "",
-    body: "",
-  };
+    body: ""
+  }
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const project = useSelector((state: RootStateOrAny) => state.project);
 
   function handlePreFetch() {
-    dispatch(add_project_request());
+    dispatch(add_bug_request());
   }
 
   function handlePostFetch(data: any) {
-    dispatch(add_project_success(data));
     onClose();
+    if("error" in data || "message" in data) {
+      handleFailure(data)
+    }
+    dispatch(add_bug_success(data));
+  }
+
+  function handleFailure(data: any) {
+    onClose();
+    dispatch(add_bug_failure(data));
   }
 
   function handleSubmit(values: InitialValuesInterface, fn: Function) {
-    const { title, body } = values;
-    const { name, username, user_id } = store.user;
     handlePreFetch();
-    api.post("/addProject", {
-      title, 
+    const { title, body } = values;
+    const { _id, user } = project.project;
+    api.post("/addBug", {
+      title,
       body,
-      user: {
-        name,
-        username,
-        user_id
-      }
-    })
-    .then(res => {
+      project_id: _id,
+      user
+    }).then(res => {
       const { data } = res;
-      handlePostFetch(data)
-    })
-    .catch(err => {
-
-    })
+      handlePostFetch(data);
+    }).catch(err => {})
   }
+
 
   return (
     <>
@@ -90,26 +72,29 @@ const AddProject = () => {
             <>
               <Form>
                 <ModalBody pb={6}>
-                  <FormControl>
+
+                  <FormControl mt={4}>
                     <FormLabel>Title</FormLabel>
                     <InputForm message="Title" name="title" />
                   </FormControl>
 
                   <FormControl mt={4}>
                     <FormLabel>Description</FormLabel>
-                    <InputForm message="Description" name="body" />
+                    <InputForm message="body" name="body" />
                   </FormControl>
+
                 </ModalBody>
                 <ModalFooter>
-                  <ButtonForm message="Submit" /> 
+                  <ButtonForm message="Submit" />
                 </ModalFooter>
               </Form>
             </>
           </Formik>
         </ModalContent>
       </Modal>
+      {project.error !== "" ? <Error message={project.error} /> : null}
     </>
-  );
-};
+  )
+}
 
-export default AddProject;
+export default AddBug;

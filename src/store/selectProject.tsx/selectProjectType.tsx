@@ -9,3 +9,7 @@ export const ADD_MEMBER_FAILURE = "project/ADD_MEMBER_FAILURE";
 export const REMOVE_MEMBER_REQUEST = "project/REMOVE_MEMBER_REQUEST";
 export const REMOVE_MEMBER_SUCCESS = "project/REMOVE_MEMBER_SUCCESS";
 export const REMOVE_MEMBER_FAILURE = "project/REMOVE_MEMBER_FAILURE";
+
+export const ADD_BUG_REQUEST = "project/ADD_BUG_REQUEST";
+export const ADD_BUG_SUCCESS = "project/ADD_BUG_SUCCESS";
+export const ADD_BUG_FAILURE = "project/ADD_BUG_FAILURE";

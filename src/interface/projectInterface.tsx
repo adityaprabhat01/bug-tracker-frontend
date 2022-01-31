@@ -5,12 +5,25 @@ export interface TechStack {
   name: string;
 }
 
+export interface BugInterface {
+  _id: string;
+  title: string;
+  user: User;
+  project_id: string;
+  body: string;
+  isOpen: boolean;
+  comments: any;
+  labels: any;
+  date_opened: string;
+  members: Array<User>;
+}
+
 export interface ProjectInterface {
   _id: string;
   title: string;
   body: string;
   user: User;
-  bugs: Array<string>;
+  bugs: Array<BugInterface>;
   dateCreated: string;
   members: Array<User>;
   techStack: Array<TechStack>;
@@ -24,7 +37,7 @@ export interface initStateInterface {
 }
 
 export interface selectProjectInitStateInterface {
-  project:  ProjectInterface;
+  project: ProjectInterface;
   error: string;
   loading: boolean;
 }

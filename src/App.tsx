@@ -4,6 +4,7 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/Signup/SignUp";
 import ProjectPage from "./pages/Project/ProjectPage";
 import Project from "./pages/SelectedProject/SelectedProjectPage";
+import BugPage from "./pages/Bug/BugPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/projects" element={<ProjectPage />} />
             <Route path="/project/:project_id" element={<Project />} />
+            <Route path="/bug/:bug_id" element={<BugPage />} />
           </Routes>
         </BrowserRouter>
       </ChakraProvider>

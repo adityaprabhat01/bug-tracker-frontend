@@ -1,7 +1,6 @@
 import { Button } from "@chakra-ui/react"
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
-import useFetch from "../../hooks/useFetch";
 import { selectProjectInitStateInterface } from "../../interface/projectInterface";
 import { remove_member_failure, remove_member_request, remove_member_success } from "../../store/selectProject.tsx/selectProjectAction";
 
@@ -24,10 +23,12 @@ const RemoveMember = (props: Props) => {
   }
 
   function handlePostFetch(data: any) {
+    console.log(data)
     if("error" in data || "message" in data) {
       handleFailure(data)
     }
-    dispatch(remove_member_success(data.user_id))
+    const { user_id } = data;
+    dispatch(remove_member_success(user_id))
   }
 
   function handleFailure (data: any) {
@@ -42,7 +43,7 @@ const RemoveMember = (props: Props) => {
       ...project_id
     }).then(res => {
       const { data } = res;
-      handlePostFetch(data.user);
+      handlePostFetch(data);
     }).catch(err => {})
   }
   

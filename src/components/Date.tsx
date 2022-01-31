@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import moment from "moment";
 
-const Date = (props: any) => {
+const About = (props: any) => {
   const { dateCreated } = props;
 
   return (
@@ -15,4 +15,4 @@ const Date = (props: any) => {
   )
 }
 
-export default Date;
+export default About;
