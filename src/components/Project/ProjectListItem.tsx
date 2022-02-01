@@ -9,7 +9,7 @@ const ProjectListItem = (props: any) => {
   const { title, body, dateCreated, techStack, _id } = project;
   return (
     <>
-      <Box>
+      <Box maxW={"100px"} maxH={"100px"}>
         <HStack>
           <Link as={NavLink} to={"/project/" + _id}>
             <Title title={title} />
@@ -17,7 +17,7 @@ const ProjectListItem = (props: any) => {
           <Date dateCreated={dateCreated} />
         </HStack>
         <Box>{body}</Box>
-        <TechStack stack={techStack} />
+        {/* <TechStack stack={techStack} handleUpdate={null} /> */}
       </Box>
     </>
   );

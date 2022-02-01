@@ -57,11 +57,11 @@ const AddBug = () => {
 
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
+      <Button onClick={onOpen}>Add Bug</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+          <ModalHeader>Report Bug in the project</ModalHeader>
           <ModalCloseButton />
           <Formik
             initialValues={initialValues}

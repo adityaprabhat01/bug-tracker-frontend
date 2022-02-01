@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   FormControl,
   FormLabel,
@@ -85,11 +86,12 @@ const AddMember = () => {
 
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
+    <Box mt={3}>
+    <Button onClick={onOpen}>Add Member</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+          <ModalHeader>Add member to the team</ModalHeader>
           <ModalCloseButton />
           <Formik
             initialValues={initialValues}
@@ -129,6 +131,8 @@ const AddMember = () => {
         </ModalContent>
       </Modal>
       {error !== "" ? <Error message={error} /> : null}
+    </Box>
+      
     </>
   );
 };

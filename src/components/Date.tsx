@@ -1,12 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import moment from "moment";
 
-const About = (props: any) => {
+const Date = (props: any) => {
   const { dateCreated } = props;
-
   return (
     <>
       <Box>
+        Added&nbsp;
         {
           moment(dateCreated).fromNow()
         }
@@ -15,4 +15,4 @@ const About = (props: any) => {
   )
 }
 
-export default About;
+export default Date;

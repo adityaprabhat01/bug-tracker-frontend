@@ -12,6 +12,9 @@ import {
   REMOVE_MEMBER_FAILURE,
   REMOVE_MEMBER_REQUEST,
   REMOVE_MEMBER_SUCCESS,
+  UPDATE_PROJECT_BODY_FAILURE,
+  UPDATE_PROJECT_BODY_REQUEST,
+  UPDATE_PROJECT_BODY_SUCCESS,
 } from "./selectProjectType";
 
 const initState: selectProjectInitStateInterface = {
@@ -130,6 +133,33 @@ const selectProjectReducer = (state = initState, action: any) => {
       }
     }
     case ADD_BUG_FAILURE: {
+      const { error, message } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        error: error === undefined ? message : error
+      }
+    }
+    case UPDATE_PROJECT_BODY_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: ""
+      }
+    }
+    case UPDATE_PROJECT_BODY_SUCCESS: {
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          techStack: action.payload.techStack,
+          body: action.payload.body
+        },
+        loading: false,
+        error: ""
+      }
+    }
+    case UPDATE_PROJECT_BODY_FAILURE: {
       const { error, message } = action.payload;
       return {
         ...state,

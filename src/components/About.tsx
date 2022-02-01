@@ -9,7 +9,7 @@ const About = (props: Props) => {
   const { user } = props;
   return (
     <>
-      <Box>Created by {user.username}</Box>
+      <Box color={"gray.600"}>Created by {user.username}</Box>
     </>
   )
 }

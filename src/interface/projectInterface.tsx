@@ -1,6 +1,6 @@
 import { User } from "./userInterface";
 
-export interface TechStack {
+export interface TechStackInterface {
   _id: string;
   name: string;
 }
@@ -26,7 +26,7 @@ export interface ProjectInterface {
   bugs: Array<BugInterface>;
   dateCreated: string;
   members: Array<User>;
-  techStack: Array<TechStack>;
+  techStack: Array<TechStackInterface>;
   comments: any;
 }
 
