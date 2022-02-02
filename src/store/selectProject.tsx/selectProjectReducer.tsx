@@ -15,6 +15,9 @@ import {
   UPDATE_PROJECT_BODY_FAILURE,
   UPDATE_PROJECT_BODY_REQUEST,
   UPDATE_PROJECT_BODY_SUCCESS,
+  UPDATE_PROJECT_TECHSTACK_FAILURE,
+  UPDATE_PROJECT_TECHSTACK_REQUEST,
+  UPDATE_PROJECT_TECHSTACK_SUCCESS,
 } from "./selectProjectType";
 
 const initState: selectProjectInitStateInterface = {
@@ -152,7 +155,6 @@ const selectProjectReducer = (state = initState, action: any) => {
         ...state,
         project: {
           ...state.project,
-          techStack: action.payload.techStack,
           body: action.payload.body
         },
         loading: false,
@@ -160,6 +162,32 @@ const selectProjectReducer = (state = initState, action: any) => {
       }
     }
     case UPDATE_PROJECT_BODY_FAILURE: {
+      const { error, message } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        error: error === undefined ? message : error
+      }
+    }
+    case UPDATE_PROJECT_TECHSTACK_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: ""
+      }
+    }
+    case UPDATE_PROJECT_TECHSTACK_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        error: "",
+        project: {
+          ...state.project,
+          techStack: action.payload.techStack
+        }
+      }
+    }
+    case UPDATE_PROJECT_TECHSTACK_FAILURE: {
       const { error, message } = action.payload;
       return {
         ...state,

@@ -8,6 +8,7 @@ import {
   update_project_body_request,
   update_project_body_success,
 } from "../../store/selectProject.tsx/selectProjectAction";
+import ButtonUI from "../ButtonUI";
 import TechStack from "./TechStack";
 
 interface Props {
@@ -42,14 +43,10 @@ const Body = (props: Props) => {
     setIsOpen(!isOpen);
   }
 
-  function handleUpdate(stack: string) {
+  function handleUpdate() {
     handlePreFetch();
-    const obj = {
-      name: stack,
-    };
     api
-      .post("/updateProject", {
-        techStack: obj,
+      .post("/updateProjectBody", {
         body: value,
         project_id,
       })
@@ -64,25 +61,25 @@ const Body = (props: Props) => {
     <>
       <Box mt={"3"}>
         {isOpen === true ? (
-          <Textarea
-            value={value}
-            border="none"
-            variant="flushed"
-            onChange={(event) => setValue(event.target.value)}
-          />
+          <>
+            <Textarea
+              value={value}
+              border="none"
+              variant="flushed"
+              onChange={(event) => setValue(event.target.value)}
+            />
+            <ButtonUI value="update" handleClick={handleUpdate} />
+          </>
         ) : (
           <Box>{value}</Box>
         )}
       </Box>
       <Box mt={"3"}>
-        <TechStack
-          isOpen={isOpen}
-          stack={techStack}
-          handleUpdate={handleUpdate}
-        />
+        <TechStack isOpen={isOpen} stack={techStack} />
       </Box>
-
-      <Button mt={3} onClick={handleOpen}>Edit</Button>
+      <Box mt={3}>
+        <ButtonUI handleClick={handleOpen} value="Edit" />
+      </Box>
     </>
   );
 };

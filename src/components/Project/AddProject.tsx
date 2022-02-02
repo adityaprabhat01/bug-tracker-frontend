@@ -18,6 +18,7 @@ import {
   add_project_request,
   add_project_success,
 } from "../../store/project/projectAction";
+import ButtonUI from "../ButtonUI";
 import ButtonForm from "../Form/ButtonForm";
 import InputForm from "../Form/InputForm";
 
@@ -75,7 +76,7 @@ const AddProject = () => {
 
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
+      <ButtonUI handleClick={onOpen} value="Add Project" />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

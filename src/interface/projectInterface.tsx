@@ -5,6 +5,12 @@ export interface TechStackInterface {
   name: string;
 }
 
+export interface BodyInterface {
+  body: string,
+  loading: boolean,
+  error: string
+}
+
 export interface BugInterface {
   _id: string;
   title: string;

@@ -14,6 +14,9 @@ import {
   UPDATE_PROJECT_BODY_FAILURE,
   UPDATE_PROJECT_BODY_REQUEST,
   UPDATE_PROJECT_BODY_SUCCESS,
+  UPDATE_PROJECT_TECHSTACK_FAILURE,
+  UPDATE_PROJECT_TECHSTACK_REQUEST,
+  UPDATE_PROJECT_TECHSTACK_SUCCESS,
 } from "./selectProjectType";
 
 export const fetch_select_project_request = () => {
@@ -112,6 +115,26 @@ export const update_project_body_success = (data: any) => {
 export const update_project_body_failure = (data: { error: string, message: string }) => {
   return {
     type: UPDATE_PROJECT_BODY_FAILURE,
+    payload: data
+  }
+}
+
+export const update_project_techStack_request = () => {
+  return {
+    type: UPDATE_PROJECT_TECHSTACK_REQUEST
+  }
+}
+
+export const update_project_techStack_success = (data: any) => {
+  return {
+    type: UPDATE_PROJECT_TECHSTACK_SUCCESS,
+    payload: data
+  }
+}
+
+export const update_project_techstack_failure = (data: { error: string, message: string }) => {
+  return {
+    type: UPDATE_PROJECT_TECHSTACK_FAILURE,
     payload: data
   }
 }

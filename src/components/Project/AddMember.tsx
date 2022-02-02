@@ -15,11 +15,13 @@ import {
 import { Form, Formik } from "formik";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
+import { ProjectInterface, selectProjectInitStateInterface } from "../../interface/projectInterface";
 import {
   add_member_failure,
   add_member_request,
   add_member_success,
 } from "../../store/selectProject.tsx/selectProjectAction";
+import ButtonUI from "../ButtonUI";
 import ButtonForm from "../Form/ButtonForm";
 import Error from "../Form/Error";
 import InputForm from "../Form/InputForm";
@@ -42,9 +44,11 @@ const AddMember = () => {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const error: string = useSelector(
-    (state: RootStateOrAny) => state.project.error
+  const project: ProjectInterface = useSelector(
+    (state: RootStateOrAny) => state.project.project
   );
+
+  const error: string = useSelector(((state: RootStateOrAny) => state.project.error))
 
   function handlePreFetch() {
     dispatch(add_member_request());
@@ -63,15 +67,15 @@ const AddMember = () => {
     onClose();
   }
 
+  console.log(project)
+
   function handleSubmit(values: InitialValuesInterface, fn: Function) {
-    const { user_id, username, name, project_id } = values;
+    const { username } = values;
     handlePreFetch();
     api
       .post("/addMembers", {
-        user_id,
         username,
-        name,
-        project_id,
+        project_id: project._id,
       })
       .then((res) => {
         const { data } = res;
@@ -87,7 +91,7 @@ const AddMember = () => {
   return (
     <>
     <Box mt={3}>
-    <Button onClick={onOpen}>Add Member</Button>
+    <ButtonUI handleClick={onOpen} value="Add Member" />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -102,25 +106,12 @@ const AddMember = () => {
             <>
               <Form>
                 <ModalBody pb={6}>
-                  <FormControl>
-                    <FormLabel>Uerr ID</FormLabel>
-                    <InputForm message="User ID" name="user_id" />
-                  </FormControl>
 
                   <FormControl mt={4}>
                     <FormLabel>Username</FormLabel>
                     <InputForm message="Username" name="username" />
                   </FormControl>
 
-                  <FormControl mt={4}>
-                    <FormLabel>Name</FormLabel>
-                    <InputForm message="Name" name="name" />
-                  </FormControl>
-
-                  <FormControl mt={4}>
-                    <FormLabel>Project ID</FormLabel>
-                    <InputForm message="Project ID" name="project_id" />
-                  </FormControl>
                 </ModalBody>
                 <ModalFooter>
                   <ButtonForm message="Submit" />

@@ -3,6 +3,7 @@ import { Form, Formik } from "formik";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
 import { add_bug_failure, add_bug_request, add_bug_success } from "../../store/selectProject.tsx/selectProjectAction";
+import ButtonUI from "../ButtonUI";
 import ButtonForm from "../Form/ButtonForm";
 import Error from "../Form/Error";
 import InputForm from "../Form/InputForm";
@@ -57,7 +58,7 @@ const AddBug = () => {
 
   return (
     <>
-      <Button onClick={onOpen}>Add Bug</Button>
+      <ButtonUI handleClick={onOpen} value={"Add Bug"} />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
