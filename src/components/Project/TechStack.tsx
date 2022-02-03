@@ -57,7 +57,7 @@ const TechStack = (props: Props) => {
       <Box>
         <HStack>
           {stack.map((tech: any) => (
-            <>
+            <Box key={tech._id}>
               <Box
                 backgroundColor={"blue.200"}
                 borderRadius={"full"}
@@ -71,7 +71,7 @@ const TechStack = (props: Props) => {
                 
                 {tech.name}
               </Box>
-            </>
+            </Box>
           ))}
         </HStack>
 

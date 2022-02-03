@@ -67,8 +67,6 @@ const AddMember = () => {
     onClose();
   }
 
-  console.log(project)
-
   function handleSubmit(values: InitialValuesInterface, fn: Function) {
     const { username } = values;
     handlePreFetch();
