@@ -36,7 +36,8 @@ const AddMemberBug = (props: Props) => {
   const { bug_id } = props;
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const error: string = useSelector((state: RootStateOrAny) => state.bug.error);
+  const error: string = useSelector((state: RootStateOrAny) => state.bug.bug.members.error);
+  const loading: boolean = useSelector((state: RootStateOrAny) => state.bug.bug.members.loading);
 
   const initialValues: InitialValuesInterface = {
     username: "",
@@ -47,26 +48,26 @@ const AddMemberBug = (props: Props) => {
 
   function handlePostFetch(data: any) {
     if ("error" in data || "message" in data) {
-      handleFailure(data);
+      return handleFailure(data);
     }
     dispatch(add_member_success(data));
+    onClose();
   }
 
   function handleFailure(data: any) {
     dispatch(add_member_failure(data));
+    onClose();
   }
 
   function handleSubmit(values: InitialValuesInterface, fn: Function) {
     handlePreFetch();
     const { username } = values;
-    console.log(username, bug_id);
     api
       .post("addMemberBug", {
         bug_id,
         username,
       })
       .then((res) => {
-        console.log(res.data);
         const { data } = res;
         handlePostFetch(data);
       })

@@ -108,30 +108,44 @@ const bugReducer = (state = initState, action: any) => {
     case ADD_MEMBER_REQUEST: {
       return {
         ...state,
-        loading: true,
-        error: ""
+        bug: {
+          ...state.bug,
+          members: {
+            ...state.bug.members,
+            loading: true
+          }
+        },
       }
     }
     case ADD_MEMBER_SUCCESS: {
       return {
         ...state,
-        loading: false,
-        error: "",
         bug: {
           ...state.bug,
           members: {
             ...state.bug.members,
-            members: [...state.bug.members.members, action.payload]
+            members: [...state.bug.members.members, action.payload],
+            loading: false,
+            error: "",
           }
         }
       }
     }
     case ADD_MEMBER_FAILURE: {
-      const { error, message } = action.paylaod;
+      const { error, message } = action.payload;
+      
       return {
         ...state,
-        loading: false,
-        error: error === undefined ? message: error
+        
+        bug: {
+          ...state.bug,
+          members: {
+            ...state.bug.members,
+            error: error === undefined ? message: error,
+            loading: false,
+          }
+        },
+        
       }
     }
     default:
