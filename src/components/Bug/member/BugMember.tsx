@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { User } from "../../interface/userInterface";
+import { User } from "../../../interface/userInterface";
 
 interface Props {
   member: User

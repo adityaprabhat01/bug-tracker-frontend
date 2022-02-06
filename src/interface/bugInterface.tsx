@@ -1,5 +1,13 @@
 import { User } from "./userInterface"
 
+export interface CommentInterface {
+  user: User,
+  project_id: string,
+  bug_id: string,
+  body: string,
+  _id: string
+}
+
 export interface BugInterface {
   title: string,
   body: {
@@ -16,7 +24,11 @@ export interface BugInterface {
   project_id: string,
   _id: string,
   user: User,
-  comments: any,
+  comments: {
+    comments: Array <CommentInterface>,
+    loading: boolean,
+    error: string
+  },
   members: {
     members: Array<User>,
     loading: boolean,

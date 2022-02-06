@@ -13,16 +13,16 @@ import {
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { api } from "../../api";
+import { api } from "../../../api";
 import {
   add_member_failure,
   add_member_request,
   add_member_success,
-} from "../../store/bug/bugAction";
-import ButtonUI from "../ButtonUI";
-import ButtonForm from "../Form/ButtonForm";
-import Error from "../Form/Error";
-import InputForm from "../Form/InputForm";
+} from "../../../store/bug/bugAction";
+import ButtonUI from "../../ButtonUI";
+import ButtonForm from "../../Form/ButtonForm";
+import Error from "../../Form/Error";
+import InputForm from "../../Form/InputForm";
 
 interface InitialValuesInterface {
   username: string;
