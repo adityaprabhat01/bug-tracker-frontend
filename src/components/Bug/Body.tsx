@@ -26,7 +26,7 @@ const Body = () => {
       handleFailure(data);
     }
     dispatch(update_bug_body_success(data));
-    setIsOpen(!isOpen)
+    setIsOpen(!isOpen);
   }
 
   function handleFailure(data: any) {
@@ -72,7 +72,9 @@ const Body = () => {
                 Updating
               </Button>
             ) : (
-              <ButtonUI value="update" handleClick={handleUpdate} />
+              <Box mt={2}>
+                <ButtonUI value="update" handleClick={handleUpdate} />
+              </Box>
             )}
           </>
         ) : (

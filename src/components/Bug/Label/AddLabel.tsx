@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Select } from "@chakra-ui/react";
 import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../../api";
@@ -17,7 +17,7 @@ const AddLabel = (props: Props) => {
   const { labels } = props;
   const [showEdit, setShowEdit] = useState(false);
   const [labelState, setLabelState] = useState(labels);
-  const bug_id = useSelector((state: RootStateOrAny) => state.bug.bug._id)
+  const bug_id = useSelector((state: RootStateOrAny) => state.bug.bug._id);
   const dispatch = useDispatch();
 
   function handlePreFetch() {
@@ -39,7 +39,7 @@ const AddLabel = (props: Props) => {
     api
       .post("/updateLabel", {
         ...labelState,
-        bug_id
+        bug_id,
       })
       .then((res) => {
         const { data } = res;
@@ -57,16 +57,17 @@ const AddLabel = (props: Props) => {
   return (
     <>
       <Button onClick={() => setShowEdit(!showEdit)}>Edit Labels</Button>
+
       {showEdit === true ? (
         <>
           {labels.labels.map((label: any, index: number) => (
-            <LabelItem
-              key={label._id}
-              {...label}
-              selectLabel={selectLabel}
-              index={index}
-            />
-          ))}
+                <LabelItem
+                  key={label._id}
+                  {...label}
+                  selectLabel={selectLabel}
+                  index={index}
+                />
+              ))}
           <Button onClick={handleUpdate}>Update</Button>
         </>
       ) : null}

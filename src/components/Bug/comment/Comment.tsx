@@ -18,8 +18,11 @@ const Comment = (props: Props) => {
   return (
     <>
       <Box border={"2px solid #4299E1"} borderRadius={"5px"}>
+        <Box padding={2}>
         <About user={user} />
         <ReactMarkdown children={body} />
+        </Box>
+        
       </Box>
     </>
   );

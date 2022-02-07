@@ -7,6 +7,7 @@ import {
   post_bug_comment_request,
   post_bug_comment_success,
 } from "../../../store/bug/bugAction";
+import ButtonUI from "../../ButtonUI";
 import Editor from "./Editor";
 
 interface Props {
@@ -19,7 +20,9 @@ const PostComment = (props: Props) => {
   const [output, setOutput] = useState(false);
   const dispatch = useDispatch();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
-  const loading = useSelector((state: RootStateOrAny) => state.bug.bug.comments.loading);
+  const loading = useSelector(
+    (state: RootStateOrAny) => state.bug.bug.comments.loading
+  );
   const project_id = useSelector(
     (state: RootStateOrAny) => state.project.project._id
   );
@@ -33,7 +36,7 @@ const PostComment = (props: Props) => {
       handleFailure(data);
     }
     dispatch(post_bug_comment_success(data));
-    setValue("")
+    setValue("");
   }
 
   function handleFailure(data: { error: string; message: string }) {
@@ -59,21 +62,52 @@ const PostComment = (props: Props) => {
       });
   }
 
+  const tx = document.getElementsByTagName("textarea");
+  for (let i = 0; i < tx.length; i++) {
+    tx[i].setAttribute(
+      "style",
+      "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
+    );
+    tx[i].addEventListener("input", OnInput, false);
+  }
+
+  function OnInput(this: any) {
+    this.style.height = "auto";
+    this.style.height = this.scrollHeight + "px";
+  }
+
   return (
     <>
       <>
-        <Box border={"2px solid #4299E1"} height="200px" overflow={"scroll"}>
+        <Box border={"2px solid #4299E1"} height="auto" minHeight={"300px"}>
           <Button onClick={() => setOutput(false)}>Editor</Button>
           <Button onClick={() => setOutput(true)}>Markdown</Button>
           {output === false ? (
-            <Textarea value={value} height={"140px"} onChange={(event) => setValue(event.target.value)} />
+            <span>
+              <Textarea
+                id="comment-textarea"
+                value={value}
+                height={"auto"}
+                minHeight={"300px"}
+                overflow="hidden"
+                resize={"vertical"}
+                onChange={(event) => setValue(event.target.value)}
+              />
+            </span>
           ) : (
             <Editor text={value} />
           )}
         </Box>
       </>
 
-      <Button isLoading={loading} loadingText='Posting' onClick={handlePost}>Post</Button>
+      <ButtonUI
+        isLoading={loading}
+        loadingText="Posting"
+        onClick={handlePost}
+        value="Post"
+        backgroundColor="cyan.400"
+        borderRadius="20px"
+      />
     </>
   );
 };

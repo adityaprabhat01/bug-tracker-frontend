@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react'
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 
@@ -24,7 +25,10 @@ const Editor = (props: Props) => {
   const [value, setValue] = useState(text)
   return (
     <>
+      <Box minHeight={"300px"} padding={10}>
       <ReactMarkdown children={value} />
+      </Box>
+      
     </>
   )
 }

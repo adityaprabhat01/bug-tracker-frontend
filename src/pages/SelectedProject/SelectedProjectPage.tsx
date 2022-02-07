@@ -70,7 +70,7 @@ const Project = () => {
 
   return (
     <>
-      <Grid templateColumns="repeat(11, 1fr)" gap={6}>
+      <Grid templateColumns="repeat(11, 1fr)">
         {project.loading === true ? (
           <GridItem colStart={6} colEnd={8}>
            <Loading /> 

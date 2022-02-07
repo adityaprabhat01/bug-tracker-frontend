@@ -30,7 +30,7 @@ const BugListItem = (props: Props) => {
           borderRadius={"5px"}
           padding={2}
           mt={4}
-          maxW={"300px"}
+          mr={2}
           maxH={"auto"}
           minH={"auto"}
           minW={"150px"}
