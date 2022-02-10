@@ -7,8 +7,10 @@ import {
   post_bug_comment_request,
   post_bug_comment_success,
 } from "../../../store/bug/bugAction";
+import { MENTION_REGEX } from "../../../utils";
 import ButtonUI from "../../ButtonUI";
 import Editor from "./Editor";
+import MentionItem from "./MentionItem";
 
 interface Props {
   bug_id: string | undefined;
@@ -18,14 +20,39 @@ const PostComment = (props: Props) => {
   const { bug_id } = props;
   const [value, setValue] = useState("");
   const [output, setOutput] = useState(false);
+  const [showMembers, setShowMembers] = useState(false);
   const dispatch = useDispatch();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
+  const members = useSelector((state: RootStateOrAny) => state.project.project.members);
   const loading = useSelector(
     (state: RootStateOrAny) => state.bug.bug.comments.loading
   );
   const project_id = useSelector(
     (state: RootStateOrAny) => state.project.project._id
   );
+
+  function handleOnChange(event: any) {
+    const val = event.target.value;
+    console.log(val.match(MENTION_REGEX))
+    let temp = val.match(MENTION_REGEX);
+    if(temp !== null) {
+      console.log(members)
+      setShowMembers(true)
+    } else {
+      setShowMembers(false)
+    }
+    setValue(val);
+  }
+
+  function handleMention(username: string) {
+    let x = value;
+    let temp = value.match(MENTION_REGEX);
+    if(temp !== null) {
+      const str = temp[0].slice(1, temp[0].length);
+      x = x.replace(str, username);
+      setValue(x)
+    }
+  }
 
   function handlePreFetch() {
     dispatch(post_bug_comment_request());
@@ -91,8 +118,12 @@ const PostComment = (props: Props) => {
                 minHeight={"300px"}
                 overflow="hidden"
                 resize={"vertical"}
-                onChange={(event) => setValue(event.target.value)}
+                onChange={handleOnChange}
               />
+              {
+                showMembers === true ?
+                members.map((member: any) => <MentionItem key={member._id} member={member} handleMention={handleMention} />) : null
+              }
             </span>
           ) : (
             <Editor text={value} />

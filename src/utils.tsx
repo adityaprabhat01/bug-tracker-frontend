@@ -4,3 +4,5 @@ export function isObjectEmpty(obj: {} | null | undefined) {
   }
   return false;
 }
+
+export const MENTION_REGEX = /(?:^|[^a-zA-Z0-9_!@#$%&*])(?:(?:@)(?!\/))([a-zA-Z0-9/_.]{1,40})(?:\b(?!@)|$)/gm;
