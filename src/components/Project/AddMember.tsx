@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   FormControl,
   FormLabel,
   Modal,
@@ -25,6 +24,8 @@ import ButtonUI from "../ButtonUI";
 import ButtonForm from "../Form/ButtonForm";
 import Error from "../Form/Error";
 import InputForm from "../Form/InputForm";
+import { socket } from "../../socket";
+import { useEffect } from "react";
 
 interface InitialValuesInterface {
   user_id: string;
@@ -49,6 +50,7 @@ const AddMember = () => {
   );
 
   const error: string = useSelector(((state: RootStateOrAny) => state.project.error))
+  const title: string = useSelector((state: RootStateOrAny) => state.project.project.title)
 
   function handlePreFetch() {
     dispatch(add_member_request());
@@ -78,6 +80,10 @@ const AddMember = () => {
       .then((res) => {
         const { data } = res;
         handlePostFetch(data);
+        socket.emit("added-to-project", {
+          username,
+          title
+        })
       })
       .catch((err) => {
         handlePostFetch({
@@ -85,6 +91,12 @@ const AddMember = () => {
         })
       });
   }
+
+  useEffect(() => {
+    socket.on("added-to-project-success", (payload) => {
+      console.log(payload)
+    })
+  }, [])
 
   return (
     <>
