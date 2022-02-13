@@ -20,6 +20,7 @@ import PostComment from "../../components/Bug/comment/PostComment";
 import Label from "../../components/Bug/Label/Label";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import Status from "../../components/Bug/Status";
+import useSocket from "../../hooks/useSocket";
 
 const BugPage = () => {
   useAuthCookies();
@@ -28,7 +29,8 @@ const BugPage = () => {
   const loading = useSelector((state: RootStateOrAny) => state.bug.loading);
   const error = useSelector((state: RootStateOrAny) => state.bug.error);
   const bug = useSelector((state: RootStateOrAny) => state.bug.bug);
-
+  useAuthCookies();
+  useSocket();
   function handlePreFetch() {
     dispatch(bug_fetch_request());
   }

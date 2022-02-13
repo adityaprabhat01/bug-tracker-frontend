@@ -20,6 +20,8 @@ import {
 } from "../../store/selectProject.tsx/selectProjectAction";
 import { isObjectEmpty } from "../../utils";
 import Date from "../../components/Date";
+import useSocket from "../../hooks/useSocket";
+import useAuthCookies from "../../hooks/useAuthCookies";
 
 const startCol = [3, 6, 9];
 const endCol = [6, 9, 12];
@@ -27,7 +29,8 @@ const endCol = [6, 9, 12];
 const Project = () => {
   const { project_id } = useParams<{ project_id?: string }>();
   const dispatch = useDispatch();
-
+  useAuthCookies();
+  useSocket();
   function handleSelector(state: selectProjectInitStateInterface) {
     if (isObjectEmpty(state)) return;
     const { project, loading, error } = state;
