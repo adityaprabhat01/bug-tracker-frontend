@@ -4,7 +4,15 @@ const Title = (props: { title: string }) => {
   const { title } = props;
   return (
     <>
-      <Heading as="h3" size="lg">
+      <Heading
+        _hover={{
+          color: "#62728c",
+          textDecoration: "none"
+        }}
+        as="h6"
+        size="md"
+        color={"#464f5d"}
+      >
         {title}
       </Heading>
     </>

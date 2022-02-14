@@ -59,7 +59,8 @@ const TechStack = (props: Props) => {
           {stack.map((tech: any) => (
             <Box key={tech._id}>
               <Box
-                backgroundColor={"blue.200"}
+                backgroundColor={"#96999aad"}
+                color={"#3c3d3c"}
                 borderRadius={"full"}
                 padding={"6px"}
                 key={tech._id}

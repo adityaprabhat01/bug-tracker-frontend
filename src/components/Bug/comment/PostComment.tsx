@@ -2,6 +2,7 @@ import { Box, Button, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../../api";
+import { socket } from "../../../socket";
 import {
   post_bug_comment_failure,
   post_bug_comment_request,
@@ -33,10 +34,8 @@ const PostComment = (props: Props) => {
 
   function handleOnChange(event: any) {
     const val = event.target.value;
-    console.log(val.match(MENTION_REGEX))
     let temp = val.match(MENTION_REGEX);
     if(temp !== null) {
-      console.log(members)
       setShowMembers(true)
     } else {
       setShowMembers(false)
@@ -54,8 +53,14 @@ const PostComment = (props: Props) => {
     }
   }
 
+  function getMentions() {
+    let temp = value.match(MENTION_REGEX);
+    console.log(temp);
+  }
+
   function handlePreFetch() {
     dispatch(post_bug_comment_request());
+    getMentions();
   }
 
   function handlePostFetch(data: any) {
@@ -86,6 +91,11 @@ const PostComment = (props: Props) => {
       .then((res) => {
         const { data } = res;
         handlePostFetch(data);
+        socket.emit("comment-on-bug", {
+          members,
+          auth: auth.username,
+          bug_id
+        })
       });
   }
 
@@ -134,7 +144,7 @@ const PostComment = (props: Props) => {
       <ButtonUI
         isLoading={loading}
         loadingText="Posting"
-        onClick={handlePost}
+        handleClick={handlePost}
         value="Post"
         backgroundColor="cyan.400"
         borderRadius="20px"

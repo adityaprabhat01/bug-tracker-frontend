@@ -14,24 +14,10 @@ const useSocket = () => {
       user_id,
     });
 
-    // socket.emit("check-online-status", {
-    //   socket_id: socket.id,
-    // });
-
     socket.on("success", (payload: any) => {
       console.log(payload);
     });
 
-    // socket.on("online-status", (payload: any) => {
-    //   console.log(payload);
-    //   if (payload.online === false) {
-    //     socket.emit("login", {
-    //       name,
-    //       username,
-    //       user_id,
-    //     });
-    //   }
-    // });
   }, [name, user_id, username]);
 };
 

@@ -11,7 +11,7 @@ interface Props {
   isLoading?: string;
   loadingText?: string;
   onClick?: any;
-  borderRadius?: string
+  borderRadius?: string;
 }
 
 const ButtonUI = (props: Props) => {

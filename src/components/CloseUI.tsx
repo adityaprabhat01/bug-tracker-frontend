@@ -2,27 +2,36 @@ import { Box } from "@chakra-ui/react";
 
 interface Props {
   handleRemove: any;
-  techStack_id: string
+  techStack_id: string;
 }
 
 const CloseUI = (props: Props) => {
   const { handleRemove, techStack_id } = props;
 
-  function handleClick () {
+  function handleClick() {
     handleRemove(techStack_id);
   }
 
   return (
     <>
-      <Box onClick={handleClick} position={"absolute"} top="-1" right={"-0.5"} mb="50">
+      <Box
+        onClick={handleClick}
+        position={"absolute"}
+        top="-1.5"
+        right={"-1"}
+        mb="50"
+        _hover={{
+          cursor: "pointer"
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           x="0px"
           y="0px"
-          width="15"
-          height="15"
+          width="20"
+          height="20"
           viewBox="0 0 172 172"
-          style={{ fill: "#000000" }}
+          style={{fill:"#000000"}}
         >
           <g
             fill="none"
@@ -38,7 +47,7 @@ const CloseUI = (props: Props) => {
             font-weight="none"
             font-size="none"
             text-anchor="none"
-            style={{ mixBlendMode: "normal" }}
+            style={{mixBlendMode: "normal"}}
           >
             <path d="M0,172v-172h172v172z" fill="none"></path>
             <g fill="#e74c3c">

@@ -51,6 +51,7 @@ const AddMember = () => {
 
   const error: string = useSelector(((state: RootStateOrAny) => state.project.error))
   const title: string = useSelector((state: RootStateOrAny) => state.project.project.title)
+  const auth_name = useSelector((state: RootStateOrAny) => state.auth.username);
 
   function handlePreFetch() {
     dispatch(add_member_request());
@@ -82,7 +83,8 @@ const AddMember = () => {
         handlePostFetch(data);
         socket.emit("added-to-project", {
           username,
-          title
+          title,
+          auth: auth_name
         })
       })
       .catch((err) => {

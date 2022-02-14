@@ -5,7 +5,7 @@ const Date = (props: any) => {
   const { dateCreated } = props;
   return (
     <>
-      <Box>
+      <Box color={"#868e9c"}>
         Added&nbsp;
         {
           moment(dateCreated).fromNow()

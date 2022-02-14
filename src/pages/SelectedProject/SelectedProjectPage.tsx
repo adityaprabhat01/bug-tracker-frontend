@@ -74,16 +74,19 @@ const Project = () => {
   return (
     <>
       <Grid templateColumns="repeat(11, 1fr)">
+
         {project.loading === true ? (
           <GridItem colStart={6} colEnd={8}>
-           <Loading /> 
+            <Box marginTop={"300px"}>
+            <Loading />
+            </Box>
+            
           </GridItem>
-          
         ) : (
           <>
-
             <GridItem colStart={3} colEnd={8}>
               <>
+                
                 <Heading>{project.title}</Heading>
                 <About user={project.user} />
                 <Date dateCreated={project.dateCreated} />

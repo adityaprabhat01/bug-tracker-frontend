@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
@@ -58,7 +58,10 @@ const AddBug = () => {
 
   return (
     <>
+      <Box mt={3}>
       <ButtonUI handleClick={onOpen} value={"Add Bug"} />
+      </Box>
+      
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

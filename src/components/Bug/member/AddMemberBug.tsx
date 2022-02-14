@@ -14,6 +14,7 @@ import {
 import { Form, Formik } from "formik";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../../api";
+import { socket } from "../../../socket";
 import {
   add_member_failure,
   add_member_request,
@@ -38,6 +39,7 @@ const AddMemberBug = (props: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const error: string = useSelector((state: RootStateOrAny) => state.bug.bug.members.error);
   const loading: boolean = useSelector((state: RootStateOrAny) => state.bug.bug.members.loading);
+  const auth_name = useSelector((state: RootStateOrAny) => state.auth.username);
 
   const initialValues: InitialValuesInterface = {
     username: "",
@@ -70,6 +72,11 @@ const AddMemberBug = (props: Props) => {
       .then((res) => {
         const { data } = res;
         handlePostFetch(data);
+        socket.emit("added-to-bug", {
+          username,
+          bug_id,
+          auth: auth_name
+        })
       })
       .catch((err) => {
         console.log(err);

@@ -5,8 +5,21 @@ import SignUp from "./pages/Signup/SignUp";
 import ProjectPage from "./pages/Project/ProjectPage";
 import Project from "./pages/SelectedProject/SelectedProjectPage";
 import BugPage from "./pages/Bug/BugPage";
+import { useEffect } from "react";
+import { socket } from "./socket";
 
 function App() {
+
+  useEffect(() => {
+    socket.on("added-to-bug-success", payload => {
+      console.log(payload)
+    })
+
+    socket.on("comment-on-bug-success", payload => {
+      console.log(payload)
+    })
+  }, [])
+
   return (
     <>
       <ChakraProvider>
