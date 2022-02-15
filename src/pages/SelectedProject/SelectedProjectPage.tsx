@@ -73,53 +73,50 @@ const Project = () => {
 
   return (
     <>
-      <Grid templateColumns="repeat(11, 1fr)">
+        <Grid templateColumns="repeat(11, 1fr)">
+          {project.loading === true ? (
+            <GridItem colStart={6} colEnd={8}>
+              <Box marginTop={"300px"}>
+                <Loading />
+              </Box>
+            </GridItem>
+          ) : (
+            <>
+              <GridItem colStart={3} colEnd={8}>
+                <>
+                  <Heading>{project.title}</Heading>
+                  <About user={project.user} />
+                  <Date dateCreated={project.dateCreated} />
+                  <Body
+                    body={project.body}
+                    user={project.user}
+                    techStack={project.techStack}
+                    project_id={project._id}
+                  />
 
-        {project.loading === true ? (
-          <GridItem colStart={6} colEnd={8}>
-            <Box marginTop={"300px"}>
-            <Loading />
-            </Box>
-            
-          </GridItem>
-        ) : (
-          <>
-            <GridItem colStart={3} colEnd={8}>
-              <>
-                
-                <Heading>{project.title}</Heading>
-                <About user={project.user} />
-                <Date dateCreated={project.dateCreated} />
-                <Body
-                  body={project.body}
-                  user={project.user}
-                  techStack={project.techStack}
-                  project_id={project._id}
+                  <AddBug />
+                </>
+              </GridItem>
+
+              <GridItem colStart={9} colEnd={12}>
+                {project.members.map((member: User) => (
+                  <ProjectMember key={member._id} member={member} />
+                ))}
+                <br />
+                <AddMember />
+              </GridItem>
+
+              {project.bugs.map((bug: BugInterface, i: number) => (
+                <BugListItem
+                  key={bug._id}
+                  bug={bug}
+                  colStart={startCol[i % 3]}
+                  colEnd={endCol[i % 3]}
                 />
-
-                <AddBug />
-              </>
-            </GridItem>
-
-            <GridItem colStart={9} colEnd={12}>
-              {project.members.map((member: User) => (
-                <ProjectMember key={member._id} member={member} />
               ))}
-              <br />
-              <AddMember />
-            </GridItem>
-
-            {project.bugs.map((bug: BugInterface, i: number) => (
-              <BugListItem
-                key={bug._id}
-                bug={bug}
-                colStart={startCol[i % 3]}
-                colEnd={endCol[i % 3]}
-              />
-            ))}
-          </>
-        )}
-      </Grid>
+            </>
+          )}
+        </Grid>
     </>
   );
 };

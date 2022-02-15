@@ -34,7 +34,7 @@ const BugListItem = (props: Props) => {
           }}
         >
           <Box
-            border={"2px solid #8e90a482"}
+            border={"2px solid #3f3f4182"}
             borderRadius={"5px"}
             padding={2}
             mt={7}
@@ -44,10 +44,12 @@ const BugListItem = (props: Props) => {
             minH={"auto"}
             minW={"150px"}
             maxW={"320px"}
-            backgroundColor="#bdc2f838"
+            backgroundColor="#ebedf0"
+            color="#495261f0"
             _hover={{
               textDecoration: "none",
-              backgroundColor: "#8892ff38",
+              backgroundColor: "#c2c3c5",
+              color: "#0a1426f0"
             }}
           >
             <Title title={title} />
@@ -75,7 +77,7 @@ const BugListItem = (props: Props) => {
               </Box>
             </Box>
 
-            <Box color={"#495261f0"} mt={2}>
+            <Box mt={2}>
               {body}
             </Box>
           </Box>

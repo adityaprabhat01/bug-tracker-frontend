@@ -17,7 +17,7 @@ const ButtonForm = (props: Props) => {
   const { message } = props
   return (
     <>
-      <Button isLoading={store.loading} loadingText='Submitting' size={"lg"} type="submit">
+      <Button backgroundColor={"#4299e1"} color="#ebf8ff" borderRadius={"full"} isLoading={store.loading} loadingText='Submitting' size={"lg"} type="submit">
         {message}
       </Button>
     </>

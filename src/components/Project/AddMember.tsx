@@ -120,7 +120,6 @@ const AddMember = () => {
                 <ModalBody pb={6}>
 
                   <FormControl mt={4}>
-                    <FormLabel>Username</FormLabel>
                     <InputForm message="Username" name="username" />
                   </FormControl>
 

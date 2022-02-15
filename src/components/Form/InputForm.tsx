@@ -16,7 +16,7 @@ const InputForm = (props: Props) => {
         placeholder={message}
         {...field}
         meta={meta}
-        variant="filled"
+        variant="flushed"
         size={"lg"}
       />
       {meta.touched && meta.error ? (

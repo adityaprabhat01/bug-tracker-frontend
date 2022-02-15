@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Divider, Grid, GridItem, Heading, HStack } from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
@@ -11,7 +11,6 @@ import {
 } from "../../store/bug/bugAction";
 import About from "../../components/About";
 import Loading from "../../components/Loading";
-import Title from "../../components/Title";
 import AddMemberBug from "../../components/Bug/member/AddMemberBug";
 import Body from "../../components/Bug/Body";
 import BugMember from "../../components/Bug/member/BugMember";
@@ -21,20 +20,30 @@ import Label from "../../components/Bug/Label/Label";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import Status from "../../components/Bug/Status";
 import useSocket from "../../hooks/useSocket";
+import { useEffect } from "react";
 
 const BugPage = () => {
-  useAuthCookies();
   const { bug_id } = useParams<{ bug_id?: string }>();
+  useAuthCookies();
+  useSocket();
+  useFetch(
+    {
+      pathname: "/getBug/" + bug_id,
+      method: "GET",
+    },
+    handlePreFetch,
+    handlePostFetch,
+    null
+  );
+  
   const dispatch = useDispatch();
   const loading = useSelector((state: RootStateOrAny) => state.bug.loading);
   const error = useSelector((state: RootStateOrAny) => state.bug.error);
   const bug = useSelector((state: RootStateOrAny) => state.bug.bug);
-  useAuthCookies();
-  useSocket();
+  
   function handlePreFetch() {
     dispatch(bug_fetch_request());
   }
-
   function handlePostFetch(data: any) {
     if ("error" in data || "message" in data) {
       return handleFailure(data);
@@ -45,15 +54,7 @@ const BugPage = () => {
   function handleFailure(data: any) {
     dispatch(bug_fetch_failure(data));
   }
-  useFetch(
-    {
-      pathname: "/getBug/" + bug_id,
-      method: "GET",
-    },
-    handlePreFetch,
-    handlePostFetch,
-    null
-  );
+
   return (
     <>
       <Grid templateColumns="repeat(11, 1fr)" gap={2}>
@@ -62,10 +63,14 @@ const BugPage = () => {
         ) : (
           <>
             <GridItem colStart={3} colEnd={8}>
-              <Title title={bug.title} />
+              <HStack>
+              <Heading>{bug.title}</Heading>
+              <Status isOpen={bug.isOpen} />
+              </HStack>
+              
               <About user={bug.user} />
               <Label />
-              <Status isOpen={bug.isOpen} />
+              
               <Body />
             </GridItem>
 
@@ -76,11 +81,15 @@ const BugPage = () => {
               <AddMemberBug bug_id={bug._id} />
             </GridItem>
 
-            <GridItem colStart={3} colEnd={9}>
+            <GridItem colStart={3} colEnd={9} mt={2}>
               
               {bug.comments.comments.map((comment: CommentInterface) => (
-                <Box mt={3}>
-                  <Comment key={comment._id} comment={comment} />
+                <Box key={comment._id}>
+                  <Comment comment={comment} />
+                  <Box height={"50px"} ml="40px">
+                  <Divider orientation='vertical' borderLeftWidth="2px" borderLeftColor={"#535353"} />
+                  </Box>
+                  
                 </Box>
               ))}
               <PostComment bug_id={bug_id} />

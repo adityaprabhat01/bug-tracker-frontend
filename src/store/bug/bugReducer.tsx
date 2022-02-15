@@ -267,7 +267,7 @@ const bugReducer = (state = initState, action: any) => {
             ...state.bug.labels,
             loading: false,
             error: "",
-            labels: action.payload,
+            labels: action.payload.labels,
           },
         },
       };

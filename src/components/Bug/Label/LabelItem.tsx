@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 interface Props {
   name: string;
@@ -9,17 +9,16 @@ interface Props {
 }
 
 const LabelItem = (props: Props) => {
-  const { name, assigned, _id, selectLabel, index } = props;
+  const { name, assigned, selectLabel, index } = props;
   function handleClick() {
-    selectLabel(index)
-    console.log(index)
+    selectLabel(index);
   }
 
   return (
     <>
-      <Button onClick={handleClick} backgroundColor={"blue.100"} mt="2" key={_id}>
-        {name}
-      </Button>
+      <Box width={"100%"} fontWeight={assigned === true ? "bold" : ""} onClick={handleClick} >
+        {name}        
+      </Box>
     </>
   );
 };

@@ -15,8 +15,15 @@ const Status = (props: Props) => {
     <>
       {isOpen.isOpen === true ? (
         <Box>
-          Status:{" "}
-          <Box as={"span"} color={"green.400"}>
+          <Box
+            ml={4}
+            as={"span"}
+            backgroundColor={"green.100"}
+            color={"green.400"}
+            fontWeight={"bold"}
+            borderRadius={"4px"}
+            padding={1}
+          >
             Open
           </Box>
         </Box>

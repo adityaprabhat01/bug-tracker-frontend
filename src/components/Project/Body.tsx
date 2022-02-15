@@ -73,18 +73,18 @@ const Body = (props: Props) => {
 
   function f() {
     const tx = document.getElementsByTagName("textarea");
-  for (let i = 0; i < tx.length; i++) {
-    tx[i].setAttribute(
-      "style",
-      "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
-    );
-    tx[i].addEventListener("input", OnInput, false);
-  }
+    for (let i = 0; i < tx.length; i++) {
+      tx[i].setAttribute(
+        "style",
+        "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
+      );
+      tx[i].addEventListener("input", OnInput, false);
+    }
 
-  function OnInput(this: any) {
-    this.style.height = "auto";
-    this.style.height = this.scrollHeight + "px";
-  }
+    function OnInput(this: any) {
+      this.style.height = "auto";
+      this.style.height = this.scrollHeight + "px";
+    }
   }
 
   return (
@@ -99,7 +99,7 @@ const Body = (props: Props) => {
               padding="2px"
               variant="flushed"
               onChange={(event) => setValue(event.target.value)}
-              backgroundColor={"#bdc2f838"}
+              backgroundColor={"#ebedf0"}
               onFocus={f}
             />
             <Box mt={3}>
@@ -113,10 +113,17 @@ const Body = (props: Props) => {
       <Box mt={"3"}>
         <TechStack isOpen={isOpen} stack={techStack} />
       </Box>
-      <Box mt={3} width={"30px"} height={"30px"} backgroundColor={"#393838"} borderRadius="4px" _hover={{
-        backgroundColor: "#595959",
-        cursor: "pointer"
-      }}>
+      <Box
+        mt={3}
+        width={"30px"}
+        height={"30px"}
+        backgroundColor={"#393838"}
+        borderRadius="4px"
+        _hover={{
+          backgroundColor: "#595959",
+          cursor: "pointer",
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           x="0px"
@@ -124,24 +131,24 @@ const Body = (props: Props) => {
           width="30"
           height="30"
           viewBox="0 0 172 172"
-          style={{fill:"#000000"}}
+          style={{ fill: "#000000" }}
           onClick={handleOpen}
         >
           <g
             fill="none"
-            fill-rule="nonzero"
+            fillRule="nonzero"
             stroke="none"
-            stroke-width="1"
-            stroke-linecap="butt"
-            stroke-linejoin="miter"
-            stroke-miterlimit="10"
-            stroke-dasharray=""
-            stroke-dashoffset="0"
-            font-family="none"
-            font-weight="none"
-            font-size="none"
-            text-anchor="none"
-            style={{mixBlendMode: "normal"}}
+            strokeWidth="1"
+            strokeLinecap="butt"
+            strokeLinejoin="miter"
+            strokeMiterlimit="10"
+            strokeDasharray=""
+            strokeDashoffset="0"
+            fontFamily="none"
+            fontWeight="none"
+            fontSize="none"
+            textAnchor="none"
+            style={{ mixBlendMode: "normal" }}
           >
             <path d="M0,172v-172h172v172z" fill="none"></path>
             <g fill="#ffffff">

@@ -5,7 +5,8 @@ export interface CommentInterface {
   project_id: string,
   bug_id: string,
   body: string,
-  _id: string
+  _id: string,
+  dateCreated: string
 }
 
 export interface BugInterface {
