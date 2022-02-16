@@ -59,7 +59,11 @@ const BugPage = () => {
     <>
       <Grid templateColumns="repeat(11, 1fr)" gap={2}>
         {loading === true ? (
-          <Loading />
+          <GridItem colStart={6} colEnd={8}>
+          <Box marginTop={"300px"}>
+            <Loading />
+          </Box>
+        </GridItem>
         ) : (
           <>
             <GridItem colStart={3} colEnd={8}>

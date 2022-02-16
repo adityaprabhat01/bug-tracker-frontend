@@ -1,5 +1,5 @@
 import { Box, Button, Textarea } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../../api";
 import { socket } from "../../../socket";
@@ -21,10 +21,13 @@ const PostComment = (props: Props) => {
   const { bug_id } = props;
   const [value, setValue] = useState("");
   const [output, setOutput] = useState(false);
+  const [height, setHeight] = useState("300px");
   const [showMembers, setShowMembers] = useState(false);
   const dispatch = useDispatch();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
-  const members = useSelector((state: RootStateOrAny) => state.project.project.members);
+  const members = useSelector(
+    (state: RootStateOrAny) => state.project.project.members
+  );
   const loading = useSelector(
     (state: RootStateOrAny) => state.bug.bug.comments.loading
   );
@@ -35,10 +38,10 @@ const PostComment = (props: Props) => {
   function handleOnChange(event: any) {
     const val = event.target.value;
     let temp = val.match(MENTION_REGEX);
-    if(temp !== null) {
-      setShowMembers(true)
+    if (temp !== null) {
+      setShowMembers(true);
     } else {
-      setShowMembers(false)
+      setShowMembers(false);
     }
     setValue(val);
   }
@@ -46,10 +49,10 @@ const PostComment = (props: Props) => {
   function handleMention(username: string) {
     let x = value;
     let temp = value.match(MENTION_REGEX);
-    if(temp !== null) {
+    if (temp !== null) {
       const str = temp[0].slice(1, temp[0].length);
       x = x.replace(str, username);
-      setValue(x)
+      setValue(x);
     }
   }
 
@@ -94,61 +97,103 @@ const PostComment = (props: Props) => {
         socket.emit("comment-on-bug", {
           members,
           auth: auth.username,
-          bug_id
-        })
+          bug_id,
+        });
       });
   }
 
-  const tx = document.getElementsByTagName("textarea");
-  for (let i = 0; i < tx.length; i++) {
-    tx[i].setAttribute(
-      "style",
-      "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
-    );
-    tx[i].addEventListener("input", OnInput, false);
-  }
+  
 
-  function OnInput(this: any) {
-    this.style.height = "auto";
-    this.style.height = this.scrollHeight + "px";
+  function increaseHeight() {
+    function OnInput(this: any) {
+      this.style.height = "auto";
+      this.style.height = this.scrollHeight + "px";
+    }
+  
+    const tx = document.getElementsByTagName("textarea");
+    for (let i = 0; i < tx.length; i++) {
+      tx[i].setAttribute(
+        "style",
+        "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
+      );
+      tx[i].addEventListener("input", OnInput, false);
+    }
   }
 
   return (
     <>
       <>
-        <Box border={"2px solid #4299E1"} height="auto" minHeight={"300px"}>
-          <Button onClick={() => setOutput(false)}>Editor</Button>
-          <Button onClick={() => setOutput(true)}>Markdown</Button>
-          {output === false ? (
-            <span>
-              <Textarea
-                id="comment-textarea"
-                value={value}
-                height={"auto"}
-                minHeight={"300px"}
-                overflow="hidden"
-                resize={"vertical"}
-                onChange={handleOnChange}
-              />
-              {
-                showMembers === true ?
-                members.map((member: any) => <MentionItem key={member._id} member={member} handleMention={handleMention} />) : null
-              }
-            </span>
-          ) : (
-            <Editor text={value} />
-          )}
+        <Box
+          border={"2px solid #717475"}
+          borderRadius={"5px"}
+          height="auto"
+          minHeight={"300px"}
+          mb={4}
+        >
+          <Box padding={2}>
+            <Button
+              backgroundColor={output === false ? "#c5ffff" : ""}
+              variant="ghost"
+              onClick={() => setOutput(false)}
+              _hover={{
+                backgroundColor: "",
+              }}
+            >
+              Editor
+            </Button>
+            <Button
+              backgroundColor={output === true ? "#c5ffff" : ""}
+              variant="ghost"
+              ml={3}
+              onClick={() => setOutput(true)}
+              _hover={{
+                backgroundColor: "",
+              }}
+            >
+              Markdown
+            </Button>
+            {output === false ? (
+              <span>
+                <Textarea
+                  id="comment-textarea"
+                  value={value}
+                  height={"auto"}
+                  minHeight={"300px"}
+                  resize={"vertical"}
+                  onChange={handleOnChange}
+                  onFocus={increaseHeight}
+                  backgroundColor={"#ebedf0"}
+                  maxHeight="auto"
+                  mt={2}
+                />
+                {showMembers === true
+                  ? members.map((member: any) => (
+                      <MentionItem
+                        key={member._id}
+                        member={member}
+                        handleMention={handleMention}
+                      />
+                    ))
+                  : null}
+              </span>
+            ) : (
+              <Box>
+                <Editor text={value} />
+              </Box>
+            )}
+          </Box>
+          <Box padding={2}>
+            <ButtonUI
+              isLoading={loading}
+              loadingText="Posting"
+              handleClick={handlePost}
+              value="Post"
+              backgroundColor="cyan.400"
+              borderRadius="20px"
+            />
+          </Box>
         </Box>
       </>
-
-      <ButtonUI
-        isLoading={loading}
-        loadingText="Posting"
-        handleClick={handlePost}
-        value="Post"
-        backgroundColor="cyan.400"
-        borderRadius="20px"
-      />
     </>
   );
 };

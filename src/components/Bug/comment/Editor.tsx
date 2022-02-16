@@ -25,7 +25,7 @@ const Editor = (props: Props) => {
   const [value, setValue] = useState(text)
   return (
     <>
-      <Box minHeight={"300px"} padding={10}>
+      <Box minHeight={"300px"} padding={4}>
       <ReactMarkdown children={value} />
       </Box>
       

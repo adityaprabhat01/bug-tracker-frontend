@@ -19,26 +19,23 @@ const Comment = (props: Props) => {
   return (
     <>
       <Box border={"2px solid #c7d0d8"} borderRadius={"5px"}>
-        
         <Box padding={2}>
-        <HStack>
-        <Wrap>
-            <WrapItem>
-              <Avatar
-                size="sm"
-                name={user.name}
-              />{" "}
-            </WrapItem>
-          </Wrap>
-          <Box fontWeight={"bold"} color={"#868e9c"}>
-            {user.username}
-          </Box>
+          <HStack>
+            <Wrap>
+              <WrapItem>
+                <Avatar size="sm" name={user.name} />{" "}
+              </WrapItem>
+            </Wrap>
+            <Box fontWeight={"bold"} color={"#868e9c"}>
+              {user.username}
+            </Box>
           </HStack>
           <Box mt={1}>
-          <Date dateCreated={dateCreated} />
+            <Date dateCreated={dateCreated} />
           </Box>
-          
-          <ReactMarkdown children={body} />
+          <Box>
+            <ReactMarkdown children={body} />
+          </Box>
         </Box>
       </Box>
     </>

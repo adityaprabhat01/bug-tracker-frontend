@@ -7,6 +7,7 @@ import Project from "./pages/SelectedProject/SelectedProjectPage";
 import BugPage from "./pages/Bug/BugPage";
 import { useEffect } from "react";
 import { socket } from "./socket";
+import NotificationPage from "./pages/Notification/NotificationPage";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/projects" element={<ProjectPage />} />
             <Route path="/project/:project_id" element={<Project />} />
             <Route path="/bug/:bug_id" element={<BugPage />} />
+            <Route path="/notification/:user_id" element={<NotificationPage />} />
           </Routes>
         </BrowserRouter>
       </ChakraProvider>
