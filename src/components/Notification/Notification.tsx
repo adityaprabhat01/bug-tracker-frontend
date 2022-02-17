@@ -1,8 +1,8 @@
-import { Box } from "@chakra-ui/react";
+import { Avatar, Box, HStack, Wrap, WrapItem } from "@chakra-ui/react";
 import { NotificationItemInterface } from "../../interface/notificationInterface";
 
 interface Props {
-  notification: NotificationItemInterface
+  notification: NotificationItemInterface;
 }
 
 const Notification = (props: Props) => {
@@ -10,9 +10,16 @@ const Notification = (props: Props) => {
   return (
     <>
       <Box backgroundColor={"gray.300"} borderRadius={"4px"} mt={2}>
-        <Box>
-          {notification.message}
-        </Box>
+        <HStack>
+          <Box>
+            <Wrap>
+              <WrapItem>
+                <Avatar size="sm" name={notification.payload.auth} />{" "}
+              </WrapItem>
+            </Wrap>
+          </Box>
+          <Box as={"span"}>{notification.message}</Box>
+        </HStack>
       </Box>
     </>
   );

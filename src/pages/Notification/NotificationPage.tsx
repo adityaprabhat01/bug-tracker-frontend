@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Notification from "../../components/Notification/Notification";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import useFetch from "../../hooks/useFetch";
 import { NotificationItemInterface } from "../../interface/notificationInterface";
+import { checkOnlineStatus } from "../../socket";
 import {
   fetch_notification_failure,
   fetch_notification_request,
@@ -18,6 +20,12 @@ const NotificationPage = () => {
 
   const { user_id } = useParams<{ user_id?: string }>();
 
+  const auth = useSelector((state: RootStateOrAny) => state.auth);
+  
+  useEffect(() => {
+    checkOnlineStatus(auth)
+  }, [auth]);
+
   function handlePreFetch() {
     dispatch(fetch_notification_request());
   }
@@ -31,7 +39,6 @@ const NotificationPage = () => {
   function handleFailure(data: any) {
     dispatch(fetch_notification_failure(data));
   }
-  console.log(user_id);
   useFetch(
     {
       pathname: "/getNotification/" + user_id,
@@ -44,7 +51,7 @@ const NotificationPage = () => {
   return (
     <>
       {
-        notification.notifications.map((notification: NotificationItemInterface) => <Notification notification={notification} />)
+        notification.notifications.map((notification: NotificationItemInterface) => <Notification key={notification._id} notification={notification} />)
       }
     </>
   );

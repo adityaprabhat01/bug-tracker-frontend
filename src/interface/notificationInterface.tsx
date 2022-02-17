@@ -1,9 +1,11 @@
 export interface NotificationItemInterface {
+  _id: string,
   socket_id: string,
   message: string,
   payload: {
     username: string,
-    title: string
+    title: string,
+    auth?: string
   }
 }
 

@@ -75,7 +75,8 @@ const AddMemberBug = (props: Props) => {
         socket.emit("added-to-bug", {
           username,
           bug_id,
-          auth: auth_name
+          auth: auth_name,
+          title: bug_id
         })
       })
       .catch((err) => {

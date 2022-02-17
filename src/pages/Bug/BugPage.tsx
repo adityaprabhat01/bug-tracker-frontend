@@ -19,13 +19,12 @@ import PostComment from "../../components/Bug/comment/PostComment";
 import Label from "../../components/Bug/Label/Label";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import Status from "../../components/Bug/Status";
-import useSocket from "../../hooks/useSocket";
+import { checkOnlineStatus } from "../../socket";
 import { useEffect } from "react";
 
 const BugPage = () => {
   const { bug_id } = useParams<{ bug_id?: string }>();
   useAuthCookies();
-  useSocket();
   useFetch(
     {
       pathname: "/getBug/" + bug_id,
@@ -40,6 +39,11 @@ const BugPage = () => {
   const loading = useSelector((state: RootStateOrAny) => state.bug.loading);
   const error = useSelector((state: RootStateOrAny) => state.bug.error);
   const bug = useSelector((state: RootStateOrAny) => state.bug.bug);
+  const auth = useSelector((state: RootStateOrAny) => state.auth);
+
+  useEffect(() => {
+    checkOnlineStatus(auth);
+  }, [auth]);
   
   function handlePreFetch() {
     dispatch(bug_fetch_request());

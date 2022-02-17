@@ -13,6 +13,7 @@ import { url } from "../../url";
 import ButtonForm from "../../components/Form/ButtonForm";
 import Error from "../../components/Form/Error";
 import InputForm from "../../components/Form/InputForm";
+import { asyncEmit } from "../../socket";
 
 interface InitialValuesInterface {
   username: string;
@@ -61,7 +62,15 @@ const Login: React.FC = () => {
           return dispatch(login_failure(data));
         }
         dispatch(login_success(data));
-        navigate("/projects")
+        (async function () {
+          const a = await asyncEmit("login", "success", {
+            name: data.name,
+            username: data.username,
+            user_id: data.user_id,
+          });
+          console.log(a);
+          navigate("/projects");
+        })();
       })
       .catch((err) => {
         dispatch(

@@ -19,6 +19,14 @@ function App() {
     socket.on("comment-on-bug-success", payload => {
       console.log(payload)
     })
+
+    socket.on("check-redis-success", payload => {
+      console.log(payload)
+    })
+
+    socket.on("check-redis-failure", payload => {
+      console.log(payload)
+    })
   }, [])
 
   return (

@@ -20,17 +20,24 @@ import {
 } from "../../store/selectProject.tsx/selectProjectAction";
 import { isObjectEmpty } from "../../utils";
 import Date from "../../components/Date";
-import useSocket from "../../hooks/useSocket";
 import useAuthCookies from "../../hooks/useAuthCookies";
+import { checkOnlineStatus } from "../../socket";
+import { useEffect } from "react";
 
 const startCol = [3, 6, 9];
 const endCol = [6, 9, 12];
 
 const Project = () => {
+  useAuthCookies();
   const { project_id } = useParams<{ project_id?: string }>();
   const dispatch = useDispatch();
-  useAuthCookies();
-  useSocket();
+
+  const auth = useSelector((state: RootStateOrAny) => state.auth);
+  
+  useEffect(() => {
+    checkOnlineStatus(auth)
+  }, [auth]);
+  
   function handleSelector(state: selectProjectInitStateInterface) {
     if (isObjectEmpty(state)) return;
     const { project, loading, error } = state;
