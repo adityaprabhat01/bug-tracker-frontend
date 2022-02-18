@@ -1,7 +1,6 @@
 import {
   Box,
   FormControl,
-  FormLabel,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,7 +13,7 @@ import {
 import { Form, Formik } from "formik";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
-import { ProjectInterface, selectProjectInitStateInterface } from "../../interface/projectInterface";
+import { ProjectInterface } from "../../interface/projectInterface";
 import {
   add_member_failure,
   add_member_request,
@@ -25,7 +24,6 @@ import ButtonForm from "../Form/ButtonForm";
 import Error from "../Form/Error";
 import InputForm from "../Form/InputForm";
 import { socket } from "../../socket";
-import { useEffect } from "react";
 
 interface InitialValuesInterface {
   user_id: string;
@@ -93,12 +91,6 @@ const AddMember = () => {
         })
       });
   }
-
-  useEffect(() => {
-    socket.on("added-to-project-success", (payload) => {
-      console.log(payload)
-    })
-  }, [])
 
   return (
     <>

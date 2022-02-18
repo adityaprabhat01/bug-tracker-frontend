@@ -8,38 +8,44 @@ import BugPage from "./pages/Bug/BugPage";
 import { useEffect } from "react";
 import { socket } from "./socket";
 import NotificationPage from "./pages/Notification/NotificationPage";
+import { useDispatch } from "react-redux";
+import { receive_notification } from "./store/notification/notificationAction";
+import NotificationBadge from "./components/Notification/NotificationBadge";
 
 function App() {
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    socket.on("added-to-bug-success", payload => {
-      console.log(payload)
-    })
+    socket.on("added-to-bug-success", (payload) => {
+      console.log(payload);
+    });
 
-    socket.on("comment-on-bug-success", payload => {
-      console.log(payload)
-    })
+    socket.on("comment-on-bug-success", (payload) => {
+      console.log(payload);
+      dispatch(receive_notification(payload.count));
+    });
 
-    socket.on("check-redis-success", payload => {
-      console.log(payload)
-    })
-
-    socket.on("check-redis-failure", payload => {
-      console.log(payload)
-    })
-  }, [])
+    socket.on("added-to-project-success", (payload) => {
+      console.log(payload);
+      dispatch(receive_notification(payload.count));
+    });
+  }, [dispatch]);
 
   return (
     <>
       <ChakraProvider>
         <BrowserRouter>
+          <NotificationBadge />
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/projects" element={<ProjectPage />} />
             <Route path="/project/:project_id" element={<Project />} />
             <Route path="/bug/:bug_id" element={<BugPage />} />
-            <Route path="/notification/:user_id" element={<NotificationPage />} />
+            <Route
+              path="/notification/:user_id"
+              element={<NotificationPage />}
+            />
           </Routes>
         </BrowserRouter>
       </ChakraProvider>

@@ -96,7 +96,7 @@ const PostComment = (props: Props) => {
         handlePostFetch(data);
         socket.emit("comment-on-bug", {
           members,
-          auth: auth.username,
+          auth: auth.user_id,
           bug_id,
         });
       });

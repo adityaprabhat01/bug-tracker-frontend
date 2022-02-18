@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Divider,
   Grid,
@@ -12,6 +13,7 @@ import { BugInterface } from "../../interface/projectInterface";
 import About from "../About";
 import Date from "../Date";
 import Title from "../Title";
+import Status from "./Status";
 
 interface Props {
   bug: BugInterface;
@@ -49,24 +51,22 @@ const BugListItem = (props: Props) => {
             _hover={{
               textDecoration: "none",
               backgroundColor: "#c2c3c5",
-              color: "#0a1426f0"
+              color: "#0a1426f0",
             }}
           >
             <Title title={title} />
             {isOpen === true ? (
-              <Box
-                fontWeight="17px"
-                borderRadius={"full"}
-                backgroundColor={"#acf9ac"}
-                color={"#049204"}
-                padding={"6px"}
-                mt={2}
-                width={"55px"}
-              >
-                Open
-              </Box>
+              <>
+                <Badge variant="subtle" colorScheme="green">
+                  Open
+                </Badge>
+              </>
             ) : (
-              <Box>Closed</Box>
+              <>
+                <Badge variant="subtle" colorScheme="red">
+                  Closed
+                </Badge>
+              </>
             )}
 
             <Divider mt={1} />
@@ -77,9 +77,7 @@ const BugListItem = (props: Props) => {
               </Box>
             </Box>
 
-            <Box mt={2}>
-              {body}
-            </Box>
+            <Box mt={2}>{body}</Box>
           </Box>
         </Link>
       </GridItem>

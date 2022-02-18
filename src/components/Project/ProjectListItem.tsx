@@ -17,7 +17,6 @@ const ProjectListItem = (props: any) => {
           <Date dateCreated={dateCreated} />
         </HStack>
         <Box>{body}</Box>
-        {/* <TechStack stack={techStack} handleUpdate={null} /> */}
       </Box>
     </>
   );
