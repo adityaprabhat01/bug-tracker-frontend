@@ -6,7 +6,7 @@ import ProjectListItem from "../../components/Project/ProjectListItem";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import useFetch from "../../hooks/useFetch";
 import { ProjectInterface } from "../../interface/projectInterface";
-import { asyncEmit, checkOnlineStatus } from "../../socket";
+import { checkOnlineStatus } from "../../socket";
 import {
   fetch_project_request,
   fetch_project_sucess,
@@ -14,7 +14,7 @@ import {
 
 const ProjectPage = () => {
   useAuthCookies();
-
+  console.log("hello")
   const auth = useSelector((state: RootStateOrAny) => state.auth);
   const dispatch = useDispatch();
   const store = useSelector(handleSelectors);

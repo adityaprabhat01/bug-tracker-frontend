@@ -87,11 +87,12 @@ const authReducer = (state = initState, action: any) => {
       };
     }
     case UPDATE_AUTH_FROM_COOKIES: {
-      const { user_id, username } = action.payload;
+      const { user_id, username, name } = action.payload;
       return {
         ...state,
         user_id,
-        username
+        username,
+        name
       }
     }
     default:

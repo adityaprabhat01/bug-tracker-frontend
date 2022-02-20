@@ -11,6 +11,7 @@ import NotificationPage from "./pages/Notification/NotificationPage";
 import { useDispatch } from "react-redux";
 import { receive_notification } from "./store/notification/notificationAction";
 import NotificationBadge from "./components/Notification/NotificationBadge";
+import UserPage from "./pages/User/UserPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,11 +42,12 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/projects" element={<ProjectPage />} />
             <Route path="/project/:project_id" element={<Project />} />
-            <Route path="/bug/:bug_id" element={<BugPage />} />
+            <Route path="/project/:project_id/bug/:bug_id" element={<BugPage />} />
             <Route
               path="/notification/:user_id"
               element={<NotificationPage />}
             />
+            <Route path="/user/:username" element={<UserPage />} />
           </Routes>
         </BrowserRouter>
       </ChakraProvider>

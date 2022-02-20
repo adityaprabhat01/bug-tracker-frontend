@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading, HStack, Wrap } from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import AddBug from "../../components/Bug/AddBug";
@@ -7,7 +7,7 @@ import About from "../../components/About";
 import Loading from "../../components/Loading";
 import AddMember from "../../components/Project/AddMember";
 import Body from "../../components/Project/Body";
-import ProjectMember from "../../components/Project/ProjectMembers";
+import Member from "../../components/Project/Member";
 import useFetch from "../../hooks/useFetch";
 import {
   BugInterface,
@@ -23,6 +23,8 @@ import Date from "../../components/Date";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import { checkOnlineStatus } from "../../socket";
 import { useEffect } from "react";
+import ProjectMenu from "../../components/Project/ProjectMenu";
+import MemberList from "../../components/MemberList";
 
 const startCol = [3, 6, 9];
 const endCol = [6, 9, 12];
@@ -33,11 +35,11 @@ const Project = () => {
   const dispatch = useDispatch();
 
   const auth = useSelector((state: RootStateOrAny) => state.auth);
-  
+
   useEffect(() => {
-    checkOnlineStatus(auth)
+    checkOnlineStatus(auth);
   }, [auth]);
-  
+
   function handleSelector(state: selectProjectInitStateInterface) {
     if (isObjectEmpty(state)) return;
     const { project, loading, error } = state;
@@ -80,50 +82,60 @@ const Project = () => {
 
   return (
     <>
-        <Grid templateColumns="repeat(11, 1fr)">
-          {project.loading === true ? (
-            <GridItem colStart={6} colEnd={8}>
-              <Box marginTop={"300px"}>
-                <Loading />
-              </Box>
-            </GridItem>
-          ) : (
-            <>
-              <GridItem colStart={3} colEnd={8}>
-                <>
-                  <Heading>{project.title}</Heading>
-                  <About user={project.user} />
-                  <Date dateCreated={project.dateCreated} />
-                  <Body
-                    body={project.body}
-                    user={project.user}
-                    techStack={project.techStack}
-                    project_id={project._id}
-                  />
-
-                  <AddBug />
-                </>
-              </GridItem>
-
-              <GridItem colStart={9} colEnd={12}>
-                {project.members.map((member: User) => (
-                  <ProjectMember key={member._id} member={member} />
-                ))}
-                <br />
-                <AddMember />
-              </GridItem>
-
-              {project.bugs.map((bug: BugInterface, i: number) => (
-                <BugListItem
-                  key={bug._id}
-                  bug={bug}
-                  colStart={startCol[i % 3]}
-                  colEnd={endCol[i % 3]}
+      <Grid templateColumns="repeat(11, 1fr)">
+        {project.loading === true ? (
+          <GridItem colStart={6} colEnd={8}>
+            <Box marginTop={"300px"}>
+              <Loading />
+            </Box>
+          </GridItem>
+        ) : (
+          <>
+            <GridItem colStart={3} colEnd={8}>
+              <>
+                <HStack>
+                <Heading>{project.title}</Heading>
+                <ProjectMenu>
+                  <MemberList />
+                  <MemberList />
+                </ProjectMenu>
+                </HStack>
+                
+                <About user={project.user} />
+                <Date dateCreated={project.dateCreated} />
+                <Body
+                  body={project.body}
+                  user={project.user}
+                  techStack={project.techStack}
+                  project_id={project._id}
                 />
-              ))}
-            </>
-          )}
-        </Grid>
+                
+                <AddBug />
+              </>
+            </GridItem>
+
+            <GridItem colStart={9} colEnd={12}>
+              <Wrap>
+                {project.members.map((member: User) => (
+                  <Member key={member._id} member={member} />
+                ))}
+              </Wrap>
+
+              <br />
+              <AddMember />
+            </GridItem>
+
+            {project.bugs.map((bug: BugInterface, i: number) => (
+              <BugListItem
+                key={bug._id}
+                bug={bug}
+                colStart={startCol[i % 3]}
+                colEnd={endCol[i % 3]}
+              />
+            ))}
+          </>
+        )}
+      </Grid>
     </>
   );
 };

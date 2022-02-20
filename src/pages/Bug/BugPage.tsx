@@ -1,4 +1,12 @@
-import { Box, Divider, Grid, GridItem, Heading, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Grid,
+  GridItem,
+  Heading,
+  HStack,
+  Wrap,
+} from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
@@ -21,6 +29,15 @@ import useAuthCookies from "../../hooks/useAuthCookies";
 import Status from "../../components/Bug/Status";
 import { checkOnlineStatus } from "../../socket";
 import { useEffect } from "react";
+import {
+  fetch_select_project_request,
+  fetch_select_project_success,
+} from "../../store/selectProject.tsx/selectProjectAction";
+import Member from "../../components/Project/Member";
+import CloseBug from "../../components/Bug/CloseBug";
+import BugMenu from "../../components/Bug/BugMenu";
+import AddLabel from "../../components/Bug/Label/AddLabel";
+import MemberList from "../../components/MemberList";
 
 const BugPage = () => {
   const { bug_id } = useParams<{ bug_id?: string }>();
@@ -34,7 +51,7 @@ const BugPage = () => {
     handlePostFetch,
     null
   );
-  
+
   const dispatch = useDispatch();
   const loading = useSelector((state: RootStateOrAny) => state.bug.loading);
   const error = useSelector((state: RootStateOrAny) => state.bug.error);
@@ -44,7 +61,7 @@ const BugPage = () => {
   useEffect(() => {
     checkOnlineStatus(auth);
   }, [auth]);
-  
+
   function handlePreFetch() {
     dispatch(bug_fetch_request());
   }
@@ -64,40 +81,50 @@ const BugPage = () => {
       <Grid templateColumns="repeat(11, 1fr)" gap={2}>
         {loading === true ? (
           <GridItem colStart={6} colEnd={8}>
-          <Box marginTop={"300px"}>
-            <Loading />
-          </Box>
-        </GridItem>
+            <Box marginTop={"300px"}>
+              <Loading />
+            </Box>
+          </GridItem>
         ) : (
           <>
             <GridItem colStart={3} colEnd={8}>
               <HStack>
-              <Heading>{bug.title}</Heading>
-              <Status isOpen={bug.isOpen} />
+                <Heading>{bug.title}</Heading>
+                <Status isOpen={bug.isOpen} />
+                <BugMenu>
+                  <CloseBug bug_id={bug_id} isOpen={bug.isOpen} />
+                  <AddLabel labels={bug.labels} />
+                  <MemberList />
+                </BugMenu>
               </HStack>
-              
+
               <About user={bug.user} />
               <Label />
-              
+
               <Body />
             </GridItem>
 
             <GridItem colStart={9} colEnd={12}>
-              {bug.members.members.map((member: User) => (
-                <BugMember key={member._id} member={member} />
-              ))}
+              <Wrap>
+                {bug.members.members.map((member: User) => (
+                  <Member key={member._id} member={member} />
+                ))}
+              </Wrap>
+
               <AddMemberBug bug_id={bug._id} />
             </GridItem>
 
             <GridItem colStart={3} colEnd={9} mt={2}>
-              
               {bug.comments.comments.map((comment: CommentInterface) => (
                 <Box key={comment._id}>
                   <Comment comment={comment} />
                   <Box height={"50px"} ml="40px">
-                  <Divider orientation='vertical' borderLeftWidth="2px" borderLeftColor={"#535353"} />
+                    <Divider
+                      orientation="vertical"
+                      borderLeftWidth="2px"
+                      borderLeftColor={"#535353"}
+                    />
                   </Box>
-                  
                 </Box>
               ))}
               <PostComment bug_id={bug_id} />

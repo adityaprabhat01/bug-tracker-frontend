@@ -29,8 +29,15 @@ const Status = (props: Props) => {
         </Box>
       ) : (
         <Box>
-          Status:{" "}
-          <Box as={"span"} color={"red.400"}>
+          <Box
+            ml={4}
+            as={"span"}
+            backgroundColor={"red.100"}
+            color={"red.400"}
+            fontWeight={"bold"}
+            borderRadius={"4px"}
+            padding={1}
+          >
             Closed
           </Box>
         </Box>

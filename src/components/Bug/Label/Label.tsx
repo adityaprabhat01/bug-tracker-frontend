@@ -13,7 +13,7 @@ const Label = () => {
               <Badge
                 variant="subtle"
                 borderRadius={"full"}
-                colorScheme="green"
+                colorScheme={label.color}
                 padding={"6px"}
                 mt={2}
               >
@@ -22,7 +22,6 @@ const Label = () => {
             ) : null}
           </Box>
         ))}
-        <AddLabel labels={labels} />
       </HStack>
     </>
   );

@@ -1,6 +1,7 @@
-import { Box, Button, Textarea } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Box, Button, Link, Textarea } from "@chakra-ui/react";
+import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { api } from "../../../api";
 import { socket } from "../../../socket";
 import {
@@ -21,8 +22,9 @@ const PostComment = (props: Props) => {
   const { bug_id } = props;
   const [value, setValue] = useState("");
   const [output, setOutput] = useState(false);
-  const [height, setHeight] = useState("300px");
   const [showMembers, setShowMembers] = useState(false);
+  const params = useParams<{project_id: string}>();
+
   const dispatch = useDispatch();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
   const members = useSelector(
@@ -51,19 +53,14 @@ const PostComment = (props: Props) => {
     let temp = value.match(MENTION_REGEX);
     if (temp !== null) {
       const str = temp[0].slice(1, temp[0].length);
-      x = x.replace(str, username);
+      const y = `[${username}](${"http://localhost:3000"}/user/${username})`
+      x = x.replace(str, y);
       setValue(x);
     }
   }
 
-  function getMentions() {
-    let temp = value.match(MENTION_REGEX);
-    console.log(temp);
-  }
-
   function handlePreFetch() {
     dispatch(post_bug_comment_request());
-    getMentions();
   }
 
   function handlePostFetch(data: any) {
@@ -89,7 +86,7 @@ const PostComment = (props: Props) => {
           user_id: auth.user_id,
           username: auth.username,
         },
-        project_id,
+        project_id: params.project_id,
       })
       .then((res) => {
         const { data } = res;
@@ -102,14 +99,12 @@ const PostComment = (props: Props) => {
       });
   }
 
-  
-
   function increaseHeight() {
     function OnInput(this: any) {
       this.style.height = "auto";
       this.style.height = this.scrollHeight + "px";
     }
-  
+
     const tx = document.getElementsByTagName("textarea");
     for (let i = 0; i < tx.length; i++) {
       tx[i].setAttribute(

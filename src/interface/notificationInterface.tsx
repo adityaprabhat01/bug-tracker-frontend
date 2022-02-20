@@ -6,7 +6,8 @@ export interface NotificationItemInterface {
     username: string,
     title: string,
     auth?: string
-  }
+  },
+  seen: boolean
 }
 
 export interface NotificationInterface {

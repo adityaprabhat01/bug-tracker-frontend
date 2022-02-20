@@ -2,6 +2,9 @@ import {
   FETCH_NOTIFICATION_FAILURE,
   FETCH_NOTIFICATION_REQUEST,
   FETCH_NOTIFICATION_SUCCESS,
+  MARK_AS_READ_FAILURE,
+  MARK_AS_READ_REQUEST,
+  MARK_AS_READ_SUCCESS,
   RECEIVE_NOTIFICATION_COUNT,
 } from "./notificationType";
 
@@ -16,6 +19,11 @@ const initState = {
   },
   loading: false,
   error: "",
+  seen: {
+    seen: false,
+    loading: false,
+    error: "",
+  },
 };
 
 const notificationReducer = (state = initState, action: any) => {
@@ -48,9 +56,44 @@ const notificationReducer = (state = initState, action: any) => {
         ...state,
         notification: {
           ...state.notification,
-          count: state.notification.count + 1
-        }
-      }
+          count: state.notification.count + 1,
+        },
+      };
+    }
+    case MARK_AS_READ_REQUEST: {
+      return {
+        ...state,
+        seen: {
+          ...state.seen,
+          loading: true,
+          error: "",
+        },
+      };
+    }
+    case MARK_AS_READ_SUCCESS: {
+      return {
+        ...state,
+        notification: {
+          ...state.notification,
+          notifications: state.notification.notifications.map((item: any, i) =>
+            item._id === action.payload.notification_id
+              ? { ...item, seen: true }
+              : item
+          ),
+        },
+      };
+    }
+    case MARK_AS_READ_FAILURE: {
+      const { error, message } = action.payload;
+      return {
+        ...state,
+        seen: {
+          ...state.seen,
+          seen: action.payload.read,
+          loading: false,
+          error: error === undefined ? message : error,
+        },
+      };
     }
     default:
       return state;

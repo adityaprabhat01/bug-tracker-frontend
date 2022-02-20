@@ -14,6 +14,9 @@ import {
   UPDATE_BUG_BODY_FAILURE,
   UPDATE_BUG_BODY_REQUEST,
   UPDATE_BUG_BODY_SUCCESS,
+  DELETE_COMMENT_SUCCESS,
+  CLOSE_BUG_REQUEST,
+  CLOSE_BUG_SUCCESS,
 } from "./bugType";
 
 const initState = {
@@ -285,6 +288,32 @@ const bugReducer = (state = initState, action: any) => {
           },
         },
       };
+    }
+    case DELETE_COMMENT_SUCCESS: {
+      return {
+        ...state,
+        bug: {
+          ...state.bug,
+          comments: {
+            ...state.bug.comments,
+            comments: state.bug.comments.comments.filter(
+              (comment: any) => comment._id !== action.payload
+            ),
+          },
+        },
+      };
+    }
+    case CLOSE_BUG_SUCCESS: {
+      return {
+        ...state,
+        bug: {
+          ...state.bug,
+          isOpen: {
+            ...state.bug.isOpen,
+            isOpen: action.payload.isOpen
+          }
+        }
+      }
     }
     default:
       return state;

@@ -23,13 +23,13 @@ interface Props {
 
 const BugListItem = (props: Props) => {
   const { bug, colStart, colEnd } = props;
-  const { title, body, date_opened, _id, user, isOpen } = bug;
+  const { title, body, date_opened, _id, user, isOpen, project_id } = bug;
   return (
     <>
       <GridItem colStart={colStart} colEnd={colEnd}>
         <Link
           as={NavLink}
-          to={"/bug/" + _id}
+          to={"/project/" + project_id + "/bug/" + _id}
           _hover={{
             textDecoration: "none",
             backgroundColor: "#8892ff38",

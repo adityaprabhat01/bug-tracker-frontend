@@ -14,6 +14,12 @@ import {
   UPDATE_BUG_BODY_FAILURE,
   UPDATE_BUG_BODY_REQUEST,
   UPDATE_BUG_BODY_SUCCESS,
+  DELETE_COMMENT_REQUEST,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_FAILURE,
+  CLOSE_BUG_REQUEST,
+  CLOSE_BUG_SUCCESS,
+  CLOSE_BUG_FAILURE,
 } from "./bugType";
 
 export const bug_fetch_request = () => {
@@ -112,6 +118,46 @@ export const update_label_success = (data: any) => {
 export const update_label_failure = (data: { error: string, message: string }) => {
   return {
     type: UPDATE_LABEL_FAILURE,
+    payload: data
+  }
+}
+
+export const delete_comment_request = () => {
+  return {
+    type: DELETE_COMMENT_REQUEST
+  }
+}
+
+export const delete_comment_success = (data: any) => {
+  return {
+    type: DELETE_COMMENT_SUCCESS,
+    payload: data
+  }
+}
+
+export const delete_comment_failure = (data: { error: string, message: string }) => {
+  return {
+    type: DELETE_COMMENT_FAILURE,
+    payload: data
+  }
+}
+
+export const close_bug_request = () => {
+  return {
+    type: CLOSE_BUG_REQUEST
+  }
+}
+
+export const close_bug_success = (data: any) => {
+  return {
+    type: CLOSE_BUG_SUCCESS,
+    payload: data
+  }
+}
+
+export const close_bug_failure = (data: { error: string, message: string }) => {
+  return {
+    type: CLOSE_BUG_FAILURE,
     payload: data
   }
 }
