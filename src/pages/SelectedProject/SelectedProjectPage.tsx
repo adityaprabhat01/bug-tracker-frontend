@@ -22,9 +22,10 @@ import { isObjectEmpty } from "../../utils";
 import Date from "../../components/Date";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import { checkOnlineStatus } from "../../socket";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ProjectMenu from "../../components/Project/ProjectMenu";
 import MemberList from "../../components/MemberList";
+import TechStack from "../../components/Project/TechStack";
 
 const startCol = [3, 6, 9];
 const endCol = [6, 9, 12];
@@ -123,6 +124,9 @@ const Project = () => {
 
               <br />
               <AddMember />
+              <Box mt={"3"}>
+        <TechStack stack={project.techStack} />
+      </Box>
             </GridItem>
 
             {project.bugs.map((bug: BugInterface, i: number) => (

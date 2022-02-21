@@ -27,14 +27,7 @@ const BugListItem = (props: Props) => {
   return (
     <>
       <GridItem colStart={colStart} colEnd={colEnd}>
-        <Link
-          as={NavLink}
-          to={"/project/" + project_id + "/bug/" + _id}
-          _hover={{
-            textDecoration: "none",
-            backgroundColor: "#8892ff38",
-          }}
-        >
+        
           <Box
             border={"2px solid #3f3f4182"}
             borderRadius={"5px"}
@@ -54,6 +47,14 @@ const BugListItem = (props: Props) => {
               color: "#0a1426f0",
             }}
           >
+            <Link
+          as={NavLink}
+          to={"/project/" + project_id + "/bug/" + _id}
+          _hover={{
+            textDecoration: "none",
+            backgroundColor: "#8892ff38",
+          }}
+        >
             <Title title={title} />
             {isOpen === true ? (
               <>
@@ -69,7 +70,7 @@ const BugListItem = (props: Props) => {
               </>
             )}
 
-            <Divider mt={1} />
+            <Divider mt={2} backgroundColor="#9fa1a4" height={"1px"} />
             <Box mt={2} fontSize={14} color={"gray.600"}>
               <About user={user} />
               <Box>
@@ -78,8 +79,9 @@ const BugListItem = (props: Props) => {
             </Box>
 
             <Box mt={2}>{body}</Box>
+            </Link>
           </Box>
-        </Link>
+        
       </GridItem>
     </>
   );

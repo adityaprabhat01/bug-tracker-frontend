@@ -68,7 +68,6 @@ const Login: React.FC = () => {
             username: data.username,
             user_id: data.user_id,
           });
-          console.log(a);
           navigate("/projects");
         })();
       })

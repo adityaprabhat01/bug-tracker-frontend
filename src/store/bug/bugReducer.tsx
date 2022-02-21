@@ -187,7 +187,7 @@ const bugReducer = (state = initState, action: any) => {
           body: {
             ...state.bug.body,
             loading: false,
-            body: action.payload,
+            body: action.payload.body,
             error: "",
           },
         },

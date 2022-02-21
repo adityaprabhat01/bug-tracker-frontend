@@ -17,8 +17,8 @@ const CloseUI = (props: Props) => {
       <Box
         onClick={handleClick}
         position={"absolute"}
-        top="-1.5"
-        right={"-1"}
+        top="-0.5"
+        right={"-2"}
         mb="50"
         _hover={{
           cursor: "pointer"
@@ -28,8 +28,8 @@ const CloseUI = (props: Props) => {
           xmlns="http://www.w3.org/2000/svg"
           x="0px"
           y="0px"
-          width="20"
-          height="20"
+          width="15"
+          height="15"
           viewBox="0 0 172 172"
           style={{fill:"#000000"}}
         >

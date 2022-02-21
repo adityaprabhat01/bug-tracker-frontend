@@ -110,9 +110,7 @@ const Body = (props: Props) => {
           <Box>{value}</Box>
         )}
       </Box>
-      <Box mt={"3"}>
-        <TechStack isOpen={isOpen} stack={techStack} />
-      </Box>
+      
       <Box
         mt={3}
         width={"30px"}
