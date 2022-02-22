@@ -69,6 +69,11 @@ const PostComment = (props: Props) => {
     }
     dispatch(post_bug_comment_success(data));
     setValue("");
+    const tx = document.getElementsByTagName("textarea");
+    tx[0].setAttribute(
+      "style",
+      "height:" + "300px"
+    );
   }
 
   function handleFailure(data: { error: string; message: string }) {
@@ -149,7 +154,7 @@ const PostComment = (props: Props) => {
             </Button>
             {output === false ? (
               <span>
-                <Textarea
+                <Textarea                  
                   id="comment-textarea"
                   value={value}
                   height={"auto"}

@@ -41,6 +41,8 @@ const BugListItem = (props: Props) => {
             maxW={"320px"}
             backgroundColor="#ebedf0"
             color="#495261f0"
+            overflow={"hidden"}
+            textOverflow={"ellipsis"}
             _hover={{
               textDecoration: "none",
               backgroundColor: "#c2c3c5",

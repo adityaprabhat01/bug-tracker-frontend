@@ -87,6 +87,7 @@ const Body = () => {
         {isOpen === true ? (
           <>
             <Textarea
+              autoFocus
               value={value}
               border="none"
               borderRadius={"10px"}

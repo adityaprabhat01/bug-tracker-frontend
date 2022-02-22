@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../../api";
 import { delete_comment_success } from "../../../store/bug/bugAction";
@@ -27,7 +27,9 @@ const DeleteComment = (props: Props) => {
   }
   return (
     <>
-      <Button onClick={handleDelete} ml={3}>Delete</Button>
+      <Box width={"100%"} onClick={handleDelete}>
+        Delete
+      </Box>
     </>
   );
 };

@@ -93,6 +93,7 @@ const Body = (props: Props) => {
         {isOpen === true ? (
           <>
             <Textarea
+              autoFocus
               value={value}
               border="none"
               borderRadius={"10px"}
@@ -110,7 +111,7 @@ const Body = (props: Props) => {
           <Box>{value}</Box>
         )}
       </Box>
-      
+
       <Box
         mt={3}
         width={"30px"}

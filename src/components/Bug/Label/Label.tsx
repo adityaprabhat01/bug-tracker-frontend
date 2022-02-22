@@ -1,6 +1,5 @@
 import { Badge, Box, HStack } from "@chakra-ui/react";
 import { RootStateOrAny, useSelector } from "react-redux";
-import AddLabel from "./AddLabel";
 
 const Label = () => {
   const labels = useSelector((state: RootStateOrAny) => state.bug.bug.labels);

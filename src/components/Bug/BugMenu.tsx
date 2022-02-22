@@ -1,4 +1,4 @@
-import { Box, Menu, MenuButton, MenuList } from "@chakra-ui/react";
+import { Box, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 
 interface Props {
   children: Array<React.ReactNode>;
@@ -42,10 +42,9 @@ const BugMenu = (props: Props) => {
           </svg>
         </MenuButton>
         <MenuList>
-          <Box>{props.children[0]}</Box>
-
+          <MenuItem>{props.children[0]}</MenuItem>
           <Box>{props.children[1]}</Box>
-          <Box>{props.children[2]}</Box>
+          <MenuItem>{props.children[2]}</MenuItem>
         </MenuList>
       </Menu>
     </>

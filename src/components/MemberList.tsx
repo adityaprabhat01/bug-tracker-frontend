@@ -1,10 +1,10 @@
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Button, MenuItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 
 const MemberList = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-    <Button onClick={onOpen}>Open Modal</Button>
+    <MenuItem onClick={onOpen}>Participants</MenuItem>
       <Modal
         isCentered
         onClose={onClose}
@@ -13,10 +13,10 @@ const MemberList = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Participants</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            Body of modal
+            List of participants
           </ModalBody>
           <ModalFooter>
             <Button colorScheme='blue' mr={3} onClick={onClose}>

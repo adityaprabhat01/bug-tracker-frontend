@@ -2,6 +2,7 @@ import { Avatar, Box, HStack, Wrap, WrapItem } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import { User } from "../../../interface/userInterface";
 import Date from "../../Date";
+import CommentMenu from "./CommentMenu";
 import DeleteComment from "./DeleteComment";
 
 interface Props {
@@ -30,6 +31,12 @@ const Comment = (props: Props) => {
             <Box fontWeight={"bold"} color={"#868e9c"}>
               {user.username}
             </Box>
+            <Box>
+              <CommentMenu>
+                <DeleteComment bug_id={bug_id} comment_id={_id} />
+                <DeleteComment bug_id={bug_id} comment_id={_id} />
+              </CommentMenu>
+            </Box>
           </HStack>
           <Box mt={1}>
             <Date dateCreated={dateCreated} />
@@ -38,7 +45,7 @@ const Comment = (props: Props) => {
             <ReactMarkdown children={body} />
           </Box>
         </Box>
-        <DeleteComment bug_id={bug_id} comment_id={_id} />
+        
       </Box>
     </>
   );

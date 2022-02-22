@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
 import { close_bug_success } from "../../store/bug/bugAction";
@@ -40,9 +40,9 @@ const CloseBug = (props: Props) => {
   return (
     <>
       {isOpen.isOpen === true ? (
-        <Button onClick={handleCloseBug}>Close Bug</Button>
+        <Box width={"100%"} onClick={handleCloseBug}>Close Bug</Box>
       ) : (
-        <Button onClick={handleReOpenBug}>Reopen Bug</Button>
+        <Box width={"100%"} onClick={handleReOpenBug}>Reopen Bug</Box>
       )}
     </>
   );
