@@ -38,6 +38,7 @@ import CloseBug from "../../components/Bug/CloseBug";
 import BugMenu from "../../components/Bug/BugMenu";
 import AddLabel from "../../components/Bug/Label/AddLabel";
 import MemberList from "../../components/MemberList";
+import Sidebar from "../../components/Sidebar";
 
 const BugPage = () => {
   const { bug_id } = useParams<{ bug_id?: string }>();
@@ -87,6 +88,11 @@ const BugPage = () => {
           </GridItem>
         ) : (
           <>
+          <GridItem colStart={0} colEnd={2}>
+              <Box>
+                <Sidebar />
+              </Box>
+            </GridItem>
             <GridItem colStart={3} colEnd={8}>
               <HStack>
                 <Heading>{bug.title}</Heading>
@@ -105,7 +111,7 @@ const BugPage = () => {
             </GridItem>
 
             <GridItem colStart={9} colEnd={12}>
-              <Wrap>
+              <Wrap mt={4}>
                 {bug.members.members.map((member: User) => (
                   <Member key={member._id} member={member} />
                 ))}

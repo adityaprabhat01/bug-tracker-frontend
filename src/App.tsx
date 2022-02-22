@@ -36,7 +36,6 @@ function App() {
     <>
       <ChakraProvider>
         <BrowserRouter>
-          <NotificationBadge />
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />

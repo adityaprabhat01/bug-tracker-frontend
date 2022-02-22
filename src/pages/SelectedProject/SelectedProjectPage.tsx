@@ -26,6 +26,7 @@ import { useEffect, useState } from "react";
 import ProjectMenu from "../../components/Project/ProjectMenu";
 import MemberList from "../../components/MemberList";
 import TechStack from "../../components/Project/TechStack";
+import Sidebar from "../../components/Sidebar";
 
 const startCol = [3, 6, 9];
 const endCol = [6, 9, 12];
@@ -92,16 +93,21 @@ const Project = () => {
           </GridItem>
         ) : (
           <>
+            <GridItem colStart={0} colEnd={2}>
+              <Box>
+                <Sidebar />
+              </Box>
+            </GridItem>
             <GridItem colStart={3} colEnd={8}>
               <>
                 <HStack>
-                <Heading>{project.title}</Heading>
-                <ProjectMenu>
-                  <MemberList />
-                  <MemberList />
-                </ProjectMenu>
+                  <Heading>{project.title}</Heading>
+                  <ProjectMenu>
+                    <MemberList />
+                    <MemberList />
+                  </ProjectMenu>
                 </HStack>
-                
+
                 <About user={project.user} />
                 <Date dateCreated={project.dateCreated} />
                 <Body
@@ -110,13 +116,13 @@ const Project = () => {
                   techStack={project.techStack}
                   project_id={project._id}
                 />
-                
+
                 <AddBug />
               </>
             </GridItem>
 
             <GridItem colStart={9} colEnd={12}>
-              <Wrap>
+              <Wrap mt={4}>
                 {project.members.map((member: User) => (
                   <Member key={member._id} member={member} />
                 ))}
@@ -125,8 +131,8 @@ const Project = () => {
               <br />
               <AddMember />
               <Box mt={"3"}>
-        <TechStack stack={project.techStack} />
-      </Box>
+                <TechStack stack={project.techStack} />
+              </Box>
             </GridItem>
 
             {project.bugs.map((bug: BugInterface, i: number) => (
