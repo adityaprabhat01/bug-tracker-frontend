@@ -6,7 +6,11 @@ export interface CommentInterface {
   bug_id: string,
   body: string,
   _id: string,
-  dateCreated: string
+  dateCreated: string,
+  activity: {
+    isActivity: boolean,
+    value: string
+  }
 }
 
 export interface BugInterface {

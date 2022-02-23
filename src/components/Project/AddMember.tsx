@@ -24,6 +24,7 @@ import ButtonForm from "../Form/ButtonForm";
 import Error from "../Form/Error";
 import InputForm from "../Form/InputForm";
 import { socket } from "../../socket";
+import { useEffect } from "react";
 
 interface InitialValuesInterface {
   user_id: string;
@@ -46,9 +47,12 @@ const AddMember = () => {
   const project: ProjectInterface = useSelector(
     (state: RootStateOrAny) => state.project.project
   );
-
-  const error: string = useSelector(((state: RootStateOrAny) => state.project.error))
-  const title: string = useSelector((state: RootStateOrAny) => state.project.project.title)
+  const error: string = useSelector(
+    (state: RootStateOrAny) => state.project.error
+  );
+  const title: string = useSelector(
+    (state: RootStateOrAny) => state.project.project.title
+  );
   const auth_name = useSelector((state: RootStateOrAny) => state.auth.username);
 
   function handlePreFetch() {
@@ -82,51 +86,59 @@ const AddMember = () => {
         socket.emit("added-to-project", {
           username,
           title,
-          auth: auth_name
-        })
+          auth: auth_name,
+        });
       })
       .catch((err) => {
         handlePostFetch({
-          error: "Something went wrong"
-        })
+          error: "Something went wrong",
+        });
       });
   }
 
+  useEffect(() => {
+    return () => {
+      if(error !== "") {
+        dispatch(add_member_failure({
+          error: "",
+          message: ""
+        }));
+      }
+    }
+  })
+
   return (
     <>
-    <Box mt={3}>
-    <ButtonUI handleClick={onOpen} value="Add Member" />
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add member to the team</ModalHeader>
-          <ModalCloseButton />
-          <Formik
-            initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }) => {
-              handleSubmit(values, setSubmitting);
-            }}
-          >
-            <>
-              <Form>
-                <ModalBody pb={6}>
-
-                  <FormControl mt={4}>
-                    <InputForm message="Username" name="username" />
-                  </FormControl>
-
-                </ModalBody>
-                <ModalFooter>
-                  <ButtonForm message="Submit" />
-                </ModalFooter>
-              </Form>
-            </>
-          </Formik>
-        </ModalContent>
-      </Modal>
-      {error !== "" ? <Error message={error} /> : null}
-    </Box>
-      
+      <Box mt={3}>
+        <ButtonUI handleClick={onOpen} value="Add Member" />
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Add member to the team</ModalHeader>
+            <ModalCloseButton />
+            <Formik
+              initialValues={initialValues}
+              onSubmit={(values, { setSubmitting }) => {
+                handleSubmit(values, setSubmitting);
+              }}
+            >
+              <>
+                <Form>
+                  <ModalBody pb={6}>
+                    <FormControl mt={4}>
+                      <InputForm message="Username" name="username" />
+                    </FormControl>
+                  </ModalBody>
+                  <ModalFooter>
+                    <ButtonForm message="Submit" />
+                  </ModalFooter>
+                </Form>
+              </>
+            </Formik>
+          </ModalContent>
+        </Modal>
+        {error !== "" ? <Error message={error} /> : null}
+      </Box>
     </>
   );
 };

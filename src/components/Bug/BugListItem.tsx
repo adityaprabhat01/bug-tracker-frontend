@@ -2,10 +2,7 @@ import {
   Badge,
   Box,
   Divider,
-  Grid,
   GridItem,
-  Heading,
-  HStack,
   Link,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
@@ -13,7 +10,6 @@ import { BugInterface } from "../../interface/projectInterface";
 import About from "../About";
 import Date from "../Date";
 import Title from "../Title";
-import Status from "./Status";
 
 interface Props {
   bug: BugInterface;

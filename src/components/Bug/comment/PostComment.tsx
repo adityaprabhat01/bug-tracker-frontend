@@ -92,6 +92,10 @@ const PostComment = (props: Props) => {
           username: auth.username,
         },
         project_id: params.project_id,
+        activity: {
+          isActivity: false,
+          value: ""
+        }
       })
       .then((res) => {
         const { data } = res;

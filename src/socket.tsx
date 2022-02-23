@@ -23,14 +23,12 @@ export async function checkOnlineStatus(auth: {
   user_id: any;
 }) {
   const a = await asyncEmit("check-redis", "check-redis-status", {});
-  console.log(a);
   if (a.message === false) {
     const a = await asyncEmit("login", "success", {
       name: auth.name,
       username: auth.username,
       user_id: auth.user_id,
     });
-    console.log(a);
   }
 }
 

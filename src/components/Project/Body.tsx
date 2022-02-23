@@ -9,7 +9,6 @@ import {
   update_project_body_success,
 } from "../../store/selectProject.tsx/selectProjectAction";
 import ButtonUI from "../ButtonUI";
-import TechStack from "./TechStack";
 
 interface Props {
   body: string;
@@ -19,7 +18,7 @@ interface Props {
 }
 
 const Body = (props: Props) => {
-  const { body, techStack, project_id } = props;
+  const { body, project_id } = props;
   const [value, setValue] = useState(body);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();

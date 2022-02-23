@@ -32,12 +32,12 @@ const initState: selectProjectInitStateInterface = {
       _id: "",
     },
     bugs: [],
-    dateCreated: "",
+    date_opened: "",
     members: [],
     techStack: [],
     comments: [],
   },
-  loading: false,
+  loading: true,
   error: "",
 };
 

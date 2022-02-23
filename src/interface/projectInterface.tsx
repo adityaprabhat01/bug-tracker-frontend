@@ -30,7 +30,7 @@ export interface ProjectInterface {
   body: string;
   user: User;
   bugs: Array<BugInterface>;
-  dateCreated: string;
+  date_opened: string;
   members: Array<User>;
   techStack: Array<TechStackInterface>;
   comments: any;

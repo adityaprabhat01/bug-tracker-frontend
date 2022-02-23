@@ -18,11 +18,10 @@ import {
   fetch_select_project_request,
   fetch_select_project_success,
 } from "../../store/selectProject.tsx/selectProjectAction";
-import { isObjectEmpty } from "../../utils";
 import Date from "../../components/Date";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import { checkOnlineStatus } from "../../socket";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ProjectMenu from "../../components/Project/ProjectMenu";
 import MemberList from "../../components/MemberList";
 import TechStack from "../../components/Project/TechStack";
@@ -33,36 +32,12 @@ const endCol = [6, 9, 12];
 
 const Project = () => {
   useAuthCookies();
-  const { project_id } = useParams<{ project_id?: string }>();
   const dispatch = useDispatch();
-
+  const { project_id } = useParams<{ project_id?: string }>();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
-
-  useEffect(() => {
-    checkOnlineStatus(auth);
-  }, [auth]);
-
-  function handleSelector(state: selectProjectInitStateInterface) {
-    if (isObjectEmpty(state)) return;
-    const { project, loading, error } = state;
-    const { _id, title, user, body, bugs, dateCreated, members, techStack } =
-      project;
-    return {
-      _id,
-      title,
-      user,
-      body,
-      bugs,
-      dateCreated,
-      members,
-      techStack,
-      loading,
-      error,
-    };
-  }
-
-  let project = useSelector((state: RootStateOrAny) => state.project);
-  project = handleSelector(project);
+  let selectedProject: selectProjectInitStateInterface = useSelector((state: RootStateOrAny) => state.project);
+  
+  const { project, loading, error } = selectedProject;
 
   function handlePreFetch() {
     dispatch(fetch_select_project_request());
@@ -71,6 +46,10 @@ const Project = () => {
   function handlePostFetch(data: any) {
     dispatch(fetch_select_project_success(data));
   }
+
+  useEffect(() => {
+    checkOnlineStatus(auth);
+  }, [auth]);
 
   useFetch(
     {
@@ -85,7 +64,7 @@ const Project = () => {
   return (
     <>
       <Grid templateColumns="repeat(11, 1fr)">
-        {project.loading === true ? (
+        {loading === true ? (
           <GridItem colStart={6} colEnd={8}>
             <Box marginTop={"300px"}>
               <Loading />
@@ -109,7 +88,7 @@ const Project = () => {
                 </HStack>
 
                 <About user={project.user} />
-                <Date dateCreated={project.dateCreated} />
+                <Date dateCreated={project.date_opened} />
                 <Body
                   body={project.body}
                   user={project.user}

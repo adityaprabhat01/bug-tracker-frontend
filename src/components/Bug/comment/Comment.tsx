@@ -13,11 +13,41 @@ interface Props {
     bug_id: string;
     dateCreated: string;
     _id: string;
+    activity: {
+      isActivity: boolean;
+      value: string;
+    };
   };
 }
 
 const Comment = (props: Props) => {
-  const { user, body, project_id, bug_id, dateCreated, _id } = props.comment;
+  const { user, body, bug_id, dateCreated, _id, activity } =
+    props.comment;
+  if (activity.isActivity) {
+    return (
+      <>
+        <Box border={"2px solid #c7d0d8"} padding={2} borderRadius={"5px"}>
+          <HStack>
+            <Wrap>
+              <WrapItem>
+                <Avatar
+                  size="sm"
+                  name={"!"}
+                  backgroundColor={
+                    activity.value === "close" ? "red.300" : "green.300"
+                  }
+                />{" "}
+              </WrapItem>
+            </Wrap>
+
+            <Box>
+              <ReactMarkdown children={body} />
+            </Box>
+          </HStack>
+        </Box>
+      </>
+    );
+  }
   return (
     <>
       <Box border={"2px solid #c7d0d8"} borderRadius={"5px"}>
@@ -45,7 +75,6 @@ const Comment = (props: Props) => {
             <ReactMarkdown children={body} />
           </Box>
         </Box>
-        
       </Box>
     </>
   );
