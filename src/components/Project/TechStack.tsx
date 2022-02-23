@@ -123,7 +123,7 @@ const TechStack = (props: Props) => {
                     handleRemove={handleRemove}
                   />
                 ) : null}
-                <Badge colorScheme={"blue"}>{tech.name}</Badge>
+                <Badge padding={1} colorScheme={"blue"}>{tech.name}</Badge>
               </Box>
             </Box>
           ))}

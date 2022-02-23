@@ -75,7 +75,7 @@ const AddLabel = (props: Props) => {
                   cursor: "pointer",
                 }}
               >
-                <Button backgroundColor={"white"} id="edit-labels">Edit Labels</Button>
+                <Box backgroundColor={"white"} id="edit-labels">Edit Labels</Box>
               </Box>
             </MenuButton>
 

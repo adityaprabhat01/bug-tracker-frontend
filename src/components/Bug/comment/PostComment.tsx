@@ -1,4 +1,14 @@
-import { Box, Button, Link, Textarea } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Center,
+  HStack,
+  Link,
+  Textarea,
+  Wrap,
+  WrapItem,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -23,7 +33,7 @@ const PostComment = (props: Props) => {
   const [value, setValue] = useState("");
   const [output, setOutput] = useState(false);
   const [showMembers, setShowMembers] = useState(false);
-  const params = useParams<{project_id: string}>();
+  const params = useParams<{ project_id: string }>();
 
   const dispatch = useDispatch();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
@@ -53,7 +63,7 @@ const PostComment = (props: Props) => {
     let temp = value.match(MENTION_REGEX);
     if (temp !== null) {
       const str = temp[0].slice(1, temp[0].length);
-      const y = `[${username}](${"http://localhost:3000"}/user/${username})`
+      const y = `[${username}](${"http://localhost:3000"}/user/${username})`;
       x = x.replace(str, y);
       setValue(x);
     }
@@ -70,10 +80,7 @@ const PostComment = (props: Props) => {
     dispatch(post_bug_comment_success(data));
     setValue("");
     const tx = document.getElementsByTagName("textarea");
-    tx[0].setAttribute(
-      "style",
-      "height:" + "300px"
-    );
+    tx[0].setAttribute("style", "height:" + "300px");
   }
 
   function handleFailure(data: { error: string; message: string }) {
@@ -94,8 +101,8 @@ const PostComment = (props: Props) => {
         project_id: params.project_id,
         activity: {
           isActivity: false,
-          value: ""
-        }
+          value: "",
+        },
       })
       .then((res) => {
         const { data } = res;
@@ -133,59 +140,75 @@ const PostComment = (props: Props) => {
           height="auto"
           minHeight={"300px"}
           mb={4}
+          padding={2}
         >
-          <Box padding={2}>
-            <Button
-              backgroundColor={output === false ? "#c5ffff" : ""}
+          <HStack>
+            <Wrap>
+              <WrapItem>
+                <Avatar size="sm" name={auth.name} />
+              </WrapItem>
+            </Wrap>
+            <Center
               variant="ghost"
               onClick={() => setOutput(false)}
               _hover={{
-                backgroundColor: "",
+                backgroundColor: "#ebedf0",
+                cursor: "pointer",
+                borderRadius: "4px",
               }}
+              width={"4rem"}
+              height={"2rem"}
+              padding={1}
+              borderBottom={output === false ? "2px" : ""}
             >
               Editor
-            </Button>
-            <Button
-              backgroundColor={output === true ? "#c5ffff" : ""}
+            </Center>
+            <Center
               variant="ghost"
-              ml={3}
               onClick={() => setOutput(true)}
               _hover={{
-                backgroundColor: "",
+                backgroundColor: "#ebedf0",
+                cursor: "pointer",
+                borderRadius: "4px",
               }}
+              width={"5rem"}
+              height={"2rem"}
+              padding={1}
+              borderBottom={output === true ? "2px" : ""}
             >
               Markdown
-            </Button>
-            {output === false ? (
-              <span>
-                <Textarea                  
-                  id="comment-textarea"
-                  value={value}
-                  height={"auto"}
-                  minHeight={"300px"}
-                  resize={"vertical"}
-                  onChange={handleOnChange}
-                  onFocus={increaseHeight}
-                  backgroundColor={"#ebedf0"}
-                  maxHeight="auto"
-                  mt={2}
-                />
-                {showMembers === true
-                  ? members.map((member: any) => (
-                      <MentionItem
-                        key={member._id}
-                        member={member}
-                        handleMention={handleMention}
-                      />
-                    ))
-                  : null}
-              </span>
-            ) : (
-              <Box>
-                <Editor text={value} />
-              </Box>
-            )}
-          </Box>
+            </Center>
+          </HStack>
+          {output === false ? (
+            <span>
+              <Textarea
+                id="comment-textarea"
+                value={value}
+                height={"auto"}
+                minHeight={"300px"}
+                resize={"vertical"}
+                onChange={handleOnChange}
+                onFocus={increaseHeight}
+                backgroundColor={"#ebedf0"}
+                maxHeight="auto"
+                mt={2}
+              />
+              {showMembers === true
+                ? members.map((member: any) => (
+                    <MentionItem
+                      key={member._id}
+                      member={member}
+                      handleMention={handleMention}
+                    />
+                  ))
+                : null}
+            </span>
+          ) : (
+            <Box>
+              <Editor text={value} />
+            </Box>
+          )}
+
           <Box padding={2}>
             <ButtonUI
               isLoading={loading}

@@ -17,8 +17,8 @@ const CloseUI = (props: Props) => {
       <Box
         onClick={handleClick}
         position={"absolute"}
-        top="-0.5"
-        right={"-2"}
+        top="-1.5"
+        right={"-1.5"}
         mb="50"
         _hover={{
           cursor: "pointer"
