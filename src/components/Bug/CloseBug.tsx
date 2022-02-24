@@ -35,8 +35,12 @@ const CloseBug = (props: Props) => {
         }
       })
     ]).then(values => {
-      dispatch(close_bug_success(values[0].data));
-      dispatch(post_bug_comment_success(values[1].data));
+      if("message" in values[0].data) {
+
+      } else {
+        dispatch(close_bug_success(values[0].data));
+        dispatch(post_bug_comment_success(values[1].data));
+      }
     }).catch(err => {})
   }
 
@@ -62,8 +66,13 @@ const CloseBug = (props: Props) => {
         }
       })
     ]).then(values => {
-      dispatch(close_bug_success(values[0].data));
-      dispatch(post_bug_comment_success(values[1].data));
+      if("message" in values[0].data) {
+
+      } else {
+        dispatch(close_bug_success(values[0].data));
+        dispatch(post_bug_comment_success(values[1].data));
+      }
+      
     }).catch(err => {})
   }
   const { bug_id, isOpen } = props;

@@ -1,7 +1,7 @@
 import {
   Box,
+  Button,
   FormControl,
-  FormLabel,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -20,10 +20,10 @@ import {
   add_member_request,
   add_member_success,
 } from "../../../store/bug/bugAction";
-import ButtonUI from "../../ButtonUI";
 import ButtonForm from "../../Form/ButtonForm";
 import Error from "../../Form/Error";
 import InputForm from "../../Form/InputForm";
+import { BsPlusLg } from "react-icons/bs";
 
 interface InitialValuesInterface {
   username: string;
@@ -37,8 +37,12 @@ const AddMemberBug = (props: Props) => {
   const { bug_id } = props;
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const error: string = useSelector((state: RootStateOrAny) => state.bug.bug.members.error);
-  const loading: boolean = useSelector((state: RootStateOrAny) => state.bug.bug.members.loading);
+  const error: string = useSelector(
+    (state: RootStateOrAny) => state.bug.bug.members.error
+  );
+  const loading: boolean = useSelector(
+    (state: RootStateOrAny) => state.bug.bug.members.loading
+  );
   const auth_name = useSelector((state: RootStateOrAny) => state.auth.username);
 
   const initialValues: InitialValuesInterface = {
@@ -76,8 +80,8 @@ const AddMemberBug = (props: Props) => {
           username,
           bug_id,
           auth: auth_name,
-          title: bug_id
-        })
+          title: bug_id,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -87,7 +91,18 @@ const AddMemberBug = (props: Props) => {
   return (
     <>
       <Box mt={3}>
-        <ButtonUI handleClick={onOpen} value="Add Member" />
+        <Button
+          onClick={onOpen}
+          backgroundColor={"blue.400"}
+          color={"white"}
+          borderRadius={"full"}
+          _hover={{
+            backgroundColor: "blue.300",
+          }}
+          leftIcon={<BsPlusLg color="white" size={"0.8rem"} />}
+        >
+          Add Member
+        </Button>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>

@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   FormControl,
   Modal,
   ModalBody,
@@ -19,12 +20,12 @@ import {
   add_member_request,
   add_member_success,
 } from "../../store/selectProject.tsx/selectProjectAction";
-import ButtonUI from "../ButtonUI";
 import ButtonForm from "../Form/ButtonForm";
 import Error from "../Form/Error";
 import InputForm from "../Form/InputForm";
 import { socket } from "../../socket";
 import { useEffect } from "react";
+import { BsPlusLg } from "react-icons/bs";
 
 interface InitialValuesInterface {
   user_id: string;
@@ -110,7 +111,18 @@ const AddMember = () => {
   return (
     <>
       <Box mt={3}>
-        <ButtonUI handleClick={onOpen} value="Add Member" />
+      <Button
+          onClick={onOpen}
+          backgroundColor={"blue.400"}
+          color={"white"}
+          borderRadius={"full"}
+          _hover={{
+            backgroundColor: "blue.300",
+          }}
+          leftIcon={<BsPlusLg color="white" size={"0.8rem"} />}
+        >
+          Add Member
+        </Button>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>

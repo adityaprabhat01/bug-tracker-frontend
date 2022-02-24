@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   FormControl,
-  FormLabel,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -20,10 +19,10 @@ import {
   add_bug_request,
   add_bug_success,
 } from "../../store/selectProject.tsx/selectProjectAction";
-import ButtonUI from "../ButtonUI";
 import ButtonForm from "../Form/ButtonForm";
 import Error from "../Form/Error";
 import InputForm from "../Form/InputForm";
+import { BsPlusLg } from "react-icons/bs";
 
 interface InitialValuesInterface {
   title: string;
@@ -78,7 +77,18 @@ const AddBug = () => {
   return (
     <>
       <Box mt={3}>
-        <ButtonUI handleClick={onOpen} value={"Add Bug"} />
+      <Button
+          onClick={onOpen}
+          backgroundColor={"blue.400"}
+          color={"white"}
+          borderRadius={"full"}
+          _hover={{
+            backgroundColor: "blue.300",
+          }}
+          leftIcon={<BsPlusLg color="white" size={"0.8rem"} />}
+        >
+          Add Bug
+        </Button>
       </Box>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
