@@ -90,7 +90,7 @@ const AddMemberBug = (props: Props) => {
 
   return (
     <>
-      <Box mt={3}>
+      <Box>
         <Button
           onClick={onOpen}
           backgroundColor={"blue.400"}

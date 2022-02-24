@@ -1,3 +1,4 @@
+import { User } from "../../interface/userInterface";
 import {
   UPDATE_LABEL_FAILURE,
   UPDATE_LABEL_REQUEST,
@@ -17,6 +18,9 @@ import {
   DELETE_COMMENT_SUCCESS,
   CLOSE_BUG_REQUEST,
   CLOSE_BUG_SUCCESS,
+  REMOVE_MEMBER_REQUEST,
+  REMOVE_MEMBER_SUCCESS,
+  REMOVE_MEMBER_FAILURE,
 } from "./bugType";
 
 const initState = {
@@ -311,6 +315,47 @@ const bugReducer = (state = initState, action: any) => {
           isOpen: {
             ...state.bug.isOpen,
             isOpen: action.payload.isOpen
+          }
+        }
+      }
+    }
+    case REMOVE_MEMBER_REQUEST: {
+      return {
+        ...state,
+        bug: {
+          ...state.bug,
+          members: {
+            ...state.bug.members,
+            loading: true,
+            error: ""
+          }
+        }
+      }
+    }
+    case REMOVE_MEMBER_SUCCESS: {
+      return {
+        ...state,
+        bug: {
+          ...state.bug,
+          members: {
+            ...state.bug.members,
+            members: state.bug.members.members.filter((member: User) => member.user_id !== action.payload),
+            loading: false,
+            error: ""
+          }
+        }
+      }
+    }
+    case REMOVE_MEMBER_FAILURE: {
+      const { error, message } = action.payload;
+      return {
+        ...state,
+        bug: {
+          ...state.bug,
+          members: {
+            ...state.bug.members,
+            loading: false,
+            error: error === undefined ? message : error
           }
         }
       }

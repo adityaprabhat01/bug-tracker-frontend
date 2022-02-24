@@ -20,6 +20,9 @@ import {
   CLOSE_BUG_REQUEST,
   CLOSE_BUG_SUCCESS,
   CLOSE_BUG_FAILURE,
+  REMOVE_MEMBER_REQUEST,
+  REMOVE_MEMBER_SUCCESS,
+  REMOVE_MEMBER_FAILURE,
 } from "./bugType";
 
 export const bug_fetch_request = () => {
@@ -158,6 +161,26 @@ export const close_bug_success = (data: any) => {
 export const close_bug_failure = (data: { error: string, message: string }) => {
   return {
     type: CLOSE_BUG_FAILURE,
+    payload: data
+  }
+}
+
+export const remove_member_request = () => {
+  return { 
+    type: REMOVE_MEMBER_REQUEST
+  }
+}
+
+export const remove_member_success = (data: any) => {
+  return {
+    type: REMOVE_MEMBER_SUCCESS,
+    payload: data
+  }
+}
+
+export const remove_member_failure = (data: { message: string, error: string }) => {
+  return {
+    type: REMOVE_MEMBER_FAILURE,
     payload: data
   }
 }

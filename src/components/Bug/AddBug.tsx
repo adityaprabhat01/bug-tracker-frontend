@@ -43,6 +43,8 @@ const AddBug = () => {
     dispatch(add_bug_request());
   }
 
+  const auth = useSelector((state: RootStateOrAny) => state.auth);
+
   function handlePostFetch(data: any) {
     onClose();
     if ("error" in data || "message" in data) {
@@ -65,7 +67,11 @@ const AddBug = () => {
         title,
         body,
         project_id: _id,
-        user,
+        user: {
+          name: auth.name,
+          username: auth.username,
+          user_id: auth.user_id
+        },
       })
       .then((res) => {
         const { data } = res;

@@ -88,7 +88,7 @@ const BugPage = () => {
           </GridItem>
         ) : (
           <>
-          <GridItem colStart={0} colEnd={2}>
+            <GridItem colStart={0} colEnd={2}>
               <Box>
                 <Sidebar />
               </Box>
@@ -100,7 +100,6 @@ const BugPage = () => {
                 <BugMenu>
                   <CloseBug bug_id={bug_id} isOpen={bug.isOpen} />
                   <AddLabel labels={bug.labels} />
-                  <MemberList />
                 </BugMenu>
               </HStack>
 
@@ -116,8 +115,10 @@ const BugPage = () => {
                   <Member key={member._id} member={member} />
                 ))}
               </Wrap>
-
-              <AddMemberBug bug_id={bug._id} />
+              <HStack mt={3}>
+                <AddMemberBug bug_id={bug._id} />
+                <MemberList {...bug.members} source={"BugPage"} />
+              </HStack>
             </GridItem>
 
             <GridItem colStart={3} colEnd={9} mt={2}>

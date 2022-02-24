@@ -1,41 +1,34 @@
 import { Button } from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { api } from "../../api";
-import { selectProjectInitStateInterface } from "../../interface/projectInterface";
+import { useParams } from "react-router-dom";
+import { api } from "../../../api";
+import { BugInterface } from "../../../interface/bugInterface";
 import {
   remove_member_failure,
   remove_member_request,
   remove_member_success,
-} from "../../store/selectProject.tsx/selectProjectAction";
+} from "../../../store/bug/bugAction";
 
 interface Props {
   user_id: string;
 }
 
-const RemoveMember = (props: Props) => {
+const RemoveMemberBug = (props: Props) => {
   const { user_id } = props;
+  const dispatch = useDispatch();
+  const { bug_id } = useParams<{ bug_id?: string }>();
   const loading = useSelector(
-    (state: RootStateOrAny) => state.project.project.members.loading
+    (state: RootStateOrAny) => state.bug.bug.members.loading
   );
   const error = useSelector(
-    (state: RootStateOrAny) => state.project.project.members.error
+    (state: RootStateOrAny) => state.bug.bug.members.error
   );
-  const project: selectProjectInitStateInterface = useSelector(
-    (state: RootStateOrAny) => state.project
-  );
-  const dispatch = useDispatch();
-  function handleSelector(state: selectProjectInitStateInterface) {
-    const { project } = state;
-    const { _id } = project;
-    return { project_id: _id };
-  }
 
   function handlePreFetch() {
     dispatch(remove_member_request());
   }
 
   function handlePostFetch(data: any) {
-    console.log(data);
     if ("error" in data || "message" in data) {
       handleFailure(data);
     }
@@ -49,11 +42,10 @@ const RemoveMember = (props: Props) => {
 
   function handleRemove() {
     handlePreFetch();
-    const project_id = handleSelector(project);
     api
-      .post("/removeMember", {
+      .post("/removeMemberBug", {
         user_id,
-        ...project_id,
+        bug_id,
       })
       .then((res) => {
         const { data } = res;
@@ -71,4 +63,4 @@ const RemoveMember = (props: Props) => {
   );
 };
 
-export default RemoveMember;
+export default RemoveMemberBug;

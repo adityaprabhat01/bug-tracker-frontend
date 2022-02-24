@@ -66,7 +66,7 @@ const CloseBug = (props: Props) => {
         }
       })
     ]).then(values => {
-      if("message" in values[0].data) {
+      if("message" in values[0].data || "message" in values[1].data) {
 
       } else {
         dispatch(close_bug_success(values[0].data));

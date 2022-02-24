@@ -1,33 +1,68 @@
-import { Button, MenuItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  Modal,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { RootStateOrAny, useSelector } from "react-redux";
+import { User } from "../interface/userInterface";
+import RemoveMemberBug from "./Bug/member/RemoveMember";
+import RemoveMember from "./Project/RemoveMember";
 
-const MemberList = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+interface Props {
+  members: Array<User>;
+  loading: boolean;
+  error: string;
+  source: string;
+}
+
+const MemberList = (props: Props) => {
+  const { members, loading, error, source } = props;
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-    <MenuItem onClick={onOpen}>Participants</MenuItem>
+      <Button
+        onClick={onOpen}
+        backgroundColor={"blue.400"}
+        color={"white"}
+        borderRadius={"full"}
+        _hover={{
+          backgroundColor: "blue.300",
+        }}
+      >
+        Participants
+      </Button>
       <Modal
         isCentered
         onClose={onClose}
         isOpen={isOpen}
-        motionPreset='slideInBottom'
+        motionPreset="slideInBottom"
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Participants</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            List of participants
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant='ghost'>Secondary Action</Button>
-          </ModalFooter>
+          {members.map((member) => (
+            <>
+              <HStack>
+                <Box>{member.name}</Box>
+                {source === "SelectedProjectPage" ? (
+                  <RemoveMember user_id={member.user_id} />
+                ) : (
+                  <RemoveMemberBug user_id={member.user_id} />
+                )}
+              </HStack>
+            </>
+          ))}
         </ModalContent>
       </Modal>
     </>
-  )
-}
+  );
+};
 
 export default MemberList;

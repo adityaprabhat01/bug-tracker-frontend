@@ -1,4 +1,12 @@
-import { Box, Grid, GridItem, Heading, HStack, Wrap } from "@chakra-ui/react";
+import {
+  AvatarGroup,
+  Box,
+  Grid,
+  GridItem,
+  Heading,
+  HStack,
+  Wrap,
+} from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import AddBug from "../../components/Bug/AddBug";
@@ -35,8 +43,10 @@ const Project = () => {
   const dispatch = useDispatch();
   const { project_id } = useParams<{ project_id?: string }>();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
-  let selectedProject: selectProjectInitStateInterface = useSelector((state: RootStateOrAny) => state.project);
-  
+  let selectedProject: selectProjectInitStateInterface = useSelector(
+    (state: RootStateOrAny) => state.project
+  );
+
   const { project, loading, error } = selectedProject;
 
   function handlePreFetch() {
@@ -81,10 +91,6 @@ const Project = () => {
               <>
                 <HStack>
                   <Heading>{project.title}</Heading>
-                  <ProjectMenu>
-                    <MemberList />
-                    <MemberList />
-                  </ProjectMenu>
                 </HStack>
 
                 <About user={project.user} />
@@ -102,13 +108,18 @@ const Project = () => {
 
             <GridItem colStart={9} colEnd={12}>
               <Wrap mt={4}>
-                {project.members.members.map((member: User) => (
-                  <Member key={member._id} member={member} />
-                ))}
+                <AvatarGroup max={4}>
+                  {project.members.members.map((member: User) => (
+                    <Member key={member._id} member={member} />
+                  ))}
+                </AvatarGroup>
               </Wrap>
 
               <br />
-              <AddMember />
+              <HStack mt={3}>
+                <AddMember />
+                <MemberList {...project.members} source={"SelectedProjectPage"} />
+              </HStack>
               <Box mt={"3"}>
                 <TechStack stack={project.techStack.techStack} />
               </Box>
