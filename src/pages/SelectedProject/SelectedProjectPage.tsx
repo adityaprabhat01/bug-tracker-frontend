@@ -90,9 +90,9 @@ const Project = () => {
                 <About user={project.user} />
                 <Date dateCreated={project.date_opened} />
                 <Body
-                  body={project.body}
+                  body={project.body.body}
                   user={project.user}
-                  techStack={project.techStack}
+                  techStack={project.techStack.techStack}
                   project_id={project._id}
                 />
 
@@ -102,7 +102,7 @@ const Project = () => {
 
             <GridItem colStart={9} colEnd={12}>
               <Wrap mt={4}>
-                {project.members.map((member: User) => (
+                {project.members.members.map((member: User) => (
                   <Member key={member._id} member={member} />
                 ))}
               </Wrap>
@@ -110,11 +110,11 @@ const Project = () => {
               <br />
               <AddMember />
               <Box mt={"3"}>
-                <TechStack stack={project.techStack} />
+                <TechStack stack={project.techStack.techStack} />
               </Box>
             </GridItem>
 
-            {project.bugs.map((bug: BugInterface, i: number) => (
+            {project.bugs.bugs.map((bug: BugInterface, i: number) => (
               <BugListItem
                 key={bug._id}
                 bug={bug}

@@ -24,18 +24,33 @@ const initState: selectProjectInitStateInterface = {
   project: {
     _id: "",
     title: "",
-    body: "",
+    body: {
+      body: "",
+      loading: false,
+      error: "",
+    },
     user: {
       name: "",
       username: "",
       user_id: "",
       _id: "",
     },
-    bugs: [],
+    bugs: {
+      bugs: [],
+      loading: false,
+      error: "",
+    },
     date_opened: "",
-    members: [],
-    techStack: [],
-    comments: [],
+    members: {
+      members: [],
+      loading: false,
+      error: "",
+    },
+    techStack: {
+      techStack: [],
+      loading: false,
+      error: "",
+    },
   },
   loading: true,
   error: "",
@@ -51,11 +66,35 @@ const selectProjectReducer = (state = initState, action: any) => {
       };
     }
     case FETCH_SELECT_PROJECT_SUCCESS: {
+      const { _id, title, user, body, bugs, members, techStack, date_opened } =
+        action.payload;
       return {
         ...state,
         loading: false,
         error: "",
-        project: action.payload,
+        project: {
+          ...state.project,
+          _id,
+          title,
+          user,
+          body: {
+            ...state.project.body,
+            body,
+          },
+          bugs: {
+            ...state.project.bugs,
+            bugs,
+          },
+          members: {
+            ...state.project.members,
+            members,
+          },
+          techStack: {
+            ...state.project.techStack,
+            techStack,
+          },
+          date_opened,
+        },
       };
     }
     case FETCH_SELECT_PROJECT_FAILURE: {
@@ -68,8 +107,15 @@ const selectProjectReducer = (state = initState, action: any) => {
     case ADD_MEMBER_REQUEST: {
       return {
         ...state,
-        loading: true,
-        error: "",
+        project: {
+          ...state.project,
+          members: {
+            ...state.project.members,
+            // members: [...state.project.members.members, action.payload],
+            loading: true,
+            error: "",
+          },
+        },
       };
     }
     case ADD_MEMBER_SUCCESS: {
@@ -77,123 +123,190 @@ const selectProjectReducer = (state = initState, action: any) => {
         ...state,
         project: {
           ...state.project,
-          members: [...state.project.members, action.payload],
+          members: {
+            ...state.project.members,
+            members: [...state.project.members.members, action.payload],
+            loading: false,
+            error: "",
+          },
         },
-        loading: false,
-        error: ""
       };
     }
     case ADD_MEMBER_FAILURE: {
       const { error, message } = action.payload;
       return {
         ...state,
-        loading: false,
-        error: error === undefined ? message : error
-      }
+        project: {
+          ...state.project,
+          members: {
+            ...state.project.members,
+            loading: false,
+            error: error === undefined ? message : error,
+          },
+        },
+      };
     }
     case REMOVE_MEMBER_REQUEST: {
       return {
         ...state,
-        loading: true,
-        error: ""
-      }
+        project: {
+          ...state.project,
+          members: {
+            ...state.project.members,
+            // members: [...state.project.members.members, action.payload],
+            loading: true,
+            error: "",
+          },
+        },
+      };
     }
     case REMOVE_MEMBER_SUCCESS: {
       return {
         ...state,
         project: {
           ...state.project,
-          members: state.project.members.filter(member => member.user_id !== action.payload)
+          members: {
+            ...state.project.members,
+            members: state.project.members.members.filter(
+              (member) => member.user_id !== action.payload
+            ),
+            loading: false,
+            error: "",
+          },
         },
-        loading: false,
-        error: ""
-      }
+      };
     }
     case REMOVE_MEMBER_FAILURE: {
       const { error, message } = action.payload;
       return {
-        ...state,
-        loading: false,
-        error: error === undefined ? message : error
-      }
+        project: {
+          ...state.project,
+          members: {
+            ...state.project.members,
+            loading: false,
+            error: error === undefined ? message : error,
+          },
+        },
+      };
     }
     case ADD_BUG_REQUEST: {
       return {
         ...state,
-        loading: true,
-        error: ""
-      }
+        project: {
+          ...state.project,
+          bugs: {
+            ...state.project.bugs,
+            loading: true,
+            error: "",
+          },
+        },
+      };
     }
     case ADD_BUG_SUCCESS: {
       return {
         ...state,
-        loading: false,
-        error: "",
         project: {
           ...state.project,
-          bugs: [...state.project.bugs, action.payload]
-        }
-      }
+          bugs: {
+            ...state.project.bugs,
+            bugs: [...state.project.bugs.bugs, action.payload],
+            loading: false,
+            error: "",
+          },
+        },
+      };
     }
     case ADD_BUG_FAILURE: {
       const { error, message } = action.payload;
       return {
         ...state,
-        loading: false,
-        error: error === undefined ? message : error
-      }
+        project: {
+          ...state.project,
+          bugs: {
+            ...state.project.bugs,
+            loading: false,
+            error: error === undefined ? message : error,
+          },
+        },
+      };
     }
     case UPDATE_PROJECT_BODY_REQUEST: {
       return {
         ...state,
-        loading: true,
-        error: ""
-      }
+        project: {
+          ...state.project,
+          body: {
+            ...state.project.body,
+            loading: true,
+            error: "",
+          },
+        },
+      };
     }
     case UPDATE_PROJECT_BODY_SUCCESS: {
       return {
         ...state,
         project: {
           ...state.project,
-          body: action.payload.body
+          body: action.payload.body,
         },
         loading: false,
-        error: ""
-      }
+        error: "",
+      };
     }
     case UPDATE_PROJECT_BODY_FAILURE: {
       const { error, message } = action.payload;
       return {
         ...state,
-        loading: false,
-        error: error === undefined ? message : error
-      }
+        project: {
+          body: {
+            ...state.project.body,
+            loading: false,
+            error: error === undefined ? message : error,
+          },
+        },
+      };
     }
     case UPDATE_PROJECT_TECHSTACK_REQUEST: {
       return {
         ...state,
-        loading: true,
-        error: ""
-      }
+        project: {
+          ...state.project,
+          techStack: {
+            ...state.project.techStack,
+            loading: true,
+            error: "",
+          },
+        },
+      };
     }
     case UPDATE_PROJECT_TECHSTACK_SUCCESS: {
       return {
         ...state,
-        loading: false,
-        error: "",
         project: {
           ...state.project,
-          techStack: action.payload.techStack
-        }
-      }
+          techStack: {
+            ...state.project.techStack,
+            techStack: action.payload.techStack,
+            loading: false,
+            error: "",
+          },
+        },
+      };
     }
     case UPDATE_PROJECT_TECHSTACK_FAILURE: {
       const { error, message } = action.payload;
       return {
         ...state,
-        loading: false,
-        error: error === undefined ? message : error
-      }
+        project: {
+          ...state.project,
+          techStack: {
+            ...state.project.techStack,
+            loading: false,
+            error: error === undefined ? message : error,
+          },
+        },
+      };
     }
     default:
       return state;

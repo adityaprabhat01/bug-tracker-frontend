@@ -27,13 +27,28 @@ export interface BugInterface {
 export interface ProjectInterface {
   _id: string;
   title: string;
-  body: string;
+  body: {
+    loading: boolean,
+    error: string,
+    body: string
+  };
   user: User;
-  bugs: Array<BugInterface>;
+  bugs: {
+    bugs: Array<BugInterface>;
+    loading: boolean,
+    error: string
+  }
   date_opened: string;
-  members: Array<User>;
-  techStack: Array<TechStackInterface>;
-  comments: any;
+  members: {
+    members: Array<User>,
+    loading: boolean,
+    error: string
+  },
+  techStack: {
+    techStack: Array<TechStackInterface>,
+    loading: boolean,
+    error: string
+  } 
 }
 
 export interface initStateInterface {

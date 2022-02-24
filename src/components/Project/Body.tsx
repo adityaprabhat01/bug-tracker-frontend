@@ -32,6 +32,7 @@ const Body = (props: Props) => {
       handleFailure(data);
     }
     dispatch(update_project_body_success(data));
+    setIsOpen(false)
   }
 
   function handleFailure(data: any) {

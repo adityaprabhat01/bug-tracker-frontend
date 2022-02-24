@@ -49,7 +49,7 @@ const AddMember = () => {
     (state: RootStateOrAny) => state.project.project
   );
   const error: string = useSelector(
-    (state: RootStateOrAny) => state.project.error
+    (state: RootStateOrAny) => state.project.project.members.error
   );
   const title: string = useSelector(
     (state: RootStateOrAny) => state.project.project.title
@@ -96,17 +96,6 @@ const AddMember = () => {
         });
       });
   }
-
-  useEffect(() => {
-    return () => {
-      if(error !== "") {
-        dispatch(add_member_failure({
-          error: "",
-          message: ""
-        }));
-      }
-    }
-  })
 
   return (
     <>
