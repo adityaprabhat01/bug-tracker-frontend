@@ -14,7 +14,6 @@ import {
 
 const ProjectPage = () => {
   useAuthCookies();
-  console.log("hello")
   const auth = useSelector((state: RootStateOrAny) => state.auth);
   const dispatch = useDispatch();
   const store = useSelector(handleSelectors);

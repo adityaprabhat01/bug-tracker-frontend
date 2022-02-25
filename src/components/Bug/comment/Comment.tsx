@@ -23,7 +23,6 @@ interface Props {
 const Comment = (props: Props) => {
   const { user, body, bug_id, dateCreated, _id, activity } =
     props.comment;
-    console.log(props)
   if (activity.isActivity) {
     return (
       <>

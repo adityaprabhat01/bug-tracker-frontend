@@ -12,6 +12,8 @@ import { NavLink } from "react-router-dom";
 import NotificationBadge from "./Notification/NotificationBadge";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useEffect, useState } from "react";
+import ProfilePictureUpload from "./ProfilePictureUpload";
+import ProfilePicture from "./ProfilePicture";
 
 const Sidebar = () => {
   const auth = useSelector((state: RootStateOrAny) => state.auth);
@@ -46,7 +48,7 @@ const Sidebar = () => {
                 <Box>
                   <Wrap>
                     <WrapItem>
-                      <Avatar size="xl" name={auth.name} />{" "}
+                      <ProfilePicture size="2xl" name={auth.name} user_id={auth.user_id} />
                     </WrapItem>
                   </Wrap>
                 </Box>
@@ -74,6 +76,12 @@ const Sidebar = () => {
                 <Link as={NavLink} to={"/projects/"}>
                   Projects
                 </Link>
+              </Center>
+            </Box>
+
+            <Box mt={4}>
+              <Center>
+                <ProfilePictureUpload />
               </Center>
             </Box>
           </Box>

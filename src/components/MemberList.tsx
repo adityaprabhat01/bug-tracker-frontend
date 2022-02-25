@@ -48,7 +48,7 @@ const MemberList = (props: Props) => {
           <ModalHeader>Participants</ModalHeader>
           <ModalCloseButton />
           {members.map((member) => (
-            <>
+            <Box key={member._id}>
               <HStack>
                 <Box>{member.name}</Box>
                 {source === "SelectedProjectPage" ? (
@@ -57,7 +57,7 @@ const MemberList = (props: Props) => {
                   <RemoveMemberBug user_id={member.user_id} />
                 )}
               </HStack>
-            </>
+            </Box>
           ))}
         </ModalContent>
       </Modal>
