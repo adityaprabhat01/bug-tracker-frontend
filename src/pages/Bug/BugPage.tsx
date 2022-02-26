@@ -38,13 +38,25 @@ import Sidebar from "../../components/Sidebar";
 import Error from "../../components/Form/Error";
 import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
 import { BugInterface } from "../../interface/projectInterface";
+import { motion } from "framer-motion";
+
+const variants = {
+  // visible: {
+  //   transition: { staggerChildren: 0.5 }
+  // },
+  // hidden: {
+  //   transition: { staggerChildren: 0.05, staggerDirection: -1 }
+  // }
+};
+
+const MotionBox = motion(Box);
 
 const BugPage: React.FC = () => {
   useAuthCookies();
   const bugState = useSelector((state: RootStateOrAny) => state.bug);
   const { bug, loading, error } = bugState;
   const { bug_id } = useParams<{ bug_id?: string }>();
-  
+
   useFetch(
     {
       pathname: "/getBug/" + bug_id,
@@ -75,7 +87,7 @@ const BugPage: React.FC = () => {
   }
 
   return (
-    <> 
+    <>
       <Grid templateColumns="repeat(11, 1fr)" gap={2}>
         {loading === true ? (
           <GridItem colStart={6} colEnd={8}>
@@ -121,19 +133,22 @@ const BugPage: React.FC = () => {
                   </HStack>
                 </GridItem>
                 <GridItem colStart={3} colEnd={9} mt={2}>
-                  {bug.comments.comments.map((comment: CommentInterface) => (
-                    <Box key={comment._id}>
-                      <Comment comment={comment} />
-                      <Box height={"50px"} ml="40px">
-                        <Divider
-                          orientation="vertical"
-                          borderLeftWidth="2px"
-                          borderLeftColor={"#535353"}
-                        />
-                      </Box>
-                    </Box>
-                  ))}
-                  <PostComment bug_id={bug_id} />
+                  <MotionBox variants={variants} animate="visible" initial="hidden">
+                    {bug.comments.comments.map((comment: CommentInterface) => (
+                      <>
+                        <Comment key={comment._id} comment={comment} />
+                        <Box height={"50px"} ml="40px">
+                          <Divider
+                            orientation="vertical"
+                            borderLeftWidth="2px"
+                            borderLeftColor={"#535353"}
+                          />
+                        </Box>
+                      </>
+                    ))}
+                    <PostComment bug_id={bug_id} />
+                  </MotionBox>
+                  
                 </GridItem>
               </>
             ) : (

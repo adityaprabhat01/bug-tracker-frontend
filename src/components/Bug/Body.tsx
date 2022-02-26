@@ -104,6 +104,12 @@ const Body = () => {
                   loadingText="Updating"
                   type="submit"
                   backgroundColor={"blue.400"}
+                  _hover={{
+                    backgroundColor: "blue.300",
+                  }}
+                  _active={{
+                    backgroundColor: "#4299e1",
+                  }}
                 >
                   Updating
                 </Button>
@@ -117,6 +123,9 @@ const Body = () => {
                   borderRadius={"full"}
                   _hover={{
                     backgroundColor: "blue.300",
+                  }}
+                  _active={{
+                    backgroundColor: "#4299e1",
                   }}
                   leftIcon={<GrUpdate color="white" size={"0.8rem"} />}
                 >

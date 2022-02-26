@@ -36,7 +36,7 @@ const PostComment = (props: Props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
   const members = useSelector(
-    (state: RootStateOrAny) => state.project.project.members
+    (state: RootStateOrAny) => state.project.project.members.members
   );
   const loading = useSelector(
     (state: RootStateOrAny) => state.bug.bug.comments.loading
@@ -61,7 +61,7 @@ const PostComment = (props: Props) => {
     let temp = value.match(MENTION_REGEX);
     if (temp !== null) {
       const str = temp[0].slice(1, temp[0].length);
-      const y = `[${username}](${"http://localhost:3000"}/user/${username})`;
+      const y = `***[${username}](${"http://localhost:3000"}/user/${username})***`;
       x = x.replace(str, y);
       setValue(x);
     }
@@ -212,9 +212,15 @@ const PostComment = (props: Props) => {
               isLoading={loading}
               loadingText="Posting"
               onClick={handlePost}
-              backgroundColor="cyan.400"
+              backgroundColor="blue.400"
               color={"white"}
               borderRadius="20px"
+              _hover={{
+                backgroundColor: "blue.300",
+              }}
+              _active={{
+                backgroundColor: "#4299e1",
+              }}
             >
               Post
             </Button>

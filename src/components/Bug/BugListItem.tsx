@@ -72,7 +72,7 @@ const BugListItem = (props: Props) => {
                 <Date dateCreated={date_opened} />
               </Box>
             </Box>
-            
+
             <Box mt={2}>{body}</Box>
           </Link>
         </MotionBox>

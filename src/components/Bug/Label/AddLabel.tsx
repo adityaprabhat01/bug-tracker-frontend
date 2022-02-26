@@ -98,7 +98,20 @@ const AddLabel = (props: Props) => {
                     />
                   </MenuItem>
                 ))}
-                <Button onClick={handleUpdate}>Update</Button>
+                <Button
+                  onClick={handleUpdate}
+                  backgroundColor="blue.400"
+                  color={"white"}
+                  borderRadius="20px"
+                  _hover={{
+                    backgroundColor: "blue.300",
+                  }}
+                  _active={{
+                    backgroundColor: "#4299e1",
+                  }}
+                >
+                  Update
+                </Button>
               </>
             </MenuList>
           </>

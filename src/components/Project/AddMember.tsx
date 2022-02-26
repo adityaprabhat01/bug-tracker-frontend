@@ -119,6 +119,9 @@ const AddMember = () => {
           _hover={{
             backgroundColor: "blue.300",
           }}
+          _active={{
+            backgroundColor: "#4299e1",
+          }}
           leftIcon={<BsPlusLg color="white" size={"0.8rem"} />}
         >
           Add Member

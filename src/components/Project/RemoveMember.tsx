@@ -59,7 +59,20 @@ const RemoveMember = (props: Props) => {
   return (
     <>
       {error === "" ? null : <Error message={error} />}
-      <Button isLoading={loading} loadingText="Removing" onClick={handleRemove}>
+      <Button
+        isLoading={loading}
+        loadingText="Removing"
+        onClick={handleRemove}
+        backgroundColor={"blue.400"}
+        color={"white"}
+        borderRadius={"full"}
+        _hover={{
+          backgroundColor: "blue.300",
+        }}
+        _active={{
+          backgroundColor: "#4299e1",
+        }}
+      >
         Remove
       </Button>
     </>

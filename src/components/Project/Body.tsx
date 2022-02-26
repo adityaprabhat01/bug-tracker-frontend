@@ -1,4 +1,4 @@
-import { Box, Textarea } from "@chakra-ui/react";
+import { Box, Button, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { api } from "../../api";
@@ -27,12 +27,14 @@ const Body = (props: Props) => {
   function handlePreFetch() {
     dispatch(update_project_body_request());
   }
-  function handlePostFetch(data: { body: string } | ErrorFetched | MessageFetched) {
+  function handlePostFetch(
+    data: { body: string } | ErrorFetched | MessageFetched
+  ) {
     if ("error" in data || "message" in data) {
       return handleFailure(data);
     }
     dispatch(update_project_body_success(data));
-    setIsOpen(false)
+    setIsOpen(false);
   }
   function handleFailure(data: ErrorFetched | MessageFetched) {
     dispatch(update_project_body_failure(data));
@@ -103,7 +105,18 @@ const Body = (props: Props) => {
               onFocus={f}
             />
             <Box mt={3}>
-              <ButtonUI value="update" handleClick={handleUpdate} />
+              <Button
+                onClick={handleUpdate}
+                backgroundColor={"blue.400"}
+                color={"white"}
+                borderRadius={"full"}
+                _hover={{
+                  backgroundColor: "blue.300",
+                }}
+                _active={{
+                  backgroundColor: "#4299e1",
+                }}
+              >Update</Button>
             </Box>
           </>
         ) : (
