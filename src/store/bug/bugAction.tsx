@@ -1,3 +1,7 @@
+import { CommentInterface, LabelInterface } from "../../interface/bugInterface";
+import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
+import { BugInterface } from "../../interface/projectInterface";
+import { User } from "../../interface/userInterface";
 import {
   UPDATE_LABEL_FAILURE,
   UPDATE_LABEL_REQUEST,
@@ -31,14 +35,14 @@ export const bug_fetch_request = () => {
   };
 };
 
-export const bug_fetch_success = (data: any) => {
+export const bug_fetch_success = (data: BugInterface) => {
   return {
     type: BUG_FETCH_SUCCESS,
     payload: data,
   };
 };
 
-export const bug_fetch_failure = (data: any) => {
+export const bug_fetch_failure = (data: ErrorFetched | MessageFetched) => {
   return {
     type: BUG_FETCH_FAILURE,
     payload: data,
@@ -51,14 +55,14 @@ export const add_member_request = () => {
   }
 }
 
-export const add_member_success = (data: any) => {
+export const add_member_success = (data: User) => {
   return {
     type: ADD_MEMBER_SUCCESS,
     payload: data
   }
 }
 
-export const add_member_failure = (data: { error: string, message: string }) => {
+export const add_member_failure = (data: MessageFetched | ErrorFetched) => {
   return  {
     type: ADD_MEMBER_FAILURE,
     payload: data
@@ -71,14 +75,14 @@ export const update_bug_body_request = () => {
   }
 }
 
-export const update_bug_body_success = (data: any) => {
+export const update_bug_body_success = (data: { body: string }) => {
   return {
     type: UPDATE_BUG_BODY_SUCCESS,
     payload: data
   }
 }
 
-export const update_bug_body_failure = (data: { error: string, message: string }) => {
+export const update_bug_body_failure = (data: ErrorFetched | MessageFetched) => {
   return {
     type: UPDATE_BUG_BODY_FAILURE,
     payload: data
@@ -91,14 +95,14 @@ export const post_bug_comment_request = () => {
   }
 }
 
-export const post_bug_comment_success = (data: any) => {
+export const post_bug_comment_success = (data: CommentInterface) => {
   return {
     type: POST_BUG_COMMENT_SUCCESS,
     payload: data
   }
 }
 
-export const post_bug_comment_failure = (data: { error: string, message: string }) => {
+export const post_bug_comment_failure = (data: ErrorFetched | MessageFetched) => {
   return {
     type: POST_BUG_COMMENT_FAILURE,
     payload: data
@@ -111,14 +115,14 @@ export const update_label_request = () => {
   }
 }
 
-export const update_label_success = (data: any) => {
+export const update_label_success = (data: Array<LabelInterface>) => {
   return {
     type: UPDATE_LABEL_SUCCESS,
     payload: data
   }
 }
 
-export const update_label_failure = (data: { error: string, message: string }) => {
+export const update_label_failure = (data: ErrorFetched | MessageFetched) => {
   return {
     type: UPDATE_LABEL_FAILURE,
     payload: data
@@ -131,14 +135,14 @@ export const delete_comment_request = () => {
   }
 }
 
-export const delete_comment_success = (data: any) => {
+export const delete_comment_success = (data: CommentInterface) => {
   return {
     type: DELETE_COMMENT_SUCCESS,
     payload: data
   }
 }
 
-export const delete_comment_failure = (data: { error: string, message: string }) => {
+export const delete_comment_failure = (data: ErrorFetched | MessageFetched) => {
   return {
     type: DELETE_COMMENT_FAILURE,
     payload: data
@@ -151,14 +155,14 @@ export const close_bug_request = () => {
   }
 }
 
-export const close_bug_success = (data: any) => {
+export const close_bug_success = (data: { isOpen: boolean }) => {
   return {
     type: CLOSE_BUG_SUCCESS,
     payload: data
   }
 }
 
-export const close_bug_failure = (data: { error: string, message: string }) => {
+export const close_bug_failure = (data: ErrorFetched | MessageFetched) => {
   return {
     type: CLOSE_BUG_FAILURE,
     payload: data
@@ -171,14 +175,14 @@ export const remove_member_request = () => {
   }
 }
 
-export const remove_member_success = (data: any) => {
+export const remove_member_success = (data: { user_id: string }) => {
   return {
     type: REMOVE_MEMBER_SUCCESS,
     payload: data
   }
 }
 
-export const remove_member_failure = (data: { message: string, error: string }) => {
+export const remove_member_failure = (data: ErrorFetched | MessageFetched) => {
   return {
     type: REMOVE_MEMBER_FAILURE,
     payload: data

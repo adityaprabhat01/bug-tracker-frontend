@@ -10,7 +10,6 @@ interface Props {
 
 const Status = (props: Props) => {
   const { isOpen } = props;
-
   return (
     <>
       {isOpen.isOpen === true ? (

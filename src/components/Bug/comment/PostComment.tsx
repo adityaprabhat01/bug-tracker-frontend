@@ -4,7 +4,6 @@ import {
   Button,
   Center,
   HStack,
-  Link,
   Textarea,
   Wrap,
   WrapItem,
@@ -20,7 +19,6 @@ import {
   post_bug_comment_success,
 } from "../../../store/bug/bugAction";
 import { MENTION_REGEX } from "../../../utils";
-import ButtonUI from "../../ButtonUI";
 import Editor from "./Editor";
 import MentionItem from "./MentionItem";
 
@@ -210,14 +208,16 @@ const PostComment = (props: Props) => {
           )}
 
           <Box padding={2}>
-            <ButtonUI
+            <Button
               isLoading={loading}
               loadingText="Posting"
-              handleClick={handlePost}
-              value="Post"
+              onClick={handlePost}
               backgroundColor="cyan.400"
+              color={"white"}
               borderRadius="20px"
-            />
+            >
+              Post
+            </Button>
           </Box>
         </Box>
       </>

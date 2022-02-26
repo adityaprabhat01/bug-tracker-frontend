@@ -17,8 +17,6 @@ const ProfilePicture = (props: Props) => {
     getDownloadURL(ref(storage, image))
       .then((url) => {
         const xhr = new XMLHttpRequest();
-        //xhr.setRequestHeader( 'Access-Control-Allow-Origin', '*');
-        //xhr.withCredentials = false;
         xhr.responseType = "blob";
         xhr.onload = (event) => {
           const blob = xhr.response;

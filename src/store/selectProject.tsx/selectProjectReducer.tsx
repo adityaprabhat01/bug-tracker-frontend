@@ -98,10 +98,11 @@ const selectProjectReducer = (state = initState, action: any) => {
       };
     }
     case FETCH_SELECT_PROJECT_FAILURE: {
+      const { error, message } = action.payload;
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: error === undefined ? message : error,
       };
     }
     case ADD_MEMBER_REQUEST: {
@@ -111,7 +112,6 @@ const selectProjectReducer = (state = initState, action: any) => {
           ...state.project,
           members: {
             ...state.project.members,
-            // members: [...state.project.members.members, action.payload],
             loading: true,
             error: "",
           },
@@ -153,7 +153,6 @@ const selectProjectReducer = (state = initState, action: any) => {
           ...state.project,
           members: {
             ...state.project.members,
-            // members: [...state.project.members.members, action.payload],
             loading: true,
             error: "",
           },
@@ -168,7 +167,7 @@ const selectProjectReducer = (state = initState, action: any) => {
           members: {
             ...state.project.members,
             members: state.project.members.members.filter(
-              (member) => member.user_id !== action.payload
+              (member) => member.user_id !== action.payload.user_id
             ),
             loading: false,
             error: "",
@@ -179,6 +178,7 @@ const selectProjectReducer = (state = initState, action: any) => {
     case REMOVE_MEMBER_FAILURE: {
       const { error, message } = action.payload;
       return {
+        ...state,
         project: {
           ...state.project,
           members: {

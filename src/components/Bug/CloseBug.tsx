@@ -2,7 +2,8 @@ import { Box } from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { api } from "../../api";
-import { close_bug_success, post_bug_comment_success } from "../../store/bug/bugAction";
+import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
+import { close_bug_failure, close_bug_request, close_bug_success, post_bug_comment_success } from "../../store/bug/bugAction";
 
 interface Props {
   bug_id: string | undefined;
@@ -11,9 +12,27 @@ interface Props {
 
 const CloseBug = (props: Props) => {
   const auth = useSelector((state: RootStateOrAny) => state.auth);
-  const dispatch = useDispatch();
   const params = useParams<{project_id: string}>();
+
+  const dispatch = useDispatch();
+  function handlePreFetch() {
+    dispatch(close_bug_request());
+  }
+  function handlePostFetch(values: any) {
+    if("message" in values[0].data || "message" in values[1].data) {
+      handlePostFailure(values[0].data);
+    } else {
+      dispatch(close_bug_success(values[0].data));
+      dispatch(post_bug_comment_success(values[1].data));
+    }
+  }
+  function handlePostFailure(data: MessageFetched | ErrorFetched) {
+    dispatch(close_bug_failure(data));
+  }
+
+  
   function handleCloseBug() {
+    handlePreFetch();
     Promise.all([
       api
       .post("closeBug", {
@@ -35,12 +54,7 @@ const CloseBug = (props: Props) => {
         }
       })
     ]).then(values => {
-      if("message" in values[0].data) {
-
-      } else {
-        dispatch(close_bug_success(values[0].data));
-        dispatch(post_bug_comment_success(values[1].data));
-      }
+      handlePostFetch(values);
     }).catch(err => {})
   }
 
@@ -66,13 +80,7 @@ const CloseBug = (props: Props) => {
         }
       })
     ]).then(values => {
-      if("message" in values[0].data || "message" in values[1].data) {
-
-      } else {
-        dispatch(close_bug_success(values[0].data));
-        dispatch(post_bug_comment_success(values[1].data));
-      }
-      
+      handlePostFetch(values);
     }).catch(err => {})
   }
   const { bug_id, isOpen } = props;

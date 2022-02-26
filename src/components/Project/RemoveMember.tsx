@@ -1,12 +1,13 @@
 import { Button } from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
-import { selectProjectInitStateInterface } from "../../interface/projectInterface";
+import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
 import {
   remove_member_failure,
   remove_member_request,
   remove_member_success,
 } from "../../store/selectProject.tsx/selectProjectAction";
+import Error from "../Form/Error";
 
 interface Props {
   user_id: string;
@@ -20,40 +21,33 @@ const RemoveMember = (props: Props) => {
   const error = useSelector(
     (state: RootStateOrAny) => state.project.project.members.error
   );
-  const project: selectProjectInitStateInterface = useSelector(
-    (state: RootStateOrAny) => state.project
-  );
-  const dispatch = useDispatch();
-  function handleSelector(state: selectProjectInitStateInterface) {
-    const { project } = state;
-    const { _id } = project;
-    return { project_id: _id };
-  }
 
+  const project_id = useSelector(
+    (state: RootStateOrAny) => state.project.project._id
+  );
+
+  const dispatch = useDispatch();
   function handlePreFetch() {
     dispatch(remove_member_request());
   }
-
-  function handlePostFetch(data: any) {
-    console.log(data);
+  function handlePostFetch(
+    data: { user_id: string } | ErrorFetched | MessageFetched
+  ) {
     if ("error" in data || "message" in data) {
-      handleFailure(data);
+      return handleFailure(data);
     }
-    const { user_id } = data;
-    dispatch(remove_member_success(user_id));
+    dispatch(remove_member_success(data));
   }
-
-  function handleFailure(data: any) {
+  function handleFailure(data: ErrorFetched | MessageFetched) {
     dispatch(remove_member_failure(data));
   }
 
   function handleRemove() {
     handlePreFetch();
-    const project_id = handleSelector(project);
     api
       .post("/removeMember", {
         user_id,
-        ...project_id,
+        project_id,
       })
       .then((res) => {
         const { data } = res;
@@ -64,6 +58,7 @@ const RemoveMember = (props: Props) => {
 
   return (
     <>
+      {error === "" ? null : <Error message={error} />}
       <Button isLoading={loading} loadingText="Removing" onClick={handleRemove}>
         Remove
       </Button>

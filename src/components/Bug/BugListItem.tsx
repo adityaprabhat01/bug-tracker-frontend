@@ -4,7 +4,7 @@ import { BugInterface } from "../../interface/projectInterface";
 import About from "../About";
 import Date from "../Date";
 import Title from "../Title";
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
 
 interface Props {
   bug: BugInterface;
@@ -12,8 +12,7 @@ interface Props {
   colEnd: number;
 }
 
-
-const MotionBox = motion(Box)
+const MotionBox = motion(Box);
 
 const BugListItem = (props: Props) => {
   const { bug, colStart, colEnd } = props;
@@ -22,7 +21,6 @@ const BugListItem = (props: Props) => {
     <>
       <GridItem colStart={colStart} colEnd={colEnd}>
         <MotionBox
-        
           border={"2px solid #3f3f4182"}
           borderRadius={"5px"}
           padding={2}
@@ -74,7 +72,7 @@ const BugListItem = (props: Props) => {
                 <Date dateCreated={date_opened} />
               </Box>
             </Box>
-
+            
             <Box mt={2}>{body}</Box>
           </Link>
         </MotionBox>

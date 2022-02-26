@@ -63,7 +63,7 @@ const Login: React.FC = () => {
         }
         dispatch(login_success(data));
         (async function () {
-          const a = await asyncEmit("login", "success", {
+            await asyncEmit("login", "success", {
             name: data.name,
             username: data.username,
             user_id: data.user_id,

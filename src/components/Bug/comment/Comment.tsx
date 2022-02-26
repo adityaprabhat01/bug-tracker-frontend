@@ -21,8 +21,7 @@ interface Props {
 }
 
 const Comment = (props: Props) => {
-  const { user, body, bug_id, dateCreated, _id, activity } =
-    props.comment;
+  const { user, body, bug_id, dateCreated, _id, activity } = props.comment;
   if (activity.isActivity) {
     return (
       <>

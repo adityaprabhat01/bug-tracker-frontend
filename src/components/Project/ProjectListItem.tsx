@@ -2,11 +2,10 @@ import { Box, HStack, Link } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import Date from "../Date";
 import Title from "../Title";
-import TechStack from "./TechStack";
 
 const ProjectListItem = (props: any) => {
   const { project } = props;
-  const { title, body, dateCreated, techStack, _id } = project;
+  const { title, body, dateCreated, _id } = project;
   return (
     <>
       <Box maxW={"100px"} maxH={"100px"}>

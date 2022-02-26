@@ -43,8 +43,7 @@ const BugMenu = (props: Props) => {
         </MenuButton>
         <MenuList>
           <MenuItem>{props.children[0]}</MenuItem>
-          <Box>{props.children[1]}</Box>
-          <MenuItem>{props.children[2]}</MenuItem>
+          <Box ml={3}>{props.children[1]}</Box>
         </MenuList>
       </Menu>
     </>

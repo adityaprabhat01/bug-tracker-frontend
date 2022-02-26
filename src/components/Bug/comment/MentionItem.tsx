@@ -7,18 +7,16 @@ interface Props {
 }
 
 const MentionItem = (props: Props) => {
-  const { name, username, user_id } = props.member;
+  const { username } = props.member;
   const { handleMention } = props;
   function handleClick() {
-    handleMention(username)
+    handleMention(username);
   }
   return (
     <>
-      <Box onClick={handleClick}>
-        {username}
-      </Box>
+      <Box onClick={handleClick}>{username}</Box>
     </>
-  )
-}
+  );
+};
 
 export default MentionItem;

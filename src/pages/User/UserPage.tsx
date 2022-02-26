@@ -1,15 +1,14 @@
-import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import StaticItem from "../../components/Users/StaticItem";
 import Loading from "../../components/Loading";
-import useFetch from "../../hooks/useFetch";
 import {
   BugInterface,
   ProjectInterface,
 } from "../../interface/projectInterface";
 import StaticSidebar from "../../components/Users/StaticSidebar";
-import Title from "../../components/Title";
+import { api } from "../../api";
 
 interface User {
   email: string;
@@ -29,37 +28,44 @@ interface Data {
 const startCol = [3, 6, 9];
 const endCol = [6, 9, 12];
 
-const UserPage = () => {
+const UserPage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [data, setData] = useState<Data | null>(null);
   const params = useParams();
 
-  function handlePreFetch() {}
   function handlePostFetch(data: any) {
     setUser(data);
   }
   function handlePostFetchData(data: any) {
     setData(data);
   }
-  useFetch(
-    {
-      method: "GET",
-      pathname: "getUser/" + params.username,
-    },
-    handlePreFetch,
-    handlePostFetch,
-    null
-  );
 
-  useFetch(
-    {
-      method: "GET",
-      pathname: "getUserCache/" + params.username,
-    },
-    handlePreFetch,
-    handlePostFetchData,
-    null
-  );
+  useEffect(() => {
+    let unmount = false;
+    api
+      .get("getUser/" + params.username)
+      .then((res) => {
+        if (!unmount) {
+          const { data } = res;
+          handlePostFetch(data);
+        }
+      })
+      .catch((err) => {});
+
+      api
+      .get("getUserCache/" + params.username)
+      .then((res) => {
+        if (!unmount) {
+          const { data } = res;
+          handlePostFetchData(data);
+        }
+      })
+      .catch((err) => {});
+
+      return () => {
+        unmount = true;
+      }
+  }, [params.username]);
 
   return (
     <>

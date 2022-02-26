@@ -18,6 +18,7 @@ const InputForm = (props: Props) => {
         meta={meta}
         variant="flushed"
         size={"lg"}
+        required
       />
       {meta.touched && meta.error ? (
         <Error message={meta.error} />

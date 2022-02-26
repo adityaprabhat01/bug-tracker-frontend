@@ -122,10 +122,11 @@ const bugReducer = (state = initState, action: any) => {
       };
     }
     case BUG_FETCH_FAILURE: {
+      const { error, message } = action.payload;
       return {
         ...state,
         loading: false,
-        error: "",
+        error: error === undefined ? message : error,
       };
     }
     case ADD_MEMBER_REQUEST: {
@@ -339,7 +340,7 @@ const bugReducer = (state = initState, action: any) => {
           ...state.bug,
           members: {
             ...state.bug.members,
-            members: state.bug.members.members.filter((member: User) => member.user_id !== action.payload),
+            members: state.bug.members.members.filter((member: User) => member.user_id !== action.payload.user_id),
             loading: false,
             error: ""
           }

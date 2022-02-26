@@ -9,7 +9,6 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { RootStateOrAny, useSelector } from "react-redux";
 import { User } from "../interface/userInterface";
 import RemoveMemberBug from "./Bug/member/RemoveMember";
 import RemoveMember from "./Project/RemoveMember";
@@ -22,7 +21,7 @@ interface Props {
 }
 
 const MemberList = (props: Props) => {
-  const { members, loading, error, source } = props;
+  const { members, source } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>

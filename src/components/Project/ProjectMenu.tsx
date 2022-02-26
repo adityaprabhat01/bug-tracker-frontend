@@ -42,9 +42,7 @@ const ProjectMenu = (props: Props) => {
           </svg>
         </MenuButton>
         <MenuList>
-          <Box>
-            {props.children[0]}
-          </Box>
+          <Box>{props.children[0]}</Box>
         </MenuList>
       </Menu>
     </>

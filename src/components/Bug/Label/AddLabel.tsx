@@ -9,6 +9,11 @@ import {
 import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../../api";
+import { LabelInterface } from "../../../interface/bugInterface";
+import {
+  ErrorFetched,
+  MessageFetched,
+} from "../../../interface/errorInterface";
 import {
   update_label_failure,
   update_label_request,
@@ -25,20 +30,21 @@ const AddLabel = (props: Props) => {
   const [showEdit, setShowEdit] = useState(false);
   const [labelState, setLabelState] = useState(labels);
   const bug_id = useSelector((state: RootStateOrAny) => state.bug.bug._id);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   function handlePreFetch() {
     dispatch(update_label_request());
   }
-  function handlePostFetch(data: any) {
+  function handlePostFetch(
+    data: Array<LabelInterface> | ErrorFetched | MessageFetched
+  ) {
     if ("error" in data || "message" in data) {
-      handleFailure(data);
+      return handleFailure(data);
     }
     dispatch(update_label_success(data));
     document.getElementById("edit-labels")?.click();
   }
-
-  function handleFailure(data: { error: string; message: string }) {
+  function handleFailure(data: ErrorFetched | MessageFetched) {
     dispatch(update_label_failure(data));
   }
 
@@ -75,7 +81,9 @@ const AddLabel = (props: Props) => {
                   cursor: "pointer",
                 }}
               >
-                <Box backgroundColor={"white"} id="edit-labels">Edit Labels</Box>
+                <Box backgroundColor={"white"} id="edit-labels">
+                  Edit Labels
+                </Box>
               </Box>
             </MenuButton>
 

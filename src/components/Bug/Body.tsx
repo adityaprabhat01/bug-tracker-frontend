@@ -7,9 +7,9 @@ import {
   update_bug_body_request,
   update_bug_body_success,
 } from "../../store/bug/bugAction";
-import ButtonUI from "../ButtonUI";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { GrUpdate } from "react-icons/gr";
+import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
 
 const Body = () => {
   const bug_id = useSelector((state: RootStateOrAny) => state.bug.bug._id);
@@ -17,21 +17,19 @@ const Body = () => {
 
   const [value, setValue] = useState(body.body);
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   function handlePreFetch() {
     dispatch(update_bug_body_request());
   }
-
-  function handlePostFetch(data: any) {
+  function handlePostFetch(data: { body: string } | ErrorFetched | MessageFetched) {
     if ("error" in data || "message" in data) {
-      handleFailure(data);
+      return handleFailure(data);
     }
     dispatch(update_bug_body_success(data));
     setIsOpen(!isOpen);
   }
-
-  function handleFailure(data: any) {
+  function handleFailure(data: ErrorFetched | MessageFetched) {
     dispatch(update_bug_body_failure(data));
   }
 

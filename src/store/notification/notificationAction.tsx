@@ -1,3 +1,4 @@
+import { NotificationInterface } from "../../interface/notificationInterface"
 import { FETCH_NOTIFICATION_FAILURE, FETCH_NOTIFICATION_REQUEST, FETCH_NOTIFICATION_SUCCESS, MARK_AS_READ_FAILURE, MARK_AS_READ_REQUEST, MARK_AS_READ_SUCCESS, RECEIVE_NOTIFICATION_COUNT } from "./notificationType"
 
 export const fetch_notification_request = () => {
@@ -6,7 +7,7 @@ export const fetch_notification_request = () => {
   }
 }
 
-export const fetch_notification_success = (data: any) => {
+export const fetch_notification_success = (data: NotificationInterface) => {
   return {
     type: FETCH_NOTIFICATION_SUCCESS,
     payload: data

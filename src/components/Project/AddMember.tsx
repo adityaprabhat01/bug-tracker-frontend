@@ -24,14 +24,19 @@ import ButtonForm from "../Form/ButtonForm";
 import Error from "../Form/Error";
 import InputForm from "../Form/InputForm";
 import { socket } from "../../socket";
-import { useEffect } from "react";
 import { BsPlusLg } from "react-icons/bs";
+import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
 
 interface InitialValuesInterface {
   user_id: string;
   username: string;
   name: string;
   project_id: string;
+}
+
+type FetchedMember = {
+  project_id: string;
+  username: string
 }
 
 const initialValues: InitialValuesInterface = {
@@ -51,16 +56,22 @@ const AddMember = () => {
   const error: string = useSelector(
     (state: RootStateOrAny) => state.project.project.members.error
   );
+  const loading: boolean = useSelector(
+    (state: RootStateOrAny) => state.project.project.members.loading
+  );
   const title: string = useSelector(
     (state: RootStateOrAny) => state.project.project.title
   );
-  const auth_name = useSelector((state: RootStateOrAny) => state.auth.username);
+  const auth_name: string = useSelector((state: RootStateOrAny) => state.auth.username);
+  
 
   function handlePreFetch() {
     dispatch(add_member_request());
   }
 
-  function handlePostFetch(data: any) {
+  function handlePostFetch(
+    data: FetchedMember | ErrorFetched | MessageFetched
+  ) {
     if ("message" in data || "error" in data) {
       return handFailure(data);
     }
@@ -68,7 +79,7 @@ const AddMember = () => {
     onClose();
   }
 
-  function handFailure(data: any) {
+  function handFailure(data: ErrorFetched | MessageFetched) {
     dispatch(add_member_failure(data));
     onClose();
   }
@@ -100,7 +111,7 @@ const AddMember = () => {
   return (
     <>
       <Box>
-      <Button
+        <Button
           onClick={onOpen}
           backgroundColor={"blue.400"}
           color={"white"}
@@ -131,7 +142,7 @@ const AddMember = () => {
                     </FormControl>
                   </ModalBody>
                   <ModalFooter>
-                    <ButtonForm message="Submit" />
+                  {loading === false ? <ButtonForm message="Submit" /> : <Button isLoading={loading} />}
                   </ModalFooter>
                 </Form>
               </>

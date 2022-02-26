@@ -24,6 +24,8 @@ import ButtonForm from "../../Form/ButtonForm";
 import Error from "../../Form/Error";
 import InputForm from "../../Form/InputForm";
 import { BsPlusLg } from "react-icons/bs";
+import { ErrorFetched, MessageFetched } from "../../../interface/errorInterface";
+import { User } from "../../../interface/userInterface";
 
 interface InitialValuesInterface {
   username: string;
@@ -35,8 +37,8 @@ interface Props {
 
 const AddMemberBug = (props: Props) => {
   const { bug_id } = props;
-  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const error: string = useSelector(
     (state: RootStateOrAny) => state.bug.bug.members.error
   );
@@ -48,19 +50,19 @@ const AddMemberBug = (props: Props) => {
   const initialValues: InitialValuesInterface = {
     username: "",
   };
+
+  const dispatch = useDispatch();
   function handlePreFetch() {
     dispatch(add_member_request());
   }
-
-  function handlePostFetch(data: any) {
+  function handlePostFetch(data: User | ErrorFetched | MessageFetched) {
     if ("error" in data || "message" in data) {
       return handleFailure(data);
     }
     dispatch(add_member_success(data));
     onClose();
   }
-
-  function handleFailure(data: any) {
+  function handleFailure(data: ErrorFetched | MessageFetched) {
     dispatch(add_member_failure(data));
     onClose();
   }
@@ -122,7 +124,11 @@ const AddMemberBug = (props: Props) => {
                     </FormControl>
                   </ModalBody>
                   <ModalFooter>
-                    <ButtonForm message="Submit" />
+                    {loading === false ? (
+                      <ButtonForm message="Submit" />
+                    ) : (
+                      <Button isLoading={loading} />
+                    )}
                   </ModalFooter>
                 </Form>
               </>

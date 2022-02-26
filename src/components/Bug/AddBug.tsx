@@ -23,6 +23,8 @@ import ButtonForm from "../Form/ButtonForm";
 import Error from "../Form/Error";
 import InputForm from "../Form/InputForm";
 import { BsPlusLg } from "react-icons/bs";
+import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
+import { useEffect } from "react";
 
 interface InitialValuesInterface {
   title: string;
@@ -37,7 +39,15 @@ const AddBug = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
-  const project = useSelector((state: RootStateOrAny) => state.project);
+  const project_id = useSelector(
+    (state: RootStateOrAny) => state.project.project._id
+  );
+  const error = useSelector(
+    (state: RootStateOrAny) => state.project.project.bugs.error
+  );
+  const loading = useSelector(
+    (state: RootStateOrAny) => state.project.project.bugs.loading
+  );
 
   function handlePreFetch() {
     dispatch(add_bug_request());
@@ -48,12 +58,12 @@ const AddBug = () => {
   function handlePostFetch(data: any) {
     onClose();
     if ("error" in data || "message" in data) {
-      handleFailure(data);
+      return handleFailure(data);
     }
     dispatch(add_bug_success(data));
   }
 
-  function handleFailure(data: any) {
+  function handleFailure(data: ErrorFetched | MessageFetched) {
     onClose();
     dispatch(add_bug_failure(data));
   }
@@ -61,16 +71,15 @@ const AddBug = () => {
   function handleSubmit(values: InitialValuesInterface, fn: Function) {
     handlePreFetch();
     const { title, body } = values;
-    const { _id, user } = project.project;
     api
       .post("/addBug", {
         title,
         body,
-        project_id: _id,
+        project_id,
         user: {
           name: auth.name,
           username: auth.username,
-          user_id: auth.user_id
+          user_id: auth.user_id,
         },
       })
       .then((res) => {
@@ -83,7 +92,7 @@ const AddBug = () => {
   return (
     <>
       <Box mt={3}>
-      <Button
+        <Button
           onClick={onOpen}
           backgroundColor={"blue.400"}
           color={"white"}
@@ -96,38 +105,39 @@ const AddBug = () => {
           Add Bug
         </Button>
       </Box>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Report Bug in the project</ModalHeader>
-            <ModalCloseButton />
-            <Formik
-              initialValues={initialValues}
-              onSubmit={(values, { setSubmitting }) => {
-                handleSubmit(values, setSubmitting);
-              }}
-            >
-              <>
-                <Form>
-                  <ModalBody pb={6}>
-                    <FormControl mt={4}>
-                      <InputForm message="Title" name="title" />
-                    </FormControl>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Report Bug in the project</ModalHeader>
+          <ModalCloseButton />
+          <Formik
+            initialValues={initialValues}
+            onSubmit={(values, { setSubmitting }) => {
+              handleSubmit(values, setSubmitting);
+            }}
+          >
+            <>
+              <Form>
+                <ModalBody pb={6}>
+                  <FormControl mt={4}>
+                    <InputForm message="Title" name="title" />
+                  </FormControl>
 
-                    <FormControl mt={4}>
-                      <InputForm message="body" name="body" />
-                    </FormControl>
-                  </ModalBody>
-                  <ModalFooter>
-                    <ButtonForm message="Submit" />
-                  </ModalFooter>
-                </Form>
-              </>
-            </Formik>
-          </ModalContent>
-        </Modal>
+                  <FormControl mt={4}>
+                    <InputForm message="body" name="body" />
+                  </FormControl>
+                </ModalBody>
 
-      {project.error !== "" ? <Error message={project.error} /> : null}
+                <ModalFooter>
+                  {loading === false ? <ButtonForm message="Submit" /> : <Button isLoading={loading} />}
+                </ModalFooter>
+              </Form>
+            </>
+          </Formik>
+        </ModalContent>
+      </Modal>
+
+      {error !== "" ? <Error message={error} /> : null}
     </>
   );
 };

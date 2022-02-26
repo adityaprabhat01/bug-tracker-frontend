@@ -16,8 +16,12 @@ const LabelItem = (props: Props) => {
 
   return (
     <>
-      <Box width={"100%"} fontWeight={assigned === true ? "bold" : ""} onClick={handleClick} >
-        {name}        
+      <Box
+        width={"100%"}
+        fontWeight={assigned === true ? "bold" : ""}
+        onClick={handleClick}
+      >
+        {name}
       </Box>
     </>
   );

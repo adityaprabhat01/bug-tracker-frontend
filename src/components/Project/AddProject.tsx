@@ -1,5 +1,4 @@
 import {
-  Button,
   FormControl,
   FormLabel,
   Modal,
@@ -12,7 +11,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
 import {
   add_project_request,
@@ -28,25 +27,18 @@ interface InitialValuesInterface {
 }
 
 const AddProject = () => {
-
-  function handleSelector (state: { auth: any; }) {
-    const user = state.auth;
-    return { user }
-  }
-
-  const dispatch = useDispatch();
-  const store = useSelector(handleSelector)
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const initialValues = {
     title: "",
     body: "",
   };
 
+  const auth = useSelector((state: RootStateOrAny) => state.auth);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const dispatch = useDispatch();
   function handlePreFetch() {
     dispatch(add_project_request());
   }
-
   function handlePostFetch(data: any) {
     dispatch(add_project_success(data));
     onClose();
@@ -54,24 +46,23 @@ const AddProject = () => {
 
   function handleSubmit(values: InitialValuesInterface, fn: Function) {
     const { title, body } = values;
-    const { name, username, user_id } = store.user;
+    const { name, username, user_id } = auth;
     handlePreFetch();
-    api.post("/addProject", {
-      title, 
-      body,
-      user: {
-        name,
-        username,
-        user_id
-      }
-    })
-    .then(res => {
-      const { data } = res;
-      handlePostFetch(data)
-    })
-    .catch(err => {
-
-    })
+    api
+      .post("/addProject", {
+        title,
+        body,
+        user: {
+          name,
+          username,
+          user_id,
+        },
+      })
+      .then((res) => {
+        const { data } = res;
+        handlePostFetch(data);
+      })
+      .catch((err) => {});
   }
 
   return (
@@ -102,7 +93,7 @@ const AddProject = () => {
                   </FormControl>
                 </ModalBody>
                 <ModalFooter>
-                  <ButtonForm message="Submit" /> 
+                  <ButtonForm message="Submit" />
                 </ModalFooter>
               </Form>
             </>

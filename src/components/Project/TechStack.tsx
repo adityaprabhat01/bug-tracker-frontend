@@ -1,7 +1,8 @@
-import { Badge, Box, Button, HStack, Icon, Input } from "@chakra-ui/react";
+import { Badge, Box, Button, HStack, Input } from "@chakra-ui/react";
 import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
+import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
 import {
   update_project_techstack_failure,
   update_project_techStack_request,
@@ -13,6 +14,12 @@ interface Props {
   stack: Array<any>;
 }
 
+type TechStackType = {
+  name: string;
+  project_id: string;
+  type: string;
+};
+
 const TechStack = (props: Props) => {
   const { stack } = props;
   const [value, setValue] = useState("");
@@ -20,17 +27,21 @@ const TechStack = (props: Props) => {
   const project_id = useSelector(
     (state: RootStateOrAny) => state.project.project._id
   );
+
   const dispatch = useDispatch();
   function handleAddPreFetch() {
     dispatch(update_project_techStack_request());
   }
-  function handleAddPostFetch(data: any) {
+  function handleAddPostFetch(
+    data: TechStackType | ErrorFetched | MessageFetched
+  ) {
     if ("error" in data || "message" in data) {
-      handleAddFailure(data);
+      return handleAddFailure(data);
     }
     dispatch(update_project_techStack_success(data));
+    handleEdit();
   }
-  function handleAddFailure(data: any) {
+  function handleAddFailure(data: ErrorFetched | MessageFetched) {
     dispatch(update_project_techstack_failure(data));
   }
 
@@ -87,7 +98,7 @@ const TechStack = (props: Props) => {
             width="24"
             height="24"
             viewBox="0 0 172 172"
-            style={{fill:"#000000"}}
+            style={{ fill: "#000000" }}
             onClick={handleEdit}
           >
             <g
@@ -104,7 +115,7 @@ const TechStack = (props: Props) => {
               fontWeight="none"
               fontSize="none"
               textAnchor="none"
-              style={{mixBlendMode: "normal"}}
+              style={{ mixBlendMode: "normal" }}
             >
               <path d="M0,172v-172h172v172z" fill="none"></path>
               <g fill="#000000">
@@ -123,7 +134,9 @@ const TechStack = (props: Props) => {
                     handleRemove={handleRemove}
                   />
                 ) : null}
-                <Badge padding={1} colorScheme={"blue"}>{tech.name}</Badge>
+                <Badge padding={1} colorScheme={"blue"}>
+                  {tech.name}
+                </Badge>
               </Box>
             </Box>
           ))}

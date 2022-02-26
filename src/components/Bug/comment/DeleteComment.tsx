@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../../api";
 import { delete_comment_success } from "../../../store/bug/bugAction";

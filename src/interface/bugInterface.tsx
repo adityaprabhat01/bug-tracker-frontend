@@ -13,6 +13,13 @@ export interface CommentInterface {
   }
 }
 
+export interface LabelInterface {
+  name: string;
+  assigned: boolean;
+  color: string;
+  _id: string;
+}
+
 export interface BugInterface {
   title: string,
   body: {
@@ -40,7 +47,7 @@ export interface BugInterface {
     error: string
   },
   labels: {
-    labels: Array<string>,
+    labels: Array<LabelInterface>,
     loading: boolean,
     error: string
   },

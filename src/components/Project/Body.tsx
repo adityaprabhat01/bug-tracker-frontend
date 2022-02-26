@@ -2,6 +2,7 @@ import { Box, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { api } from "../../api";
+import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
 import { User } from "../../interface/userInterface";
 import {
   update_project_body_failure,
@@ -21,21 +22,19 @@ const Body = (props: Props) => {
   const { body, project_id } = props;
   const [value, setValue] = useState(body);
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   function handlePreFetch() {
     dispatch(update_project_body_request());
   }
-
-  function handlePostFetch(data: any) {
+  function handlePostFetch(data: { body: string } | ErrorFetched | MessageFetched) {
     if ("error" in data || "message" in data) {
-      handleFailure(data);
+      return handleFailure(data);
     }
     dispatch(update_project_body_success(data));
     setIsOpen(false)
   }
-
-  function handleFailure(data: any) {
+  function handleFailure(data: ErrorFetched | MessageFetched) {
     dispatch(update_project_body_failure(data));
   }
 
