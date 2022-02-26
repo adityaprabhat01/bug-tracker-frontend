@@ -137,6 +137,7 @@ const Project: React.FC = () => {
                     <TechStack stack={project.techStack.techStack} />
                   </Box>
                 </GridItem>
+
                 {project.bugs.bugs.map((bug: BugInterface, i: number) => (
                   <BugListItem
                     key={bug._id}
@@ -145,6 +146,7 @@ const Project: React.FC = () => {
                     colEnd={endCol[i % 3]}
                   />
                 ))}
+                
               </>
             ) : (
               <GridItem colStart={6} colEnd={8}>

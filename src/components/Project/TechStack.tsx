@@ -1,4 +1,5 @@
 import { Badge, Box, Button, HStack, Input } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { api } from "../../api";
@@ -19,6 +20,20 @@ type TechStackType = {
   project_id: string;
   type: string;
 };
+
+const container = {
+  hidden: { opacity: 1, scale: 0 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delayChildren: 0.3,
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const MotionBox = motion(Box);
 
 const TechStack = (props: Props) => {
   const { stack } = props;
@@ -126,7 +141,13 @@ const TechStack = (props: Props) => {
         </Box>
         <HStack>
           {stack.map((tech: any) => (
-            <Box key={tech._id}>
+            <MotionBox
+              key={tech._id}
+              className="container"
+              variants={container}
+              initial="hidden"
+              animate="visible"
+            >
               <Box key={tech._id} position="relative" mr={2}>
                 {edit === true ? (
                   <CloseUI
@@ -138,7 +159,7 @@ const TechStack = (props: Props) => {
                   {tech.name}
                 </Badge>
               </Box>
-            </Box>
+            </MotionBox>
           ))}
         </HStack>
 

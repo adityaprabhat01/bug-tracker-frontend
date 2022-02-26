@@ -4,6 +4,7 @@ import { User } from "../../../interface/userInterface";
 import Date from "../../Date";
 import CommentMenu from "./CommentMenu";
 import DeleteComment from "./DeleteComment";
+import { motion } from "framer-motion";
 
 interface Props {
   comment: {
@@ -20,12 +21,34 @@ interface Props {
   };
 }
 
+
+
+const variants = {
+  open: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      y: { stiffness: 1000, velocity: -100 }
+    }
+  },
+  closed: {
+    y: 50,
+    opacity: 0,
+    transition: {
+      y: { stiffness: 1000 }
+    }
+  }
+};
+
+
+const MotionBox = motion(Box);
+
 const Comment = (props: Props) => {
   const { user, body, bug_id, dateCreated, _id, activity } = props.comment;
   if (activity.isActivity) {
     return (
       <>
-        <Box border={"2px solid #c7d0d8"} padding={2} borderRadius={"5px"}>
+        <MotionBox variants={variants} border={"2px solid #c7d0d8"} padding={2} borderRadius={"5px"}>
           <HStack>
             <Wrap>
               <WrapItem>
@@ -43,13 +66,13 @@ const Comment = (props: Props) => {
               <ReactMarkdown children={body} />
             </Box>
           </HStack>
-        </Box>
+        </MotionBox>
       </>
     );
   }
   return (
     <>
-      <Box border={"2px solid #c7d0d8"} borderRadius={"5px"}>
+      <MotionBox variants={variants} border={"2px solid #c7d0d8"} borderRadius={"5px"}>
         <Box padding={2}>
           <HStack>
             <Wrap>
@@ -74,7 +97,7 @@ const Comment = (props: Props) => {
             <ReactMarkdown children={body} />
           </Box>
         </Box>
-      </Box>
+      </MotionBox>
     </>
   );
 };

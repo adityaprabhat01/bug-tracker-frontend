@@ -75,7 +75,7 @@ const BugPage: React.FC = () => {
   }
 
   return (
-    <>
+    <> 
       <Grid templateColumns="repeat(11, 1fr)" gap={2}>
         {loading === true ? (
           <GridItem colStart={6} colEnd={8}>

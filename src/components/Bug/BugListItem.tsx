@@ -1,4 +1,4 @@
-import { Badge, Box, Divider, GridItem, Link, Slide } from "@chakra-ui/react";
+import { Badge, Box, Divider, GridItem, Link } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { BugInterface } from "../../interface/projectInterface";
 import About from "../About";
