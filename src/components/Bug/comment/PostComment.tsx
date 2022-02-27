@@ -12,13 +12,14 @@ import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { api } from "../../../api";
+import { BugInterface } from "../../../interface/bugInterface";
 import { socket } from "../../../socket";
 import {
   post_bug_comment_failure,
   post_bug_comment_request,
   post_bug_comment_success,
 } from "../../../store/bug/bugAction";
-import { MENTION_REGEX } from "../../../utils";
+import { MENTION_REGEX, REFERENCE_REGEX } from "../../../utils";
 import Editor from "./Editor";
 import MentionItem from "./MentionItem";
 
@@ -31,24 +32,32 @@ const PostComment = (props: Props) => {
   const [value, setValue] = useState("");
   const [output, setOutput] = useState(false);
   const [showMembers, setShowMembers] = useState(false);
+  const [showBugs, setShowBugs] = useState(false);
   const params = useParams<{ project_id: string }>();
-
+  
   const dispatch = useDispatch();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
   const members = useSelector(
     (state: RootStateOrAny) => state.project.project.members.members
   );
+  const bugs = useSelector(
+    (state: RootStateOrAny) => state.project.project.bugs.bugs
+  );
   const loading = useSelector(
     (state: RootStateOrAny) => state.bug.bug.comments.loading
   );
-  const project_id = useSelector(
-    (state: RootStateOrAny) => state.project.project._id
-  );
+  
 
   function handleOnChange(event: any) {
     const val = event.target.value;
-    let temp = val.match(MENTION_REGEX);
-    if (temp !== null) {
+    let mention = val.match(MENTION_REGEX);
+    let reference = val.match(REFERENCE_REGEX);
+    if(reference !== null) {
+      setShowBugs(true);
+    } else {
+      setShowBugs(false);
+    }
+    if (mention !== null) {
       setShowMembers(true);
     } else {
       setShowMembers(false);
@@ -62,6 +71,18 @@ const PostComment = (props: Props) => {
     if (temp !== null) {
       const str = temp[0].slice(1, temp[0].length);
       const y = `***[${username}](${"http://localhost:3000"}/user/${username})***`;
+      x = x.replace(str, y);
+      setValue(x);
+    }
+  }
+
+  function handleReference(reference: { bug_id: string, mentionId: number | null, project_id: string }) {
+    const { bug_id, mentionId, project_id } = reference;
+    let x = value;
+    let temp = value.match(REFERENCE_REGEX);
+    if (temp !== null) {
+      const str = temp[0].slice(1, temp[0].length);
+      const y = `***[${mentionId}](${"http://localhost:3000"}/project/${project_id}/bug/${bug_id})***`;
       x = x.replace(str, y);
       setValue(x);
     }
@@ -195,11 +216,25 @@ const PostComment = (props: Props) => {
                 ? members.map((member: any) => (
                     <MentionItem
                       key={member._id}
-                      member={member}
+                      value={member.username}
                       handleMention={handleMention}
                     />
                   ))
                 : null}
+              {
+                showBugs === true ?
+                bugs.map((bug: BugInterface) => (
+                  <MentionItem
+                      key={bug._id}
+                      value={{
+                        mentionId: bug.mentionId,
+                        bug_id: bug._id,
+                        project_id: bug.project_id
+                      }}
+                      handleMention={handleReference}
+                    />
+                )): null
+              }
             </span>
           ) : (
             <Box>

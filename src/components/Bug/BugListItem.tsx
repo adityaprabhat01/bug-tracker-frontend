@@ -1,10 +1,10 @@
 import { Badge, Box, Divider, GridItem, Link } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { BugInterface } from "../../interface/projectInterface";
 import About from "../About";
 import Date from "../Date";
 import Title from "../Title";
 import { motion } from "framer-motion";
+import { BugInterface } from "../../interface/bugInterface";
 
 interface Props {
   bug: BugInterface;
@@ -51,7 +51,7 @@ const BugListItem = (props: Props) => {
             }}
           >
             <Title title={title} />
-            {isOpen === true ? (
+            {isOpen.isOpen === true ? (
               <>
                 <Badge variant="subtle" colorScheme="green">
                   Open

@@ -1,16 +1,16 @@
-import { User } from "./userInterface"
+import { User } from "./userInterface";
 
 export interface CommentInterface {
-  user: User,
-  project_id: string,
-  bug_id: string,
-  body: string,
-  _id: string,
-  dateCreated: string,
+  user: User;
+  project_id: string;
+  bug_id: string;
+  body: string;
+  _id: string;
+  dateCreated: string;
   activity: {
-    isActivity: boolean,
-    value: string
-  }
+    isActivity: boolean;
+    value: string;
+  };
 }
 
 export interface LabelInterface {
@@ -21,36 +21,37 @@ export interface LabelInterface {
 }
 
 export interface BugInterface {
-  title: string,
+  title: string;
   body: {
-    body: string,
-    loading: boolean,
-    error: string
-  },
-  dateOpen: string,
+    body: string;
+    loading: boolean;
+    error: string;
+  };
+  date_opened: string;
   isOpen: {
-    isOpen: boolean,
-    loading: boolean,
-    error: string
-  },
-  project_id: string,
-  _id: string,
-  user: User,
+    isOpen: boolean;
+    loading: boolean;
+    error: string;
+  };
+  project_id: string;
+  _id: string;
+  user: User;
   comments: {
-    comments: Array <CommentInterface>,
-    loading: boolean,
-    error: string
-  },
+    comments: Array<CommentInterface>;
+    loading: boolean;
+    error: string;
+  };
   members: {
-    members: Array<User>,
-    loading: boolean,
-    error: string
-  },
+    members: Array<User>;
+    loading: boolean;
+    error: string;
+  };
   labels: {
-    labels: Array<LabelInterface>,
-    loading: boolean,
-    error: string
-  },
-  loading: boolean,
-  error: string
+    labels: Array<LabelInterface>;
+    loading: boolean;
+    error: string;
+  };
+  mentionId: number | null;
+  loading: boolean;
+  error: string;
 }

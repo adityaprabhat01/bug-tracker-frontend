@@ -1,20 +1,41 @@
 import { Box } from "@chakra-ui/react";
-import { User } from "../../../interface/userInterface";
 
 interface Props {
-  member: User;
+  value:
+    | string
+    | { bug_id: string; mentionId: number | null; project_id: string };
   handleMention: any;
 }
 
 const MentionItem = (props: Props) => {
-  const { username } = props.member;
+  const { value } = props;
   const { handleMention } = props;
   function handleClick() {
-    handleMention(username);
+    handleMention(value);
+  }
+  if (typeof value === "object") {
+    return (
+      <Box onClick={handleClick} mt={2} _hover=
+      {{
+        backgroundColor: "gray.200",
+        cursor: "pointer",
+      }}>
+        {value.mentionId} 
+      </Box>
+    );
   }
   return (
     <>
-      <Box onClick={handleClick}>{username}</Box>
+      <Box
+        onClick={handleClick}
+        mt={2}
+        _hover={{
+          backgroundColor: "gray.200",
+          cursor: "pointer",
+        }}
+      >
+        {value}
+      </Box>
     </>
   );
 };

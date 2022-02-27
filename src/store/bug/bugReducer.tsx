@@ -60,6 +60,7 @@ const initState = {
       loading: false,
       error: "",
     },
+    mentionId: null,
   },
   loading: false,
   error: "",
@@ -86,6 +87,7 @@ const bugReducer = (state = initState, action: any) => {
         comments,
         members,
         labels,
+        mentionId,
       } = action.payload;
       return {
         ...state,
@@ -118,6 +120,7 @@ const bugReducer = (state = initState, action: any) => {
             ...state.bug.labels,
             labels,
           },
+          mentionId,
         },
       };
     }
@@ -315,10 +318,10 @@ const bugReducer = (state = initState, action: any) => {
           ...state.bug,
           isOpen: {
             ...state.bug.isOpen,
-            isOpen: action.payload.isOpen
-          }
-        }
-      }
+            isOpen: action.payload.isOpen,
+          },
+        },
+      };
     }
     case REMOVE_MEMBER_REQUEST: {
       return {
@@ -328,10 +331,10 @@ const bugReducer = (state = initState, action: any) => {
           members: {
             ...state.bug.members,
             loading: true,
-            error: ""
-          }
-        }
-      }
+            error: "",
+          },
+        },
+      };
     }
     case REMOVE_MEMBER_SUCCESS: {
       return {
@@ -340,12 +343,14 @@ const bugReducer = (state = initState, action: any) => {
           ...state.bug,
           members: {
             ...state.bug.members,
-            members: state.bug.members.members.filter((member: User) => member.user_id !== action.payload.user_id),
+            members: state.bug.members.members.filter(
+              (member: User) => member.user_id !== action.payload.user_id
+            ),
             loading: false,
-            error: ""
-          }
-        }
-      }
+            error: "",
+          },
+        },
+      };
     }
     case REMOVE_MEMBER_FAILURE: {
       const { error, message } = action.payload;
@@ -356,10 +361,10 @@ const bugReducer = (state = initState, action: any) => {
           members: {
             ...state.bug.members,
             loading: false,
-            error: error === undefined ? message : error
-          }
-        }
-      }
+            error: error === undefined ? message : error,
+          },
+        },
+      };
     }
     default:
       return state;

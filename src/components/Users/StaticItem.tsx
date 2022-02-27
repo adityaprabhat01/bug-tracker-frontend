@@ -4,10 +4,11 @@ import {
   Divider,
   GridItem,
 } from "@chakra-ui/react";
-import { BugInterface, ProjectInterface } from "../../interface/projectInterface";
+import  { ProjectInterface }  from "../../interface/projectInterface";
 import About from "../About";
 import Date from "../Date";
 import Title from "../Title";
+import { BugInterface } from "../../interface/bugInterface";
 
 interface Props {
   item: BugInterface | ProjectInterface

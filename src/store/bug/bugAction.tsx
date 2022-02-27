@@ -1,6 +1,5 @@
-import { CommentInterface, LabelInterface } from "../../interface/bugInterface";
+import { BugInterface, CommentInterface, LabelInterface } from "../../interface/bugInterface";
 import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
-import { BugInterface } from "../../interface/projectInterface";
 import { User } from "../../interface/userInterface";
 import {
   UPDATE_LABEL_FAILURE,

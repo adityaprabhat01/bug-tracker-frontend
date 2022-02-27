@@ -18,7 +18,6 @@ import Body from "../../components/Project/Body";
 import Member from "../../components/Project/Member";
 import useFetch from "../../hooks/useFetch";
 import {
-  BugInterface,
   selectProjectInitStateInterface,
   ProjectInterface,
 } from "../../interface/projectInterface";
@@ -37,6 +36,7 @@ import TechStack from "../../components/Project/TechStack";
 import Sidebar from "../../components/Sidebar";
 import Error from "../../components/Form/Error";
 import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
+import { BugInterface } from "../../interface/bugInterface";
 
 const startCol = [3, 6, 9];
 const endCol = [6, 9, 12];

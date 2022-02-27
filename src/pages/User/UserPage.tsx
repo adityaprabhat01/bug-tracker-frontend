@@ -4,11 +4,11 @@ import { useParams } from "react-router-dom";
 import StaticItem from "../../components/Users/StaticItem";
 import Loading from "../../components/Loading";
 import {
-  BugInterface,
   ProjectInterface,
 } from "../../interface/projectInterface";
 import StaticSidebar from "../../components/Users/StaticSidebar";
 import { api } from "../../api";
+import { BugInterface } from "../../interface/bugInterface";
 
 interface User {
   email: string;

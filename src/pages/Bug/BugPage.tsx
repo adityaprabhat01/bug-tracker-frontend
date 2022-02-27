@@ -11,7 +11,7 @@ import {
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
-import { CommentInterface } from "../../interface/bugInterface";
+import { BugInterface, CommentInterface } from "../../interface/bugInterface";
 import { User } from "../../interface/userInterface";
 import {
   bug_fetch_failure,
@@ -37,7 +37,6 @@ import MemberList from "../../components/MemberList";
 import Sidebar from "../../components/Sidebar";
 import Error from "../../components/Form/Error";
 import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
-import { BugInterface } from "../../interface/projectInterface";
 import { motion } from "framer-motion";
 
 const variants = {

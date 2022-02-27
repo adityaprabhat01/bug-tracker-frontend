@@ -51,6 +51,7 @@ const initState: selectProjectInitStateInterface = {
       loading: false,
       error: "",
     },
+    mentionIdCurrent: null,
   },
   loading: true,
   error: "",
