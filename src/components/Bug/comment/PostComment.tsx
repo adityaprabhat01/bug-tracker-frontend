@@ -38,7 +38,7 @@ const PostComment = (props: Props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
   const members = useSelector(
-    (state: RootStateOrAny) => state.project.project.members.members
+    (state: RootStateOrAny) => state.bug.bug.members.members
   );
   const bugs = useSelector(
     (state: RootStateOrAny) => state.project.project.bugs.bugs

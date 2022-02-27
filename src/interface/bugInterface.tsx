@@ -11,12 +11,19 @@ export interface CommentInterface {
     isActivity: boolean;
     value: string;
   };
+  reactions: Array<ReactionsInterface>
 }
 
 export interface LabelInterface {
   name: string;
   assigned: boolean;
   color: string;
+  _id: string;
+}
+
+export interface ReactionsInterface {
+  name: string;
+  count: number;
   _id: string;
 }
 

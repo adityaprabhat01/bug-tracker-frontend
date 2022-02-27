@@ -1,3 +1,4 @@
+import { CommentInterface } from "../../interface/bugInterface";
 import { User } from "../../interface/userInterface";
 import {
   UPDATE_LABEL_FAILURE,
@@ -21,6 +22,7 @@ import {
   REMOVE_MEMBER_REQUEST,
   REMOVE_MEMBER_SUCCESS,
   REMOVE_MEMBER_FAILURE,
+  UPDATE_REACTIONS,
 } from "./bugType";
 
 const initState = {
@@ -362,6 +364,29 @@ const bugReducer = (state = initState, action: any) => {
             ...state.bug.members,
             loading: false,
             error: error === undefined ? message : error,
+          },
+        },
+      };
+    }
+    case UPDATE_REACTIONS: {
+      const { comment_id, index, reaction } = action.payload;
+      return {
+        ...state,
+        bug: {
+          ...state.bug,
+          comments: {
+            ...state.bug.comments,
+            comments: state.bug.comments.comments.map(
+              (comment: CommentInterface, i) =>
+                comment_id === comment._id
+                  ? {
+                      ...comment,
+                      reactions: comment.reactions.map((val, i) =>
+                        i === index ? reaction : val
+                      ),
+                    }
+                  : comment
+            ),
           },
         },
       };

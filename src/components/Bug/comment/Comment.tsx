@@ -5,6 +5,8 @@ import Date from "../../Date";
 import CommentMenu from "./CommentMenu";
 import DeleteComment from "./DeleteComment";
 import { motion } from "framer-motion";
+import Reactions from "./Reactions";
+import { ReactionsInterface } from "../../../interface/bugInterface";
 
 interface Props {
   comment: {
@@ -18,6 +20,7 @@ interface Props {
       isActivity: boolean;
       value: string;
     };
+    reactions: Array<ReactionsInterface>
   };
 }
 
@@ -41,7 +44,7 @@ const variants = {
 const MotionBox = motion(Box);
 
 const Comment = (props: Props) => {
-  const { user, body, bug_id, dateCreated, _id, activity } = props.comment;
+  const { user, body, bug_id, dateCreated, _id, activity, reactions } = props.comment;
   if (activity.isActivity) {
     return (
       <>
@@ -106,6 +109,10 @@ const Comment = (props: Props) => {
           <Box>
             <ReactMarkdown children={body} />
           </Box>
+          <Box mt={3}>
+          <Reactions reactions={reactions} comment_id={_id} />
+          </Box>
+          
         </Box>
       </MotionBox>
     </>
