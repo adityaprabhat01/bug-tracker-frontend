@@ -11,6 +11,7 @@ import NotificationPage from "./pages/Notification/NotificationPage";
 import { useDispatch } from "react-redux";
 import { receive_notification } from "./store/notification/notificationAction";
 import UserPage from "./pages/User/UserPage";
+import Root from "./pages/Root/Root";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function App() {
       <ChakraProvider>
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<Root />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/projects" element={<ProjectPage />} />
