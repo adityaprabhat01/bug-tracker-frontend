@@ -9,11 +9,11 @@ import {
   login_request,
   login_success,
 } from "../../store/auth/authActions";
-import { url } from "../../url";
 import ButtonForm from "../../components/Form/ButtonForm";
 import Error from "../../components/Form/Error";
 import InputForm from "../../components/Form/InputForm";
 import { asyncEmit } from "../../socket";
+import { url } from "../../url";
 
 interface InitialValuesInterface {
   username: string;

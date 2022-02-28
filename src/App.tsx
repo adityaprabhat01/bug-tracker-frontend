@@ -10,7 +10,6 @@ import { socket } from "./socket";
 import NotificationPage from "./pages/Notification/NotificationPage";
 import { useDispatch } from "react-redux";
 import { receive_notification } from "./store/notification/notificationAction";
-import NotificationBadge from "./components/Notification/NotificationBadge";
 import UserPage from "./pages/User/UserPage";
 
 function App() {
