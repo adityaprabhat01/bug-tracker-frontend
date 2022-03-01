@@ -13,9 +13,13 @@ const useAuthCookies = () => {
   const dispatch = useDispatch()
   
   if(store.user_id === "" || store.username === "" || store.name === "") {
-    const user_id = Cookies.get('user_id');
-    const username = Cookies.get("username");
-    const name = Cookies.get("name");
+    // const user_id = Cookies.get('user_id');
+    // const username = Cookies.get("username");
+    // const name = Cookies.get("name");
+    const localStorage = window.localStorage;
+    const name = localStorage.getItem("name");
+    const username = localStorage.getItem("username") ;
+    const user_id = localStorage.getItem("user_id")
     const obj = {
       username,
       user_id,
