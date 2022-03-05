@@ -37,7 +37,7 @@ const Notification = (props: Props) => {
           <Box>
             <Wrap>
               <WrapItem>
-                <Avatar size="sm" name={notification.payload.auth} />{" "}
+                <Avatar size="sm" name={notification.payload.auth.name} />{" "}
               </WrapItem>
             </Wrap>
           </Box>

@@ -1,5 +1,5 @@
 import { NotificationInterface } from "../../interface/notificationInterface"
-import { FETCH_NOTIFICATION_FAILURE, FETCH_NOTIFICATION_REQUEST, FETCH_NOTIFICATION_SUCCESS, MARK_AS_READ_FAILURE, MARK_AS_READ_REQUEST, MARK_AS_READ_SUCCESS, RECEIVE_NOTIFICATION_COUNT } from "./notificationType"
+import { FETCH_NOTIFICATION_COUNT, FETCH_NOTIFICATION_FAILURE, FETCH_NOTIFICATION_REQUEST, FETCH_NOTIFICATION_SUCCESS, MARK_AS_READ_FAILURE, MARK_AS_READ_REQUEST, MARK_AS_READ_SUCCESS, RECEIVE_NOTIFICATION_COUNT } from "./notificationType"
 
 export const fetch_notification_request = () => {
   return {
@@ -44,6 +44,13 @@ export const mark_as_read_success = (data: { read: boolean, notification_id: str
 export const mark_as_read_failure = (data: { message: string , error: string }) => {
   return {
     type: MARK_AS_READ_FAILURE,
+    payload: data
+  }
+}
+
+export const fetch_notofication_count = (data: { count: number }) => {
+  return {
+    type: FETCH_NOTIFICATION_COUNT,
     payload: data
   }
 }

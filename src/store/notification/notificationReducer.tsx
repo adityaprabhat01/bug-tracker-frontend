@@ -1,4 +1,5 @@
 import {
+  FETCH_NOTIFICATION_COUNT,
   FETCH_NOTIFICATION_FAILURE,
   FETCH_NOTIFICATION_REQUEST,
   FETCH_NOTIFICATION_SUCCESS,
@@ -92,6 +93,15 @@ const notificationReducer = (state = initState, action: any) => {
           seen: action.payload.read,
           loading: false,
           error: error === undefined ? message : error,
+        },
+      };
+    }
+    case FETCH_NOTIFICATION_COUNT: {
+      return {
+        ...state,
+        notification: {
+          ...state.notification,
+          count: action.payload,
         },
       };
     }
