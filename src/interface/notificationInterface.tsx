@@ -1,3 +1,5 @@
+import { User } from "./userInterface"
+
 export interface NotificationItemInterface {
   _id: string,
   socket_id: string,
@@ -5,7 +7,7 @@ export interface NotificationItemInterface {
   payload: {
     username: string,
     title: string,
-    auth?: string
+    auth: User
   },
   seen: boolean
 }

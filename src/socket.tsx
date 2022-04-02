@@ -1,6 +1,7 @@
 import io from "socket.io-client";
+import { url } from "./url";
 
-export const socket = io("https://aditya-bug-tracker.herokuapp.com");
+export const socket = io(url);
 
 export function asyncEmit(
   emitEventName: string,

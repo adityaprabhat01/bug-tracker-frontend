@@ -15,20 +15,17 @@ import Root from "./pages/Root/Root";
 
 function App() {
   const dispatch = useDispatch();
-
   useEffect(() => {
     socket.on("added-to-bug-success", (payload) => {
-      console.log(payload);
+      dispatch(receive_notification(payload));
     });
 
     socket.on("comment-on-bug-success", (payload) => {
-      console.log(payload);
-      dispatch(receive_notification(payload.count));
+      dispatch(receive_notification(payload));
     });
 
     socket.on("added-to-project-success", (payload) => {
-      console.log(payload);
-      dispatch(receive_notification(payload.count));
+      dispatch(receive_notification(payload));
     });
   }, [dispatch]);
 

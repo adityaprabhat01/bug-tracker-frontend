@@ -12,6 +12,7 @@ const Notification = (props: Props) => {
   const { notification } = props;
   const dispatch = useDispatch();
   const user_id = useSelector((state: RootStateOrAny) => state.auth.user_id);
+  //const loading = useSelector((state: RootStateOrAny) => state.notification.loading)
 
   function handleRead() {
     api
@@ -37,7 +38,7 @@ const Notification = (props: Props) => {
           <Box>
             <Wrap>
               <WrapItem>
-                <Avatar size="sm" name={notification.payload.auth} />{" "}
+                <Avatar size="sm" name={notification.payload.auth.name} />{" "}
               </WrapItem>
             </Wrap>
           </Box>

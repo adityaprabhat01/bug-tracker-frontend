@@ -1,3 +1,4 @@
+import { boolean } from "yup/lib/locale";
 import { CommentInterface } from "../../interface/bugInterface";
 import { User } from "../../interface/userInterface";
 import {
@@ -34,11 +35,7 @@ const initState = {
       error: "",
     },
     dateOpen: "",
-    isOpen: {
-      isOpen: false,
-      loading: false,
-      error: "",
-    },
+    isOpen: boolean,
     project_id: "",
     _id: "",
     user: {

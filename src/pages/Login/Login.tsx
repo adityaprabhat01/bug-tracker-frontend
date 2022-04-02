@@ -66,6 +66,7 @@ const Login: React.FC = () => {
         localStorage.setItem("name", data.name);
         localStorage.setItem("username", data.username);
         localStorage.setItem("user_id", data.user_id);
+        localStorage.setItem("jwt", data.jwt);
         (async function () {
             await asyncEmit("login", "success", {
             name: data.name,

@@ -25,10 +25,11 @@ import MentionItem from "./MentionItem";
 
 interface Props {
   bug_id: string | undefined;
+  mentionId: string | undefined;
 }
 
 const PostComment = (props: Props) => {
-  const { bug_id } = props;
+  const { bug_id, mentionId } = props;
   const [value, setValue] = useState("");
   const [output, setOutput] = useState(false);
   const [showMembers, setShowMembers] = useState(false);
@@ -128,8 +129,9 @@ const PostComment = (props: Props) => {
         handlePostFetch(data);
         socket.emit("comment-on-bug", {
           members,
-          auth: auth.user_id,
+          auth: auth,
           bug_id,
+          mentionId
         });
       });
   }

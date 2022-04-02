@@ -37,6 +37,7 @@ const NotificationPage: React.FC = () => {
   const { notification, loading, error } = notifications;
   
   const auth = useSelector((state: RootStateOrAny) => state.auth);
+  console.log(loading)
   useEffect(() => {
     checkOnlineStatus(auth);
   }, [auth]);

@@ -7,6 +7,7 @@ import {
   Heading,
   HStack,
   Wrap,
+  Text
 } from "@chakra-ui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -106,6 +107,7 @@ const BugPage: React.FC = () => {
                 <GridItem colStart={3} colEnd={8}>
                   <HStack>
                     <Heading>{bug.title}</Heading>
+                    <Text fontSize='2xl' as={"u"}>#{bug.mentionId}</Text>
                     <Status isOpen={bug.isOpen} />
                     <BugMenu>
                       <CloseBug bug_id={bug_id} isOpen={bug.isOpen} />
@@ -145,7 +147,7 @@ const BugPage: React.FC = () => {
                         </Box>
                       </>
                     ))}
-                    <PostComment bug_id={bug_id} />
+                    <PostComment bug_id={bug_id} mentionId={bug.mentionId}  />
                   </MotionBox>
                   
                 </GridItem>

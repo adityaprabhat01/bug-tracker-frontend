@@ -1,4 +1,5 @@
 import {
+  FETCH_NOTIFICATION_COUNT,
   FETCH_NOTIFICATION_FAILURE,
   FETCH_NOTIFICATION_REQUEST,
   FETCH_NOTIFICATION_SUCCESS,
@@ -24,6 +25,9 @@ const initState = {
     loading: false,
     error: "",
   },
+  received: {
+    notifications: []
+  }
 };
 
 const notificationReducer = (state = initState, action: any) => {
@@ -58,6 +62,10 @@ const notificationReducer = (state = initState, action: any) => {
           ...state.notification,
           count: state.notification.count + 1,
         },
+        received: {
+          ...state.received,
+          notifications: [...state.received.notifications, action.payload]
+        }
       };
     }
     case MARK_AS_READ_REQUEST: {
@@ -92,6 +100,15 @@ const notificationReducer = (state = initState, action: any) => {
           seen: action.payload.read,
           loading: false,
           error: error === undefined ? message : error,
+        },
+      };
+    }
+    case FETCH_NOTIFICATION_COUNT: {
+      return {
+        ...state,
+        notification: {
+          ...state.notification,
+          count: action.payload,
         },
       };
     }
