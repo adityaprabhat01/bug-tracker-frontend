@@ -25,6 +25,9 @@ const initState = {
     loading: false,
     error: "",
   },
+  received: {
+    notifications: []
+  }
 };
 
 const notificationReducer = (state = initState, action: any) => {
@@ -59,6 +62,10 @@ const notificationReducer = (state = initState, action: any) => {
           ...state.notification,
           count: state.notification.count + 1,
         },
+        received: {
+          ...state.received,
+          notifications: [...state.received.notifications, action.payload]
+        }
       };
     }
     case MARK_AS_READ_REQUEST: {

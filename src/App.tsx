@@ -15,7 +15,6 @@ import Root from "./pages/Root/Root";
 
 function App() {
   const dispatch = useDispatch();
-
   useEffect(() => {
     socket.on("added-to-bug-success", (payload) => {
       dispatch(receive_notification(payload));
