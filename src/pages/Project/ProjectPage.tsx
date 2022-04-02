@@ -74,6 +74,11 @@ const ProjectPage: React.FC = () => {
                     <Sidebar />
                   </Box>
                 </GridItem>
+                <GridItem colStart={3} colEnd={4}>
+                  <Box mt={3}>
+                  <AddProject />
+                  </Box>
+                </GridItem>
 
                 {projects.map((project: ProjectInterface, i: number) => (
                   <ProjectListItem
@@ -83,11 +88,12 @@ const ProjectPage: React.FC = () => {
                     colEnd={endCol[i % 3]}
                   />
                 ))}
+                
               </>
             ) : (
               <>
                 <Error message={error} />
-                <AddProject />
+                
               </>
             )}
           </>
