@@ -12,6 +12,7 @@ const Notification = (props: Props) => {
   const { notification } = props;
   const dispatch = useDispatch();
   const user_id = useSelector((state: RootStateOrAny) => state.auth.user_id);
+  //const loading = useSelector((state: RootStateOrAny) => state.notification.loading)
 
   function handleRead() {
     api

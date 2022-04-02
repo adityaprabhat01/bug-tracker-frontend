@@ -35,11 +35,7 @@ export interface BugInterface {
     error: string;
   };
   date_opened: string;
-  isOpen: {
-    isOpen: boolean;
-    loading: boolean;
-    error: string;
-  };
+  isOpen: boolean,
   project_id: string;
   _id: string;
   user: User;

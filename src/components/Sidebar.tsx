@@ -28,6 +28,7 @@ const Sidebar = () => {
   useEffect(() => {
     api.get("getNotificationCount/" + auth.user_id).then(res => {
       const { data } = res;
+      console.log(data)
       dispatch(fetch_notofication_count(data.count));
     })
   }, [auth.user_id, dispatch])
@@ -36,7 +37,7 @@ const Sidebar = () => {
     <>
       {isLargerThan1400 || showSidebar ? (
         <Box
-          backgroundColor={"purple.50"}
+          backgroundColor={"#4299e1"}
           position="fixed"
           top={0}
           bottom={0}
@@ -65,12 +66,12 @@ const Sidebar = () => {
             </Box>
 
             <Box mt={4}>
-              <Center>{auth.name}</Center>
+              <Center color={"white"}>{auth.name}</Center>
             </Box>
 
             <Box mt={4}>
               <Center>
-                <Box color={"#868e9c"}>@{auth.username}</Box>
+                <Box color={"white"}>@{auth.username}</Box>
               </Center>
             </Box>
 
@@ -81,7 +82,7 @@ const Sidebar = () => {
             </Box>
 
             <Box mt={4}>
-              <Center>
+              <Center color={"white"}r>
                 <Link as={NavLink} to={"/projects/"}>
                   Projects
                 </Link>

@@ -1,9 +1,11 @@
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import Error from "../../components/Form/Error";
 import Loading from "../../components/Loading";
 import AddProject from "../../components/Project/AddProject";
 import ProjectListItem from "../../components/Project/ProjectListItem";
+import Sidebar from "../../components/Sidebar";
 import useAuthCookies from "../../hooks/useAuthCookies";
 import useFetch from "../../hooks/useFetch";
 import { ErrorFetched, MessageFetched } from "../../interface/errorInterface";
@@ -14,6 +16,9 @@ import {
   fetch_project_request,
   fetch_project_sucess,
 } from "../../store/project/projectAction";
+
+const startCol = [3, 6, 9];
+const endCol = [6, 9, 12];
 
 const ProjectPage: React.FC = () => {
   useAuthCookies();
@@ -53,22 +58,41 @@ const ProjectPage: React.FC = () => {
 
   return (
     <>
-      {loading === true ? (
-        <Loading />
-      ) : (
-        <>
-          {error === "" ? (
-            projects.map((project: ProjectInterface) => (
-              <ProjectListItem key={project._id} project={project} />
-            ))
-          ) : (
-            <>
-              <Error message={error} />
-            </>
-          )}
-        </>
-      )}
-      <AddProject />
+      <Grid templateColumns="repeat(11, 1fr)" gap={2}>
+        {loading === true ? (
+          <GridItem colStart={6} colEnd={8}>
+            <Box marginTop={"300px"}>
+              <Loading />
+            </Box>
+          </GridItem>
+        ) : (
+          <>
+            {error === "" ? (
+              <>
+                <GridItem colStart={0} colEnd={2}>
+                  <Box>
+                    <Sidebar />
+                  </Box>
+                </GridItem>
+
+                {projects.map((project: ProjectInterface, i: number) => (
+                  <ProjectListItem
+                    key={project._id}
+                    project={project}
+                    colStart={startCol[i % 3]}
+                    colEnd={endCol[i % 3]}
+                  />
+                ))}
+              </>
+            ) : (
+              <>
+                <Error message={error} />
+                <AddProject />
+              </>
+            )}
+          </>
+        )}
+      </Grid>
     </>
   );
 };

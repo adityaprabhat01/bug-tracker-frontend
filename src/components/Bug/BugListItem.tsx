@@ -51,7 +51,7 @@ const BugListItem = (props: Props) => {
             }}
           >
             <Title title={title} />
-            {isOpen.isOpen === true ? (
+            {isOpen === true ? (
               <>
                 <Badge variant="subtle" colorScheme="green">
                   Open
@@ -64,7 +64,6 @@ const BugListItem = (props: Props) => {
                 </Badge>
               </>
             )}
-
             <Divider mt={2} backgroundColor="#9fa1a4" height={"1px"} />
             <Box mt={2} fontSize={14} color={"gray.600"}>
               <About user={user} />
