@@ -13,10 +13,10 @@ const useFetch = (
   handlePostFetch: Function,
   postData: any
 ) => {
+  handlePreFetch();
   useEffect(() => {
     switch (options.method) {
       case "GET": {
-        handlePreFetch();
         api
           .get(options.pathname)
           .then((res) => {
