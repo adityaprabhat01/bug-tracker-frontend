@@ -19,6 +19,7 @@ import {
   post_bug_comment_request,
   post_bug_comment_success,
 } from "../../../store/bug/bugAction";
+import { feUrl } from "../../../url";
 import { MENTION_REGEX, REFERENCE_REGEX } from "../../../utils";
 import Editor from "./Editor";
 import MentionItem from "./MentionItem";
@@ -71,7 +72,7 @@ const PostComment = (props: Props) => {
     let temp = value.match(MENTION_REGEX);
     if (temp !== null) {
       const str = temp[0].slice(1, temp[0].length);
-      const y = `***[${username}](${"http://localhost:3000"}/user/${username})***`;
+      const y = `***[${username}](${feUrl}/user/${username})***`;
       x = x.replace(str, y);
       setValue(x);
     }
@@ -83,7 +84,7 @@ const PostComment = (props: Props) => {
     let temp = value.match(REFERENCE_REGEX);
     if (temp !== null) {
       const str = temp[0].slice(1, temp[0].length);
-      const y = `***[${mentionId}](${"http://localhost:3000"}/project/${project_id}/bug/${bug_id})***`;
+      const y = `***[${mentionId}](${feUrl}/project/${project_id}/bug/${bug_id})***`;
       x = x.replace(str, y);
       setValue(x);
     }

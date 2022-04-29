@@ -13,8 +13,8 @@ const useFetch = (
   handlePostFetch: Function,
   postData: any
 ) => {
-  handlePreFetch();
   useEffect(() => {
+    handlePreFetch();
     switch (options.method) {
       case "GET": {
         api
